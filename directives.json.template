@@ -1,11 +1,11 @@
 # this is a project directives file
 # comments are ok but must start the line in this JSON
 {
-  "title"                     : "SOME TITLE",
+  "title"                     : "NMR Suite",
 
-# "genapptest" below could be replaced, but you should probably also then replace "genapptest" in the paths below
+# "nmrsuite" below could be replaced, but you should probably also then replace "nmrsuite" in the paths below
 # the application name should not contain any special characters
-  "application"               : "genapptest",
+  "application"               : "nmrsuite",
 
   "footer"                    : "Test footer",
   "footersize"                : "50px",
@@ -16,11 +16,11 @@
 
   "executable_path"           :
                                 {
-                                 "html5" : "__app_parent_directory__/genapptest/bin",
-                                 "qt3"   : "__app_parent_directory__/genapptest/bin",
-                                 "qt4"   : "__app_parent_directory__/genapptest/bin",
-                                 "qt5"   : "__app_parent_directory__/genapptest/bin",
-                                 "java"  : "__app_parent_directory__/genapptest/bin"
+                                 "html5" : "__app_parent_directory__/nmrsuite/bin",
+                                 "qt3"   : "__app_parent_directory__/nmrsuite/bin",
+                                 "qt4"   : "__app_parent_directory__/nmrsuite/bin",
+                                 "qt5"   : "__app_parent_directory__/nmrsuite/bin",
+                                 "java"  : "__app_parent_directory__/nmrsuite/bin"
                                 },
 
   "docroot"                   :
@@ -159,7 +159,7 @@
   ,"usews" : "true"
 
 # the following are currently only meaningful for "html5" language
-  ,"appconfig"                 : "__app_parent_directory__/genapptest/appconfig.json"
+  ,"appconfig"                 : "__app_parent_directory__/nmrsuite/appconfig.json"
 # if you have a 32 bit mongo system "html5", comment this
   ,"mongojournal"               : "true"
 
