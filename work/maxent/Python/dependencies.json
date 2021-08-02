@@ -1,7 +1,7 @@
 {
     "dependencies" : [
 	{ "base" : "python" }
-	,{ "conda" : "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" }
+	,{ "conda" : [ "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" ] }
 	,{ "pip" : "csaps" }
     ]
 }
