@@ -1,10 +1,11 @@
+#!/opt/miniconda3/bin/python
 import numpy as np
 import scipy.optimize
 import math
 
 from scipy.optimize import Bounds, LinearConstraint
 
-import ipopt
+import cyipopt as ipopt
 
 def matlabRange (start, stepSize, stop):
   # In Matlab, one can type something like "[-0.6:0.2:7.0]",

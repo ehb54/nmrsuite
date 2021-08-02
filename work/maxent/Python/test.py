@@ -1,4 +1,5 @@
-import ipopt
+#!/opt/miniconda3/bin/python
+import cyipopt as ipopt
 import numpy as np
 import scipy.sparse as sps
 
