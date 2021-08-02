@@ -1,3 +1,4 @@
+#!/opt/miniconda3/bin/python
 #This script tells you which of the values of lambda is the best lambda for you to use.
 #You can have that information by looking at the variable index68 for
 #example. This scrip plots the L-curve got by Log(chi^2) x Log(entropy).  
