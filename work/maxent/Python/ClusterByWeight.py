@@ -1,4 +1,3 @@
-#!/opt/miniconda3/bin/python
 #This script uses the definition in Jacs paper on how to decide which
 #structures to keep. In the end you have a vector "keep68" that tells you
 #the important structures you should be looking at. After here you can
