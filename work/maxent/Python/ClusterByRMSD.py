@@ -1,3 +1,4 @@
+#!/opt/miniconda3/bin/python
 #This script compares pdb files and write pairwise RMSD in a table: total_structs
 #Here it's assumed that the name of the pdb files are struct# with #=00001,00002 and so on.
 #It's also assumed that the pdb files are written in a certain way like in
