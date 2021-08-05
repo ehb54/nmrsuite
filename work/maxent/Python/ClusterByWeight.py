@@ -4,6 +4,8 @@
 #still cluster the structures in keep68 by rmsd using the script
 #ClusterByRMSD.m
 
+#!/opt/miniconda3/bin/python
+
 import numpy as np
 
 # Load all variables from their associated files in the 'result_of_maxent' folder
