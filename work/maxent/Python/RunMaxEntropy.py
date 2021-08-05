@@ -1,3 +1,4 @@
+#!/opt/miniconda3/bin/python
 import numpy as np
 import scipy.optimize
 import math
