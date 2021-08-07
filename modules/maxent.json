@@ -69,14 +69,6 @@
         {
             "role": "input",
             "id": "lambda_lower_bound",
-            "label": "Lambda Inputs",
-            "type": "label",
-            "prehline": "true",
-            "posthline": "true"
-        },
-        {
-            "role": "input",
-            "id": "lambda_lower_bound",
             "label": "lambda lower bound",
             "type": "float",
             "default": -0.6,
