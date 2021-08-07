@@ -27,10 +27,9 @@
             "label": "run maxent",
             "type": "checkbox",
             "checked": "false",
-            "style": "switch",
-            "help": "click box to run maxent",
             "repeater": "true",
-            "norow": "false"
+            "norow": "false",
+            "help": "click box to run maxent"
         },
         {
             "role": "input",
