@@ -30,7 +30,7 @@
             "style": "switch",
             "help": "click box to run maxent",
             "repeater": "true",
-            "norow": "false",
+            "norow": "false"
         },
         {
             "role": "input",
