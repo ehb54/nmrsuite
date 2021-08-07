@@ -10,7 +10,7 @@ if __name__=='__main__':
     json_variables = json.load(argv_io_string)
 
     ### initialize the genapp object
-    ga = genapp( json_variables )
+    ga = genapp(json_variables)
 
     output = {}
     output['plotbar'] = {
