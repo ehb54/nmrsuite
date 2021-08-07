@@ -17,7 +17,7 @@
             "id": "directory_name",
             "label": "directory name",
             "type": "text",
-            "default": "run_0",
+            "default": "run_1",
             "required": "true",
             "help": "if maxent is run, its results will be placed here; if either analysis function is run, maxent results will be taken from here (make sure the filenames are as follows: A.txt, lambda.txt, x.txt, y.txt)"
         },
