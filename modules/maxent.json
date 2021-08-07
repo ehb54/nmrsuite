@@ -29,7 +29,8 @@
             "checked": "false",
             "style": "switch",
             "help": "click box to run maxent",
-            "repeater": "true"
+            "repeater": "true",
+            "norow": "false",
         },
         {
             "role": "input",
