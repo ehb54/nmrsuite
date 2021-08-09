@@ -5,13 +5,44 @@ from io import StringIO
 
 from genapp3 import genapp
 
+from RunMaxEntropy import run_max_entropy
+
+
 if __name__=='__main__':
     argv_io_string = StringIO(sys.argv[1])
     json_variables = json.load(argv_io_string)
 
     ### initialize the genapp object
     ga = genapp(json_variables)
+    '''
+    if none checked:
+            stop
+        else:
+                if max ent checked:
+                       run max ent and put results in run folder
 
+                check in run folder to get four files
+
+                if (filter by weight checked):
+                        do filter by weight
+
+                if (cluster by rmsd checked):
+                        do cluster by rmsd 
+    if (max_ent not checked):
+            look in run folder to get four files
+
+        if max ent checked:
+                run max ent and put results in run folder
+        then:
+                do the same as above
+
+        so maybe
+
+
+        
+
+
+    '''
     output = {}
     output['plotbar'] = {
             "data": [

@@ -2,12 +2,13 @@
 import numpy as np
 import scipy.optimize
 import math
+import os
 
 from scipy.optimize import Bounds, LinearConstraint
 
 import cyipopt as ipopt
 
-def matlabRange (start, stepSize, stop):
+def matlab_range (start, stepSize, stop):
   # In Matlab, one can type something like "[-0.6:0.2:7.0]",
   # which would return '-0.6 -0.4 -0.2 ... 6.8 7.0',
   # but Python has no reliable way of doing this.
@@ -16,12 +17,12 @@ def matlabRange (start, stepSize, stop):
   numSteps = round(stepDifference/stepSize) + 1
   return np.linspace(start, stop, numSteps)
 
-def main ():
-  A = np.loadtxt("MatrixA_test.txt")
-  y = np.loadtxt("y_test.txt")
+def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_upper, run_directory):
+  A = np.loadtxt(A_filename)
+  y = np.loadtxt(y_filename)
   y = y[:, 0]
 
-  lambda_ = np.power(2, matlabRange(-0.6, 0.2, 7)) # 'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
+  lambda_ = np.power(2, matlab_range(lambda_lower, lambda_step, lambda_upper)) # 'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
   best = scipy.optimize.nnls(A, y)[0] # PRODUCES X VECTOR; Python function: Nonnegative least squares
   
   x0 = np.ones(np.shape(A)[1]) / np.shape(A)[1]
@@ -46,10 +47,10 @@ def main ():
   for i in range (np.shape(xsol)[1]):
     xnorm = np.append(xnorm, xsol[:,i]/np.sum(xsol[:,i]))
 
-  np.savetxt("result_of_maxent/A.txt", A)#, np.round(A, 5),  fmt='%f')
-  np.savetxt("result_of_maxent/lambda.txt", lambda_)#, np.round(lambda_, 5),  fmt='%f')
-  np.savetxt("result_of_maxent/x.txt", xsol)#, np.round(xsol, 5),  fmt='%f')
-  np.savetxt("result_of_maxent/y.txt", y)#, np.round(y, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "A.txt"), A)#, np.round(A, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "lambda.txt"), lambda_)#, np.round(lambda_, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "x.txt"), xsol)#, np.round(xsol, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "y.txt"), y)#, np.round(y, 5),  fmt='%f')
 
   print ("Done.")
 
@@ -241,4 +242,4 @@ def mymaxent(A, y, lambda_, w, x0):
     '''
   return (xout)
 
-main()
+run_max_entropy("MatrixA_test.txt", "y_test.txt", -0.6, 0.2, 7, "result_of_maxent")
