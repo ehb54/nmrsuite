@@ -1,0 +1,35 @@
+    '''
+    if none checked:
+            stop
+        else:
+                if max ent checked:
+                       run max ent and put results in run folder
+
+                check in run folder to get four files
+
+                if (filter by weight checked):
+                        do filter by weight
+
+                if (cluster by rmsd checked):
+                        do cluster by rmsd 
+    if (max_ent not checked):
+            look in run folder to get four files
+
+        if max ent checked:
+                run max ent and put results in run folder
+        then:
+                do the same as above
+
+        so maybe
+
+
+        
+
+
+    '''
+
+argv_io_string = StringIO(sys.argv[1])
+    json_variables = json.load(argv_io_string)
+
+    ### initialize the genapp object
+    ga = genapp(json_variables)

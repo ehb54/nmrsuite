@@ -47,6 +47,9 @@ def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_u
   for i in range (np.shape(xsol)[1]):
     xnorm = np.append(xnorm, xsol[:,i]/np.sum(xsol[:,i]))
 
+  if (os.path.exists(run_directory) == False):
+    os.mkdir(run_directory)
+  
   np.savetxt(os.path.join(run_directory, "A.txt"), A)#, np.round(A, 5),  fmt='%f')
   np.savetxt(os.path.join(run_directory, "lambda.txt"), lambda_)#, np.round(lambda_, 5),  fmt='%f')
   np.savetxt(os.path.join(run_directory, "x.txt"), xsol)#, np.round(xsol, 5),  fmt='%f')
@@ -187,7 +190,7 @@ def mymaxent(A, y, lambda_, w, x0):
             print()
             #print ("Objective value at iteration #%d is - %g" % (iter_count, obj_value))
 
-    nlp = ipopt.problem(
+    nlp = ipopt.Problem(
         n=len(x0),
         m=1,
         problem_obj=hs(),
@@ -197,12 +200,12 @@ def mymaxent(A, y, lambda_, w, x0):
         cu=cu
     )
 
-    nlp.addOption(b'limited_memory_update_type', b'bfgs')
-    nlp.addOption(b'hessian_approximation', b'limited-memory')
-    nlp.addOption(b'limited_memory_max_history', 3)
-    nlp.addOption(b'constr_viol_tol', 1e-6)
-    nlp.addOption(b'tol', 1e-8)
-    nlp.addOption(b'max_iter', 50000)
+    nlp.add_option(b'limited_memory_update_type', b'bfgs')
+    nlp.add_option(b'hessian_approximation', b'limited-memory')
+    nlp.add_option(b'limited_memory_max_history', 3)
+    nlp.add_option(b'constr_viol_tol', 1e-6)
+    nlp.add_option(b'tol', 1e-8)
+    nlp.add_option(b'max_iter', 50000)
 
     x, info = nlp.solve(x0)
 
@@ -242,4 +245,4 @@ def mymaxent(A, y, lambda_, w, x0):
     '''
   return (xout)
 
-run_max_entropy("MatrixA_test.txt", "y_test.txt", -0.6, 0.2, 7, "result_of_maxent")
+#run_max_entropy("MatrixA_test.txt", "y_test.txt", -0.6, 0.2, 7, "result_of_maxent")

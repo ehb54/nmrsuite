@@ -3,22 +3,15 @@
 #You can have that information by looking at the variable index68 for
 #example. This scrip plots the L-curve got by Log(chi^2) x Log(entropy).  
 
-import json
+import os, json
 import numpy as np
 from scipy.interpolate import UnivariateSpline
 from csaps import CubicSmoothingSpline
 
-import plotly
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
+#import plotly
+#from plotly.subplots import make_subplots
+#import plotly.graph_objects as go
 
-
-A = np.loadtxt("result_of_maxent/A.txt")
-lambda_ = np.loadtxt("result_of_maxent/lambda.txt") #'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
-x = np.loadtxt("result_of_maxent/x.txt")
-y = np.loadtxt("result_of_maxent/y.txt")
-
-y_prime = np.array([])
 
 def index_max(array): #Return the (first) index of the maximum value and the maximum value in a given array
     _max = np.max(array) #'max' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
@@ -74,40 +67,120 @@ def lcurve_points(y, A, x, lambda_):
 
     return [index, xval, f, pp]
 
-x = x[:, 1:] #excluding the results with lambda = 0
-lambda68 = lambda_[1:] #from results_of_maxent
 
-[index68,x68,y68, pp] = lcurve_points(y, A, x, lambda68)
+def L_curve_for_best_lambda (run_directory):
+    A = np.loadtxt(os.path.join(run_directory, "A.txt"))
+    lambda_ = np.loadtxt(os.path.join(run_directory, "lambda.txt")) #'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
+    x = np.loadtxt(os.path.join(run_directory, "x.txt"))
+    y = np.loadtxt(os.path.join(run_directory, "y.txt"))
 
-with open('index.txt', 'w') as f: f.write(str(index68))
+    y_prime = np.array([])
 
-fig = make_subplots(rows=1, cols=2, subplot_titles=("Plot 1", "Plot 2"))
+    x = x[:, 1:] #excluding the results with lambda = 0
+    lambda68 = lambda_[1:] #from results_of_maxent
 
-# If figure is not being saved correctly, switch "append_trace" to "add_trace"
-fig.append_trace(go.Scatter(x=np.log(x68), y=np.log(y68), mode="markers", marker=dict(color="Black"), name=r"$All other \lambda$"), row=1, col=1) #, line=dict(color="Blue", dash="dash")
-fig.append_trace(go.Scatter(x=np.array(np.log(x68[index68])), y=np.array(np.log(y68[index68])), mode="markers", marker=dict(color="Red"), name=r"$\lambda$ chosen"), row=1, col=1) #, line=dict(color="Blue", dash="dash")
+    [index68,x68,y68, pp] = lcurve_points(y, A, x, lambda68)
 
-'''
-xi = np.linspace(np.log(x68)[0], np.log(x68)[-1], 300) #Plotly has no method to plot a function, so I just took 300 evenly spaced xs (300 is just a random large number I picked).
-yi = pp(xi)
-fig.append_trace(go.Scatter(x=xi, y=yi, line=dict(color="Blue", dash="dash"), name="Spline fit"), row=1, col=1)
-'''
-fig.append_trace(go.Scatter(x=np.log(x68), y=np.log(y68), line=dict(color="Blue", dash="dash"), name="Spline fit"), row=1, col=1)
+    chosen_lambda = lambda68[index68]
+
+    with open(os.path.join(run_directory, "index.txt"), "w") as f: f.write(str(index68))
+
+    line_plot = {
+        "data": [
+            {
+                "x": np.log(x68).tolist(), # converting to list because the genapp plotly does not accept numpy arrays
+                "y": np.log(y68).tolist(),
+                "mode": "markers",
+                "marker": {
+                    "color": "Black"
+                },
+                "name": "All other &#955;" #"name": r"$\text{All other }\lambda$" # rstring to use latex characters
+            },
+            {
+                "x": [np.log(x68[index68])],
+                "y": [np.log(y68[index68])],
+                "mode": "markers",
+                "line": {
+                    "color": "Red"
+                },
+                "name": "&#955; chosen = {}".format(round(chosen_lambda, 5))
+                # the name variable was weird to work with because I needed to use a latex string but also add a variable in, so I had to use the slightly archaic .format and add an escape second bracket to each of the latex brackets
+            },
+            {
+                "x": np.log(x68).tolist(),
+                "y": np.log(y68).tolist(),
+                "line": {
+                    "color": "Blue",
+                    "dash": "dash"
+                },
+                "name": "Spline fit"
+            },
+        ],
+        "layout": {
+                "title": "L-curve for best &#955;",
+                "xaxis": {
+                    "title": "log(Entropy)"
+                },
+                "yaxis": {
+                    "title": "log(&#967;<sup>2</sup>)"
+                }
+        }
+    }
 
 
-fig.append_trace(go.Histogram(x=x[:,index68]*100, nbinsx=30), row=1, col=2)
+    histogram = {
+            "data": [
+                {
+                    "type": "histogram",
+                    "nbinsx": 30, # number of bins
+                    "x": (x[:,index68]*100).tolist()
+                }
+            ],
+            "layout": {
+                    "title": "Distribution of Weights",
+                    "xaxis": {
+                        "title": "Weight(%)"
+                    },
+                    "yaxis": {
+                        "title": "# of Structures",
+                        "range": [0, 20]
+                    }
+            }
+        }
+    
 
-fig.update_xaxes(title_text="log(Entropy)", row=1, col=1)
-fig.update_yaxes(title_text=r"$\log{\chi^2}$", row=1, col=1)
 
-fig.update_xaxes(title_text="Weight(%)", row=1, col=2)
-fig.update_yaxes(title_text="# of Structures", row=1, col=2)
+    """ fig = make_subplots(rows=1, cols=2, subplot_titles=("Plot 1", "Plot 2"))
 
-#fig.update_yaxes(title_text="Log Relative Error", type="log", row=1, col=2)
+    # If figure is not being saved correctly, switch "append_trace" to "add_trace"
+    fig.append_trace(go.Scatter(x=np.log(x68), y=np.log(y68), mode="markers", marker=dict(color="Black"), name=r"$All other \lambda$"), row=1, col=1) #, line=dict(color="Blue", dash="dash")
+    fig.append_trace(go.Scatter(x=np.array(np.log(x68[index68])), y=np.array(np.log(y68[index68])), mode="markers", marker=dict(color="Red"), name=r"$\lambda$ chosen"), row=1, col=1) #, line=dict(color="Blue", dash="dash")
 
-fig.update_layout(title_text="L-curve Plots", font=dict(family="Arial", size=14)) #height=600, width=1000, 
+    '''
+    xi = np.linspace(np.log(x68)[0], np.log(x68)[-1], 300) #Plotly has no method to plot a function, so I just took 300 evenly spaced xs (300 is just a random large number I picked).
+    yi = pp(xi)
+    fig.append_trace(go.Scatter(x=xi, y=yi, line=dict(color="Blue", dash="dash"), name="Spline fit"), row=1, col=1)
+    '''
+    fig.append_trace(go.Scatter(x=np.log(x68), y=np.log(y68), line=dict(color="Blue", dash="dash"), name="Spline fit"), row=1, col=1)
 
-fig.show()
+    fig.append_trace(go.Histogram(x=x[:,index68]*100, nbinsx=30), row=1, col=2)
+
+    fig.update_xaxes(title_text="log(Entropy)", row=1, col=1)
+    fig.update_yaxes(title_text=r"$\log{\chi^2}$", row=1, col=1)
+
+    fig.update_xaxes(title_text="Weight(%)", row=1, col=2)
+    fig.update_yaxes(title_text="# of Structures", row=1, col=2)
+
+    #fig.update_yaxes(title_text="Log Relative Error", type="log", row=1, col=2)
+
+    fig.update_layout(title_text="L-curve Plots", font=dict(family="Arial", size=14)) #height=600, width=1000, 
+
+    fig.show() """
+
+    return line_plot, histogram
+
+#L_curve_for_best_lambda("result_of_maxent")
+
 """ 
 figure(1)
 plot(log(x68),log(y68),'m.')
