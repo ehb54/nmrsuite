@@ -1,0 +1,153 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid": "maxent",
+    "label": "MaxEnt",
+    "fields": [
+        {
+            "role": "input",
+            "id": "module_header",
+            "label": "MaxEnt",
+            "type": "label",
+            "default": "header4",
+            "prehline": "true",
+            "posthline": "true"
+        },
+        {
+            "role": "input",
+            "id": "directory_name",
+            "label": "directory name",
+            "type": "text",
+            "default": "run_0",
+            "required": "true",
+            "help": "if maxent is run, its results will be placed here; if either analysis function is run, maxent results will be taken from here (make sure the filenames are as follows: A.txt, lambda.txt, x.txt, y.txt)"
+        },
+        {
+            "role": "input",
+            "id": "maxent_checkbox",
+            "label": "run maxent",
+            "type": "checkbox",
+            "checked": "false",
+            "repeater": "true",
+            "norow": "false",
+            "help": "click box to run maxent"
+        },
+        {
+            "role": "input",
+            "id": "datafile",
+            "label": "experimental data file",
+            "type": "lrfile",
+            "help": "Lx2 text matrix file of the experimental data for L residues",
+            "repeat": "maxent_checkbox",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "matrixfile",
+            "label": "matrix file",
+            "type": "lrfile",
+            "help": "LxN text matrix of predicted data for N conformers",
+            "repeat": "maxent_checkbox",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "matrixfile",
+            "label": "matrix file",
+            "type": "lrfile",
+            "help": "LxN text matrix of predicted data for N conformers",
+            "repeat": "maxent_checkbox",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "lambda_inputs",
+            "label": "Lambda Inputs",
+            "type": "label",
+            "prehline": "true",
+            "posthline": "true",
+            "repeat": "maxent_checkbox"
+        },
+        {
+            "role": "input",
+            "id": "lambda_lower_bound",
+            "label": "lambda lower bound",
+            "type": "float",
+            "default": -0.6,
+            "min": -2147483647,
+            "max": 2147483647,
+            "step": 0.1,
+            "help": "lower bound to generate lambda values",
+            "repeat": "maxent_checkbox"
+        },
+        {
+            "role": "input",
+            "id": "lambda_step_size",
+            "label": "lambda step size",
+            "type": "float",
+            "default": 0.2,
+            "min": 0,
+            "max": 2147483647,
+            "step": 0.1,
+            "help": "step size to generate lambda values",
+            "repeat": "maxent_checkbox"
+        },
+        {
+            "role": "input",
+            "id": "lambda_upper_bound",
+            "label": "lambda upper bound",
+            "type": "float",
+            "default": 7.0,
+            "min": -2147483647,
+            "max": 2147483647,
+            "step": 0.1,
+            "help": "upper bound to generate lambda values",
+            "repeat": "maxent_checkbox"
+        },
+        {
+            "role": "input",
+            "id": "filter_by_weight_checkbox",
+            "label": "run filter by weight",
+            "type": "checkbox",
+            "checked": "false",
+            "style": "switch",
+            "help": "click box to run filter by weight"
+        },
+        {
+            "role": "input",
+            "id": "cluster_by_rmsd_checkbox",
+            "label": "run cluster by rmsd",
+            "type": "checkbox",
+            "checked": "false",
+            "style": "switch",
+            "help": "click box to run cluster by rmsd"
+        },
+        {
+            "role": "output",
+            "id": "progress_html",
+            "label": "progress: ",
+            "type": "progress",
+            "max:": 1
+        },
+        {
+            "role": "output",
+            "id": "lineplot",
+            "label": "",
+            "type": "plotly"
+        },
+        {
+            "role": "output",
+            "id": "histogram",
+            "label": "",
+            "type": "plotly"
+        },
+        {
+            "role": "output",
+            "id": "report_html",
+            "name": "report_html",
+            "label": "report : ",
+            "type": "html"
+        }
+    ],
+# the executable will take inputs in order and produce output
+    "executable": "maxent.py"
+}
