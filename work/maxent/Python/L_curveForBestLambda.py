@@ -97,16 +97,6 @@ def L_curve_for_best_lambda (run_directory):
                 "name": "All other &#955;" #"name": r"$\text{All other }\lambda$" # rstring to use latex characters
             },
             {
-                "x": [np.log(x68[index68])],
-                "y": [np.log(y68[index68])],
-                "mode": "markers",
-                "line": {
-                    "color": "Red"
-                },
-                "name": "&#955; chosen = {}".format(round(chosen_lambda, 5))
-                # the name variable was weird to work with because I needed to use a latex string but also add a variable in, so I had to use the slightly archaic .format and add an escape second bracket to each of the latex brackets
-            },
-            {
                 "x": np.log(x68).tolist(),
                 "y": np.log(y68).tolist(),
                 "line": {
@@ -115,6 +105,16 @@ def L_curve_for_best_lambda (run_directory):
                 },
                 "name": "Spline fit"
             },
+                        {
+                "x": [np.log(x68[index68])],
+                "y": [np.log(y68[index68])],
+                "mode": "markers",
+                "line": {
+                    "color": "Red"
+                },
+                "name": "&#955; chosen = {}".format(round(chosen_lambda, 5))
+                # the name variable was weird to work with because I needed to use a latex string but also add a variable in, so I had to use the slightly archaic .format and add an escape second bracket to each of the latex brackets
+            }
         ],
         "layout": {
                 "title": "L-curve for best &#955;",

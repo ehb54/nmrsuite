@@ -33,4 +33,4 @@ def filter_by_weight (run_directory):
     keep68 = clustering(mean68, std68, x[:,index68]) + 1
     np.savetxt(os.path.join(run_directory, "cluster.txt"), keep68)
 
-#filter_by_weight("result_of_maxent")
+filter_by_weight("result_of_maxent")
