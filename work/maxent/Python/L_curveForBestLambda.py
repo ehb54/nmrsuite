@@ -106,7 +106,7 @@ def L_curve_for_best_lambda (run_directory):
                 "name": "Spline fit"
             },
                         {
-                "x": [np.log(x68[index68])],
+                "x": [np.log(x68[index68])],    
                 "y": [np.log(y68[index68])],
                 "mode": "markers",
                 "line": {

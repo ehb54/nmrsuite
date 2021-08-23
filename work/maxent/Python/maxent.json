@@ -119,7 +119,15 @@
             "type": "checkbox",
             "checked": "false",
             "style": "switch",
+            "repeater": "true",
             "help": "click box to run cluster by rmsd"
+        },{
+            "role": "input",
+            "id": "structure_directory",
+            "label": "structure files directory",
+            "type": "lrfile",
+            "repeat": "cluster_by_rmsd_checkbox",
+            "help": "input directory where the structure files are located"
         },
         {
             "role": "output",

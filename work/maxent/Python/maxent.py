@@ -6,6 +6,8 @@ from genapp3 import genapp ## python3
 from maxent_scripts.RunMaxEntropy import run_max_entropy
 from maxent_scripts.L_curveForBestLambda import L_curve_for_best_lambda
 from maxent_scripts.FilterByWeight import filter_by_weight
+from maxent_scripts.ClusterByRMSD import cluster_by_rmsd
+
 
 # function to check if a checkbox was checked by seeing if its id exists in the JSON
 is_checked = lambda json_variables, checkbox_id : checkbox_id in json_variables.keys()
@@ -46,7 +48,10 @@ if __name__=='__main__':
                 filter_by_weight(run_directory)
                 output_str += f"Uploaded filter_by_weight result vector 'keep68' to {run_directory}/cluster.txt\n"
         
-        #output = json_variables
+        if is_checked(json_variables, "cluster_by_rmsd_checkbox"):
+                structure_directory = json_variables["structure_directory"][0]
+                cluster_by_rmsd(run_directory, structure_directory)
+                output_str += f"Uploaded cluster_by_rmsd result matrices 'weights' and 'structs' to {run_directory}/cluster.txt\n"
 
         ga.udpprogress(0);
         ga.udpmessage( { "_textarea" : "udp message to _textarea\n" } );

@@ -29,6 +29,10 @@ def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_u
 
   w = np.ones(np.shape(A)[1]) * np.shape(A)[1] # Prior distribution vector
 
+  """ y = np.round(y, 5)
+  A = np.round(A, 5)
+  w = np.round(w, 5) """
+
   xsol = mymaxent(A, y, lambda_, w, x0+1.0e-6)
 
   #print (xsol)
@@ -243,6 +247,8 @@ def mymaxent(A, y, lambda_, w, x0):
     x0 = x0
     
     '''
+  print (xout)
   return (xout)
 
-#run_max_entropy("MatrixA_test.txt", "y_test.txt", -0.6, 0.2, 7, "result_of_maxent")
+run_max_entropy("./Matrix_Ub2A_MNODES.txt", "./y_Ub2A.txt", -1, 0.2, 1, "result_of_raquel_test")
+#run_max_entropy("./MatrixA_test.txt", "./y_test.txt", -0.6, 0.2, 7, "result_of_maxent")
