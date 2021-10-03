@@ -2,6 +2,7 @@
 {
     "moduleid": "maxent",
     "label": "MaxEnt",
+    "executable": "maxent.py",
     "dependencies" : [
 	{ "base" : "python3" }
 	,{ "conda" : [ "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" ] }
@@ -124,31 +125,32 @@
             "type": "checkbox",
             "checked": "false",
             "style": "switch",
+            "repeater": "true",
             "help": "click box to run cluster by rmsd"
-        },
-        {
-            "role": "output",
-            "id": "progress_output",
-            "label": "progress: ",
-            "type": "progress",
-            "max": 1.0
+        },{
+            "role": "input",
+            "id": "structure_directory",
+            "label": "structure files directory",
+            "type": "lrfile",
+            "repeat": "cluster_by_rmsd_checkbox",
+            "help": "input directory where the structure files are located"
         },
         {
             "role": "output",
             "id": "progress_html",
-            "name": "progress_html",
-            "label": "percent done: ",
-            "type": "html"
+            "label": "progress: ",
+            "type": "progress",
+            "max:": 1
         },
         {
             "role": "output",
-            "id": "lcurve_plot",
+            "id": "lineplot",
             "label": "",
             "type": "plotly"
         },
         {
             "role": "output",
-            "id": "distribution_of_weights",
+            "id": "histogram",
             "label": "",
             "type": "plotly"
         },
@@ -159,7 +161,5 @@
             "label": "report : ",
             "type": "html"
         }
-    ],
-# the executable will take inputs in order and produce output
-    "executable": "altens"
+    ]
 }
