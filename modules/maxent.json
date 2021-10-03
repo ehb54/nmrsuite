@@ -2,7 +2,12 @@
 {
     "moduleid": "maxent",
     "label": "MaxEnt",
-    "fields": [
+    "dependencies" : [
+	{ "base" : "python3" }
+	,{ "conda" : [ "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" ] }
+	,{ "pip" : "csaps" }
+    ]
+    ,"fields": [
         {
             "role": "input",
             "id": "module_header",
