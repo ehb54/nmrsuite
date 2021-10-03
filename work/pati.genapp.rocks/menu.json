@@ -1,0 +1,16 @@
+# this is a project menu file
+{
+ "menu" : [
+           { 
+            "id"      : "simulate",
+            "label"   : "Simulate",
+            "icon"    : "pngs/simulate.png",
+            "modules" : [ 
+                         { 
+                          "id"    : "pati",
+                          "label" : "Pati"
+                         }
+                        ]
+            }
+          ]
+}

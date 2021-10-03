@@ -1,0 +1,51 @@
+#!/usr/bin/python3.8
+import json, sys, os, io, subprocess
+
+if __name__=='__main__':
+
+        argv_io_string = io.StringIO(sys.argv[1])
+#	json_variables = json.load(sys.stdin)	
+        json_variables = json.load(argv_io_string)
+
+        axes = json_variables['axes']
+        axesl = float(json_variables['axesl'])
+        bicelle = float(json_variables['bicelle'])
+        dockpdb = json_variables['dockpdb']     
+        model = int(json_variables['model'])
+        pdb = json_variables['pdb'][0]
+        pdb_base = os.path.basename(pdb)
+        directory = os.path.dirname(pdb)
+        if 'rdc' in json_variables:
+            rdc_base = os.path.basename(json_variables['rdc'][0])
+
+        exec_string = "java -jar pati-1.1.jar"
+        if axes != "":
+            exec_string += " -axes " + str(axes)
+        exec_string += " -axesl " + str(axesl)
+        exec_string += " -bicelle " + str(bicelle)
+        if 'dock' in json_variables:
+            exec_string += " -dock"
+        if dockpdb != "":
+            exec_string += " -dockpdb " + str(dockpdb)
+        if 'draw' in json_variables:
+            exec_string += " -draw"
+        exec_string += " -model " + str(model)
+        if 'nostat' in json_variables:
+            exec_string += " -nostat"
+        exec_string += " -pdb " + str(pdb_base)
+        if 'rdc' in json_variables:
+            exec_string += " -rdc " + str(rdc_base)
+        if 'robust' in json_variables:
+            exec_string += " -robust"
+
+#	path = base_directory.replace('\/','/') + "/"
+#	os.chdir(path)
+        sys.path.append('./')
+	
+        output_string = subprocess.check_output(exec_string, stderr=subprocess.STDOUT, shell=True)
+	
+        output = {} 
+        output['mainoutput'] = output_string
+
+        print(json.dumps(output))
+		

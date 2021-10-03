@@ -1,0 +1,135 @@
+{
+    "moduleid" : "pati"
+    ,"label"    : "Pati"
+    ,"help"     : "help for pati"
+    ,"executable"   : "pati.py"
+    ,"submitpolicy" : "all"    
+    ,"uniquedir" : "true"
+    ,"fields"   : [
+        {
+            "role"       : "input"
+            ,"id"         : "pdb"
+            ,"label"      : "PDB file"
+            ,"type"       : "file"
+            ,"required"   : "true"
+            ,"help"       : "Select a PDB file to use for calculations"
+        }
+        ,{
+            "role"       : "input"
+            ,"id"         : "rdc"
+            ,"label"      : "RDC file (optional)"
+            ,"type"       : "file"
+            ,"help"       : "Select a RDC file to use for calculations - CNS or PATI format"
+        }
+        ,{
+            "role"       : "input"
+            ,"id"         : "axesl"
+            ,"label"      : "Axes length [Angstroms]"
+            ,"type"       : "float"
+            ,"default"    : 5.0
+            ,"required"   : "true" 
+            ,"help"       : "Length of PyMOL axes extension beyond the molecule bonds"
+        }
+	,{
+            "role"       : "input"
+            ,"id"         : "bicelle"
+            ,"label"      : "Bicelle volume fraction"
+            ,"type"       : "float"
+            ,"default"    : 0.03
+            ,"required"   : "true" 
+        }
+       	,{
+            "role"       : "input"
+            ,"id"         : "dock"
+            ,"label"      : "Perform docking?"
+            ,"type"       : "checkbox"
+            ,"checked"   : "false" 
+            ,"help"       : "Performs docking of a two domain system and outputs rotation and translation if checked"
+        }
+	,{
+            "role"       : "input"
+            ,"id"         : "draw"
+            ,"label"      : "Draw the fit plots?"
+            ,"type"       : "checkbox"
+            ,"checked"   : "false"
+	}
+	,{
+            "role"       : "input"
+            ,"id"         : "nostat"
+            ,"label"      : "Skip calculating statistics?"
+            ,"type"       : "checkbox"
+            ,"checked"   : "false" 
+            ,"help"       : "Selecting this option will speed up computation"
+        }
+	,{
+            "role"       : "input"
+            ,"id"         : "robust"
+            ,"label"      : "Robust regression?"
+            ,"type"       : "checkbox"
+            ,"checked"   : "false" 
+            ,"help"       : "Performs rubst least-squares regression (outlier suppression) where possible if checked"
+        }
+	,{
+            "role"       : "input"
+            ,"id"         : "model"
+            ,"label"      : "PDB file model number"
+            ,"type"       : "integer"
+            ,"default"    : 1
+            ,"required"   : "true"             
+	}
+	,{
+            "role"       : "input"
+            ,"id"         : "axes"
+            ,"label"      : "Axes filename"
+            ,"type"       : "text"
+	    ,"safefile"   : "on"
+            ,"help"       : "Name of the PyMOL script file for tensor axes. Not generated if set to empty."
+        }
+	,{
+            "role"       : "input"
+            ,"id"         : "dockpdb"
+            ,"label"      : "Patidock PDB filename"
+            ,"type"       : "text"
+	    ,"safefile"	  : "on"
+	    ,"help"       : "Name of the output PDB file used for Patidock. Not generated if set to empty."
+        }
+
+
+        ,{
+            "role"       : "output"
+            ,"id"         : "mainoutput"
+            ,"label"     : "Output file"
+            ,"type"      : "file"
+        }
+       	,{
+            "role"       : "output"
+            ,"id"         : "dockout"
+            ,"label"     : "Patidock output file"
+            ,"type"      : "file"
+        }
+       	,{
+            "role"       : "output"
+            ,"id"         : "axesoutput"
+            ,"label"     : "Tensor axes PyMOL script file"
+            ,"type"      : "file"
+        }
+	,{
+            "role"       : "output"
+            ,"id"         : "axesoutputpredicted"
+            ,"label"     : "Tensor axes PyMOL script file (predicted)"
+            ,"type"      : "file"
+        }
+	,{
+	    "role"	: "output"
+	    ,"id"	: "graphoutput"
+	    ,"label"	: "Residual Graph"
+	    ,"type"	: "plotly"
+	}
+	,{
+	    "role"	: "output"
+	    ,"id"	: "chainoutput"
+	    ,"label"	: "Chain Residual Graphs"
+	    ,"type"	: "plotly"
+	}
+	]
+}

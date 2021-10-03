@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+# user defines
+
+use JSON;
+
+if ( !@ARGV )
+{
+    print "\{\"error\":\"energy called with no arguments\"\}\n";
+    exit;
+}
+
+$ref = decode_json( shift );
+
+$res = {};
+
+# assemble output
+
+$$res{ "e" } = sprintf( "%.6g", $$ref{ "m" } * $$ref{ "c" }**2 );
+
+print encode_json( $res ) . "\n";
+
