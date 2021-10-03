@@ -1,0 +1,188 @@
+	# this is a module file, any module specific info belongs here
+{
+    "moduleid" : "elmdock",
+    "label"    : "Calculate",
+    #"resource" : "oscluster",
+    "submitpolicy" : "login",
+    #"help"     : "help for Bead Modeller",
+    #"center"   : "true",
+    #"centeroutput" : "true",
+    #"notify"    : "alexsav.science@gmail.com",
+    "notify" : "email",
+
+    
+    "fields"   : [
+                  {   
+                   "role"     : "input",  
+                   "id"       : "ELMDOCK_label",
+                   "label"    : "Diffusion Tensor-Guided Docking (ELMDOCK)",
+                   "type"     : "label",
+                   "prehline" : "true",
+                   "posthline": "true",
+                   "default"  : "header4"
+               },  
+               {
+	            "role"       : "input"
+	            ,"id"         : "run_name"
+	            ,"label"      : "Run Name"
+	            ,"type"       : "text"
+	            ,"required"   : "true"
+	            ,"help"       : "Enter a name to run this task"
+	        },
+################################################################
+	       { 
+		   "role"     : "input",  
+		   "id"       : "data_label",
+		   "label"    : "DATA (ONLY available for two-domain complexes)",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+
+               {
+                   "role"     : "input",
+                   "id"       : "relax_location",
+                   "label"    : "Relaxation Data File",
+                   "type"     : "lrfile",
+                   "required" : "False",
+		   "accept"   : ".txt",
+		   "help"     : "Upload Relaxation Data File"
+                   },	
+	     
+                  {
+                   "role"     : "input",
+                   "id"       : "pdb_location",
+                   "label"    : "PDB Coordinates File",
+                   "type"     : "lrfile",
+                   "required" : "true",
+		   "accept"   : ".pdb",
+		   "help"     : "Upload Coordinates File"
+                   },
+               {   
+                   "role"    : "input",
+                   "id"      : "model",
+                   "label"   : "PDB File Model",
+                   "type"    : "text",
+                   "required" : "True",
+                   "default" : "1"
+               },
+	       { 
+		   "role"     : "input",  
+		   "id"       : "runmenu_label",
+		   "label"    : "Run Menu",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+
+             {
+		  "role"     : "input",  
+		  "id"       : "optimization_method",
+		  "label"    : "Optimization Method",
+		  "type"     : "listbox",
+		  "values"   : "Least Squares~leastsq~Robust Least Squares (3.0sig)~robust",
+		  "repeater" : "yes",
+		  "default"  : "leastsq",
+		  "help"     : "Choose optimization method"
+	      },
+            #{ 
+              #  "role"    : "input",
+              #  "id"      : "run_elm",
+              #  "label"   : "Run ELM",   
+              #  "type"    : "checkbox",
+             #   "checked" : "false"
+            #},
+            {
+                "role"    : "input",
+                "id"      : "temperature",
+                "label"   : "Temperature(K)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "298"
+            },
+             {
+	        "role"     : "input",
+	        "id"       : "adv_option",
+	        "label"    : "Check Box to Enable Advanced Settings",
+	        "type"     : "checkbox",
+	        "checked"  : "false",
+	        "repeater" : "true"
+	    },
+            {   
+                "role"    : "input",
+                "id"      : "hydro",
+                "label"   : "Hydration Layer Thickness(Angstrom)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "2.2",
+                "repeat" : "adv_option"
+            },
+            {   
+                "role"    : "input",
+                "id"      : "water",
+                "label"   : "Water Radius(Angstrom)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "1.4",
+                "repeat" : "adv_option"
+            },  
+ #####################################################################################################
+                 {
+		     "role"    : "output",
+		     "id"      : "progress_output",
+		     "label"   : "Progress: ",
+		     "type"    : "progress",
+		     "max"     : 1.0
+		 },	
+                {
+		   "role"    : "output",
+                   "id"      : "progress_text",
+                   "label"   : "Calculation Report: ",
+		   "type"    : "textarea",
+                   #"append"  : "on",
+                   "cols"    : 40
+                  }, 
+	           {
+                   "role"  : "output",
+                   "id"    : "outputrotdif",
+                   "label" : "Detailed Results File: ",
+                   "type"  : "file",
+		   "multiple": "true"    
+                  },
+                  # {   
+                  # "role"  : "output",
+                  # "id"    : "elm_out",
+                  # "label" : "Download ELM Prediction ",
+                  # "type"  : "file",
+                  # "multiple": "true"
+                  #},  
+                   {   
+                   "role"  : "output",
+                   "id"    : "elmdock_out",
+                   "label" : "ELMDOCK Transformations File: ",
+                   "type"  : "file",
+                   "multiple": "true"
+                  },
+                   {   
+                   "role"  : "output",
+                   "id"    : "pdb",
+                   "label" : "ELMDOCK-generated Structures File: ",
+                   "type"  : "file",
+                   "multiple": "true"
+                  },
+                   {
+                   "role": "output",
+                   "id" :"outputpdb",
+                   "label":"Docking View",
+                   "type"  : "atomicstructure",
+                   "height" : "850",
+                   "width" : "850"
+                   }   
+            ],
+
+# the executable will take inputs in order and produce output
+    "executable" : "main_elmdock.py"
+    #,"executable" : "rinit.sh"
+}

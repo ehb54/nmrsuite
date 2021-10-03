@@ -1,0 +1,17 @@
+#le, any module specific info belongs here
+{
+    "moduleid"       : "demo",
+    "label"          : "How to Use",
+    "noreset"        : "true",
+    "nosubmit"       : "true",
+    "nooutputhr"     : "true",
+    "fields"   : [
+                  {
+                   "role"       : "input",
+                   "id"         : "text1",
+                   "type"       : "html"
+                  , "value"      : "__<aboutrotdif.html"
+                   }
+    ]
+}
+

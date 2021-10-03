@@ -1,0 +1,257 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid" : "rotdif_all",
+    "label"    : "Calculate",
+    #"resource" : "oscluster",
+    "submitpolicy" : "login",
+    #"help"     : "help for Bead Modeller",
+    #"center"   : "true",
+    #"centeroutput" : "true",
+    #"notify"    : "alexsav.science@gmail.com",
+    "notify" : "email",
+
+    
+    "fields"   : [
+                  {   
+                   "role"     : "input",  
+                   "id"       : "ROTDIF_label",
+                   "label"    : "ROTDIF & Dynamics Analysis",
+                   "type"     : "label",
+                   "prehline" : "true",
+                   "posthline": "true",
+                   "default"  : "header4"
+               },  
+
+               {
+	            "role"       : "input"
+	            ,"id"         : "run_name"
+	            ,"label"      : "Run Name"
+	            ,"type"       : "text"
+	            ,"required"   : "true"
+	            ,"help"       : "Enter a name to run this task"
+	        },
+################################################################
+	       { 
+		   "role"     : "input",  
+		   "id"       : "data_label",
+		   "label"    : "Data",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+
+               {
+                   "role"     : "input",
+                   "id"       : "relax_location",
+                   "label"    : "Relaxation Data File",
+                   "type"     : "lrfile",
+                   "required" : "False",
+		   "accept"   : ".txt",
+		   "help"     : "Upload Relaxation Data File"
+                   },	
+	     
+                  {
+                   "role"     : "input",
+                   "id"       : "pdb_location",
+                   "label"    : "PDB Coordinates File",
+                   "type"     : "lrfile",
+                   "required" : "true",
+		   "accept"   : ".pdb",
+		   "help"     : "Upload Coordinates File"
+                   },
+               {   
+                   "role"    : "input",
+                   "id"      : "model",
+                   "label"   : "PDB File Model",
+                   "type"    : "text",
+                   "required" : "True",
+                   "default" : "1"
+               },
+	       { 
+		   "role"     : "input",  
+		   "id"       : "runmenu_label",
+		   "label"    : "Run Menu",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+
+             {
+		  "role"     : "input",  
+		  "id"       : "optimization_method",
+		  "label"    : "Optimization Method",
+		  "type"     : "listbox",
+		  "values"   : "Least Squares~leastsq~Robust Least Squares (3.0sig)~robust",
+		  "repeater" : "yes",
+		  "default"  : "leastsq",
+		  "help"     : "Choose optimization method"
+	      },
+            {   
+                "role"    : "input",
+                "id"      : "axeslength",
+                "label"   : "Axes Length(Angstrom)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "5"
+            }, 
+
+	    {
+	        "role"    : "input", 
+		"id"      : "stat", 
+		"label"   : "Full Statistics ", 
+		"type"    : "checkbox", 
+		"checked" : "false" 
+	    },
+            {   
+                "role"    : "input", 
+                "id"      : "run_dyna", 
+                "label"   : "Run Dynamics ", 
+                "type"    : "checkbox", 
+                "checked" : "false" 
+            }, 
+            #{ 
+                #"role"    : "input",
+                #"id"      : "run_elm",
+                #"label"   : "Run ELM",   
+                #"type"    : "checkbox",
+                #"checked" : "false"
+            #}, 
+ #####################################################################################################
+                 {
+		     "role"    : "output",
+		     "id"      : "progress_output",
+		     "label"   : "Progress: ",
+		     "type"    : "progress",
+		     "max"     : 1.0
+		 },	
+                {
+		   "role"    : "output",
+                   "id"      : "progress_text",
+                   "label"   : "Calculation Report: ",
+		   "type"    : "textarea",
+                   #"append"  : "on",
+                   "cols"    : 40
+                  },
+
+                {
+		   "role"    : "output",
+                   "id"      : "live_log",
+                   "label"   : "Live Log File:  ",
+		   "type"    : "html"
+                }, 
+	           {
+                   "role"  : "output",
+                   "id"    : "outputrotdif",
+                   "label" : "Detailed Results File: ",
+                   "type"  : "file",
+		   "multiple": "true"    
+                  },
+                   {
+                   "role"  : "output",
+                   "id"    : "axi_out",
+                   "label" : "Tensor Axes PyMol File, Axially Symmetric Model: ",
+                   "type"  : "file",
+                   "multiple": "true"
+                  },
+                   {
+                   "role"  : "output",
+                   "id"    : "ani_out",
+                   "label" : "Tensor Axes PyMol File, Fully Anisotropic Model: ",
+                   "type"  : "file",
+                   "multiple": "true"
+                  },                        
+                {
+                   "role" : "output",
+                   "id" : "exp_plot",
+                   "label" : "Experimental Data",
+                   "showcollapse":"False",
+                   "type": "plot3d"
+                  }, 
+                  {
+                   "role" : "output",
+                   "id" : "vec_plot",
+                   "label" : "Bond Orientations Plot",
+                   "showcollapse":"False",
+                   "height": "450px",
+                   "width" : "700px",
+                   "type": "plotly"
+                  },
+		  {
+		   "role" : "output",
+		   "id" : "chi2_plot",
+		   "label" : "Chi-square Plot",
+		   "showcollapse": "False",
+                   "height": "450px",
+                   "width" : "700px",
+		   "type": "plotly"
+		  },
+      	          {
+                   "role"  : "output",
+                   "id"    : "plot_2d",
+                   "label" : "2D Model Fit:",
+                   "type"  : "plot2d",
+		   "height": "450px",
+		   "width" : "700px",
+		   "pan"   : "false",
+		   "zoom"  : "false",
+		   "backgroundcolor" : "white",    
+		   "selzoom" : "true",
+		   "changescalex" : "false",     
+		   "changescaley" : "false",    
+		   "savetofile" : "true", 
+		   "rotatedylabel" : "true", 
+		   "customtooltips": "true",  
+		   "showcollapse": "False",
+   		   "hover" : "true"    
+                   }
+	        ,{
+		   "role"  : "output",
+                   "id"    : "plot_3d",
+                   "label" : "3D Model Fit:",
+		   "showcollapse": "False",
+                   "type"  : "plot3d"
+		},
+                {  
+                   "role"  : "output",
+                   "id"    : "iso_plot",
+                   "label" : "Isotropic Model Fit:",
+                   "showcollapse": "False",
+                   "type"  : "plotly"
+                },
+                {  "role"  : "output",
+                   "id"    : "axi_plot",
+                   "label" : "Axially Symmetric Model Fit:",
+                   "showcollapse": "False",
+                   "type"  : "plotly"
+                },
+                {  "role"  : "output",
+                   "id"    : "ani_plot",
+                   "label" : "Fully Anisotropic Model Fit:",
+                   "showcollapse": "False",
+                   "type"  : "plotly"
+                },
+                {  "role"  : "output",
+                   "id"    : "diso_plot",
+                   "label" : "Dynamics: Isotropic Model Fit:",
+                   "showcollapse" : "False",
+                   "type"  : "plotly"
+                },
+                {  "role"  : "output",
+                   "id"    : "daxi_plot",
+                   "label" : "Dynamics: Axially Symmetric Model Fit:",
+                   "showcollapse" : "False",
+                   "type"  : "plotly"
+                },
+                {  "role"  : "output",
+                   "id"    : "dani_plot",
+                   "label" : "Dynamics: Fully Anisotropic Model Fit:",
+                   "showcollapse" : "False",
+                   "type"  : "plotly"
+                }    
+            ],
+
+# the executable will take inputs in order and produce output
+    "executable" : "main_rotdif.py"
+}

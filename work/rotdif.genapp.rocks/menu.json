@@ -1,0 +1,121 @@
+# this is a project menu file
+{
+# "header" : "ROTDIF",
+ "menu" : [
+#	{
+#            "id"      : "demo_menu", 
+#            "label"   : "How to Use",
+#            "icon"    : "pngs/noicon.png",
+#            "autorun" : "demo",
+#            "modules" : [
+#                {
+#                    "id"    : "demo", 
+#                    "label" : "About ROTDIF",
+#		    "nobutton" : "true"
+#                }]
+#          },
+          {
+             "id"    : "tutorial_menu",
+             "label" : "ROTDIF tutorial",
+             "icon": "pngs/noicon.png",
+             "autorun":"tutorial",
+             "modules"   :[
+                 {
+	          "id"       : "tutorial",
+	          "label"    : "ROTDIF tutorial",
+	          "nobutton" : "true"
+	         }
+	    ]
+         },
+       { 
+            "id"      : "rotdif_menu",
+            "label"   : "Run ROTDIF",
+            "icon"    : "pngs/simulate.png",
+            #"help"    : "help text",
+	    #"autorun" : "rotdif_all",
+            "modules" : [ 
+                         { 
+                          "id"    : "rotdif_all",
+                          "label" : "ROTDIF & Dynamics Analysis",
+			  "views" : [ "Input", "Output", "Plots", "OpenGL" ]
+                         },
+                          {
+                          "id"    : "elm",
+                          "label" : "Diffusion Tensor Prediction",
+                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
+                          },
+                         {   
+                          "id"    : "elmdock",
+                          "label" : "Diffusion Tensor-Guided Docking",
+                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
+                          }                          
+                        ]
+            }
+        ,
+       {
+            "id"      : "Acknowledgements_menu",
+            "label"   : "Acknowledgements",
+            "icon"    : "pngs/noicon.png",
+            "autorun" : "acknowledgements",
+            "modules" : [
+                {
+                    "id"    : "acknowledgements",
+                    "label" : "Acknowledgements",
+                    "nobutton" : "true"
+                }   
+            ]   
+        }   
+        ,{  
+            "id"      : "disclaimer_menu",
+            "label"   : "Official Disclaimer",
+            "icon"    : "pngs/gnu_disclaimer.png",
+            "autorun" : "disclaimer",
+            "modules" : [ 
+                {   
+                    "id"    : "disclaimer",
+                    "label" : "Official Disclaimer",
+                    "nobutton" : "true"
+                }   
+            ]   
+        },
+        {  
+            "id"         : "admin",
+            "restricted" : "admin",
+            "label"      : "Admin",
+            "icon"       : "pngs/admin.png",
+            "modules" : [ 
+                         {   
+                          "id"    : "jobmonitor",
+                          "label" : "Job monitor"
+                         }   
+                         ,{  
+                          "id"    : "jobintegritycheck",
+                          "label" : "Integrity check"
+                         }   
+                         ,{  
+                          "id"    : "sysuserslist",
+                          "label" : "Users"
+                         }   
+                         ,{  
+                          "id"    : "sys_manage_users",
+                          "label" : "User management"
+                         }   
+                         ,{  
+                          "id"    : "jobshistory_1",
+                          "label" : "Job history"
+                         }   
+    
+                        ]   
+            },  
+
+          {
+              "id"      : "etc",
+              "modules" : [
+                           {
+			    "id"    : "sys_file_manager",
+			    "label" : "File manager"
+			    }
+                          ]
+	  }
+]
+}
