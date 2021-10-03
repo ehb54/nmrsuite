@@ -1,102 +1,100 @@
-# this is a project menu file
 {
-# "header" : "parnmr",
     "menu" : [
-#	             {
-#	             "id"    : "tutorial_menu",
-#	             "label" : "Tutorial",
-#             "icon": "pngs/interact.png",
-#             "autorun":"tutorial",
-#             "modules"   :[
-#                 {
-#                  "id"       : "tutorial",
-#                  "label"    : "Tutorial",
-#                  "nobutton" : "true"
-#                 }
-#            ]
-#         },
-       {
+        {
             "id"      : "analyze",
             "label"   : "Analyze",
             "icon"    : "pngs/analyze.png",
-#            "help"    : "help text",
-#            "autorun" : "parnmr_all",
             "modules" : [
-                         {
-                          "id"    : "pcs",
-                          "label" : "PCS",
-                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
-                         },
-                          {
-                          "id"    : "altens",
-                          "label" : "ALTENS",
-                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
-                          },
-                         {
-                          "id"    : "pre",
-                          "label" : "PRE",
-                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
-                          }
-#			  {
-#                          "id"    : "predict",
-#                          "label" : "PREDICT",
-#                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
-#                          }
-                        ]
-            },
-       {
-            "id"      : "predict_menu",
+                {
+                    "id"    : "pcs"
+                    ,"label" : "PCS"
+                }
+                ,{
+                    "id"    : "altens"
+                    ,"label" : "ALTENS"
+                }
+                ,{
+                    "id"    : "pre"
+                    ,"label" : "PRE"
+                }
+		,{
+                    "id"    : "rotdif_all"
+                    ,"label" : "ROTDIF & Dynamics Analysis"
+                }
+            ]
+        },
+        {
+            "id"      : "predict",
             "label"   : "Predict",
             "icon"    : "pngs/simulate.png",
-            "autorun" : "predict",
 	    "modules" : [
-                          {
-                          "id"    : "predict",
-                          "label" : "PREDICT",
-			  "views" : [ "Input", "Output", "Plots", "OpenGL" ]
-                          }
-                        ]
-            },
-       {
-            "id"      : "ses_menu",
-            "label"   : "SES",
-            "icon"    : "pngs/calculate.png",
-            "autorun" : "ses",
-            "modules" : [
-                          {
-                          "id"    : "ses",
-                          "label" : "SES",
-                          "views" : [ "Input", "Output", "Plots", "OpenGL" ]
-                          }
-                        ]
-            },
-#       {
-#            "id"      : "Acknowledgements_menu",
-#            "label"   : "Acknowledgements",
-#            "icon"    : "pngs/noicon.png",
-#            "autorun" : "acknowledgements",
-#            "modules" : [
-#                {
-#                    "id"    : "acknowledgements",
-#                    "label" : "Acknowledgements",
-#                    "nobutton" : "true"
-#                }
-#            ]
-#        }
-#        ,{
-#            "id"      : "disclaimer_menu",
-#            "label"   : "Official Disclaimer",
-#            "icon"    : "pngs/gnu_disclaimer.png",
-#            "autorun" : "disclaimer",
-#            "modules" : [
-#                {
-#                    "id"    : "disclaimer",
-#                    "label" : "Official Disclaimer",
-#                    "nobutton" : "true"
-#                }
-#            ]
-#        },
+                {
+                    "id"    : "pati"
+                    ,"label" : "Pati"
+                }
+                ,{
+                    "id"    : "elm"
+                    ,"label" : "Diffusion Tensor Prediction/ELM"
+                }
+            ]
+        },
         {
+            "id"      : "ensemble",
+            "label"   : "Ensemble",
+            "icon"    : "pngs/calculate.png",
+            "modules" : [
+                {
+                    "id"    : "ses"
+                    ,"label" : "SES"
+                }
+                ,{
+                    "id"    : "maxent"
+                    ,"label" : "MaxEnt"
+                }
+            ]
+        },
+        {
+            "id"      : "docking",
+            "label"   : "Docking",
+            "icon"    : "pngs/calculate.png",
+            "modules" : [
+                {
+                    "id"    : "elmdock"
+                    ,"label" : "Diffusion Tensor-Guided Docking/ELMDOCK"
+                }
+#                ,{
+#                    "id"    : "patidock"
+#                    ,"label" : "PATIDOCK"
+#                }
+            ]
+        }
+        ,{
+            "id"      : "Acknowledgements_menu",
+            "label"   : "Acknowledgements",
+            "icon"    : "pngs/noicon.png",
+            "autorun" : "acknowledgements",
+            "modules" : [
+                {
+                    "id"    : "acknowledgements",
+                    "label" : "Acknowledgements",
+                    "nobutton" : "true"
+                }
+            ]
+        }
+        ,{
+            "id"      : "disclaimer_menu",
+            "label"   : "Official Disclaimer",
+            "icon"    : "pngs/gnu_disclaimer.png",
+            "autorun" : "disclaimer",
+            "modules" : [
+                {
+                    "id"    : "disclaimer",
+                   "label" : "Official Disclaimer",
+                    "nobutton" : "true"
+                }
+            ]
+        }
+        ,{
             "id"         : "admin",
             "restricted" : "admin",
             "label"      : "Admin",
@@ -112,28 +110,28 @@
                          }
                          ,{
                           "id"    : "sysuserslist",
-                          "label" : "Users"
+                             "label" : "Users"
                          }
-                         ,{
-                          "id"    : "sys_manage_users",
-                          "label" : "User management"
-                         }
-                         ,{
-                          "id"    : "jobshistory_1",
-                          "label" : "Job history"
-                         }
+                ,{
+                    "id"    : "sys_manage_users",
+                    "label" : "User management"
+                }
+                ,{
+                    "id"    : "jobshistory_1",
+                    "label" : "Job history"
+                }
 
-                        ]
-            },
+            ]
+        },
 
-          {
-              "id"      : "etc",
-              "modules" : [
-                           {
-                            "id"    : "sys_file_manager",
-                            "label" : "File manager"
-                            }
-                          ]
-          }
-]
+        {
+            "id"      : "etc",
+            "modules" : [
+                {
+                    "id"    : "sys_file_manager",
+                    "label" : "File manager"
+                }
+            ]
+        }
+    ]
 }

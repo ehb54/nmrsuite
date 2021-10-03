@@ -1,0 +1,150 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid" : "elm",
+    "label"    : "Calculate",
+    #"resource" : "oscluster",
+    "submitpolicy" : "login",
+    #"help"     : "help for Bead Modeller",
+    #"center"   : "true",
+    #"centeroutput" : "true",
+    #"notify"    : "alexsav.science@gmail.com",
+    "notify" : "email",
+
+    
+    "fields"   : [
+                {   
+                   "role"     : "input",  
+                   "id"       : "ELM_label",
+                   "label"    : "Diffusion Tensor Prediction (ELM)",
+                   "type"     : "label",
+                   "prehline" : "true",
+                   "posthline": "true",
+                   "default"  : "header4"
+               },  
+               {
+	            "role"       : "input"
+	            ,"id"         : "run_name"
+	            ,"label"      : "Run Name"
+	            ,"type"       : "text"
+	            ,"required"   : "true"
+	            ,"help"       : "Enter a name for this task"
+	        },
+################################################################
+	       { 
+		   "role"     : "input",  
+		   "id"       : "data_label",
+		   "label"    : "Data",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+                  {
+                   "role"     : "input",
+                   "id"       : "pdb_location",
+                   "label"    : "PDB Coordinates File",
+                   "type"     : "lrfile",
+                   "required" : "true",
+		   "accept"   : ".pdb",
+		   "help"     : "Upload Coordinates File"
+                   },
+               {   
+                   "role"    : "input",
+                   "id"      : "model",
+                   "label"   : "PDB File Model",
+                   "type"    : "text",
+                   "required" : "True",
+                   "default" : "1"
+               },
+	       { 
+		   "role"     : "input",  
+		   "id"       : "runmenu_label",
+		   "label"    : "Run Menu",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+            {
+                "role"    : "input",
+                "id"      : "temperature",
+                "label"   : "Temperature(K)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "298"
+            },
+            {
+	        "role"     : "input",
+	        "id"       : "adv_option",
+	        "label"    : "Check Box to Enable Advanced Settings",
+	        "type"     : "checkbox",
+	        "checked"  : "false",
+	        "repeater" : "true"
+	    },
+            {   
+                "role"    : "input",
+                "id"      : "hydro",
+                "label"   : "Hydration Layer Thickness(Angstrom)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "2.2",
+                "repeat": "adv_option"
+            },
+            {   
+                "role"    : "input",
+                "id"      : "water",
+                "label"   : "Water Radius(Angstrom)",
+                "type"    : "text",
+                "required" : "True",
+                "default" : "1.4",
+                "repeat" : "adv_option"
+            },  
+ #####################################################################################################
+                 {
+		     "role"    : "output",
+		     "id"      : "progress_output",
+		     "label"   : "Progress: ",
+		     "type"    : "progress",
+		     "max"     : 1.0
+		 },	
+                {
+		   "role"    : "output",
+                   "id"      : "progress_text",
+                   "label"   : "Calculation Report: ",
+		   "type"    : "textarea",
+                   #"append"  : "on",
+                   "cols"    : 40
+                  },  
+                   {   
+                   "role"  : "output",
+                   "id"    : "elm_out",
+                   "label" : "ELM Prediction Results File: ",
+                   "type"  : "file",
+                   "multiple": "true"
+                  },
+                  {
+                   "role":"output",
+                   "id":"elm_params",
+                   "label":"ELM Prediction Settings File: ",
+                   "type":"file",
+                   "multiple":"true"
+                  },
+                  {
+                  "role":"output",
+                  "id"  :"elm_tensor",
+                  "label":"ELM Tensor Axes PyMol File: ",
+                  "type":"file",
+                  "multiple":"true"
+                  },                
+                  {
+                  "role":"output",
+                  "id" :"elm_ellipsoid",
+                  "label":"ELM Ellipsoid PyMol File: ",
+                  "type":"file",
+                  "multiple":"true"
+}                 
+            ],
+
+# the executable will take inputs in order and produce output
+    "executable" : "main_elm.py"
+}
