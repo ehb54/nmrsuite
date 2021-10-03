@@ -1,0 +1,12 @@
+java -jar /usr/share/java/commons-math3.jar -jar /opt/genapp/parnmr/bin/sesgeneral-1.1.jar -data "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/ydata_struct1_PCS.txt" -matrix "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/Amatrix_PCS.txt" -out "solution" -K "100000" -precond "1" -reltol "0.0005" -top "0.005"
+
+java -jar /opt/genapp/parnmr/bin/combined.jar -data "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/ydata_struct1_PCS.txt" -matrix "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/Amatrix_PCS.txt" -out "solution" -K "100000" -precond "1" -reltol "0.0005" -top "0.005"
+
+
+java -jar /opt/genapp/parnmr/bin/sesgeneral-1.1.jar -data "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/ydata_struct1_PCS.txt" -matrix "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/Amatrix_PCS.txt" -out "solution" -K "100000" -precond "1" -reltol "0.0005" -top "0.005"
+
+
+edu.umd.umiacs.armor.refinement.GeneralSparseEnsembleSelection
+edu/umd/umiacs/armor/refinement/GeneralSparseEnsembleSelection.class
+
+java -cp /opt/genapp/parnmr/bin/sesgeneral-1.1.jar:/usr/share/java/commons-math3.jar:/usr/share/java/biojava.jar edu.umd.umiacs.armor.refinement.GeneralSparseEnsembleSelection -data "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/ydata_struct1_PCS.txt" -matrix "/var/www/html/parnmr/results/users/mcasertano/no_project_specified/Amatrix_PCS.txt" -out "solution" -K "100000" -precond "1" -reltol "0.0005" -top "0.005"

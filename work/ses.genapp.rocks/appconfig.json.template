@@ -1,0 +1,43 @@
+#
+# WARNING ---   after copying to appconfig.json REMOVE ALL COMMENT LINES
+# i.e. any lines starting with #
+
+# this is for basic smtpmail setup, likely to be updated later
+# this file should be placed somewhere outside of the html root and must be in the "appconfig" in directives.json
+{
+  "mail"     : {
+                "admin"    : ""
+                ,"feedback" : ""
+                ,"from"     : ""
+# only define the next four lines if you are using an smtp server for outgoing mail
+                ,"smtp"     : {
+                    "host"     : ""
+                    ,"user"     : ""
+                    ,"password" : ""
+                              }
+               }
+  ,"hostip"   : "PUT YOUR NUMERIC WEBSERVER HOST IP HERE"
+  ,"hostname" : "PUT YOUR  WEBSERVER DOMAIN NAME HERE, CAN BE NUMERIC IF YOU DO NOT HAVE A NAME"
+  ,"messaging" : {
+# the zmqport  and udp ports are primarily internal (maybe 127.0.0.1) 
+# the wsport should be public for html clients that require messaging updates
+# if you chcange messaging settings be sure to kill and restart the messaging servers (output/html5/util/ws_start.sh)
+                  "wsport"   : 8080
+# the wssport is only needed if you are using secure web sockets and have appropriately configured your web server
+                  ,"wssport"   : 443
+                  ,"zmqhostip" : "NUMERIC IP ADDRESS OF THE SERVER RUNNING THE ZMQ WebSocket MESSAGING"
+                  ,"zmqport" : 37778
+                  ,"udphostip" : "NUMERIC IP ADDRESS OF THE SERVER RUNNING THE UDP MESSAGING"
+                  ,"udpport" : 37779
+                 }
+# "restricted" restricts top level access to authenticated and listed users
+  ,"restricted" : {
+      "admin"     : []
+  }
+  ,"resources" : {
+                  "local"      : ""
+                 }
+  ,"resourcedefault" : "local"
+# submitpolicy "login" requres users to login by default
+  ,"submitpolicy"    : "login"
+}

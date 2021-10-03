@@ -1,0 +1,17 @@
+        { 
+            "role": "input",
+            "id": "storejava",
+            "label": "store java",
+            "type": "checkbox",
+            "style": "switch",
+            "checked": "false",
+            "help": "Output the java object with all results that can be used for parsing using ARMOR API"
+        },
+
+,
+        {
+            "role": "output",
+            "id": "lineplot",
+            "label": "lineplot",
+            "type": "plotly"
+        }

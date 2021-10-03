@@ -1,0 +1,6 @@
+The problem lies with the creation of the files containing the values
+
+SES_newcode.txt contains this new code
+
+Around here:
+https://github.com/ehb54/parnmr/commit/16a214f7bdf9343b9cddbd89b44950fa9126fb95

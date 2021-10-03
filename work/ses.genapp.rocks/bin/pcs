@@ -1,0 +1,318 @@
+#!/opt/host/local/anaconda/bin/python
+import json
+import sys
+import os
+import shutil
+import ast
+import locale
+from StringIO import StringIO
+import multiprocessing
+import time
+import string
+import socket
+
+import sassie.analyze.pcs.pcs as pcs
+import sassie.interface.input_filter as input_filter
+import sassie.interface.pcs_filter as pcs_filter
+
+class PCS_Drv():
+
+    module = 'pcs'
+
+    def message_box(self, text, icon):
+
+        _message = {}
+        _message['icon'] = icon
+        _message['text'] = text
+
+        UDP_IP = json_variables['_udphost']
+        UDP_PORT = json_variables['_udpport']
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+
+        socket_dict = {}
+        socket_dict['_uuid'] = json_variables['_uuid']
+        socket_dict['_message'] = _message
+
+        doc_string = json.dumps(socket_dict)
+        sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+
+        return
+
+    def background_job(self, process, txtQueue, json_variables):
+
+        total_string = ''
+
+        UDP_IP = json_variables['_udphost']
+        UDP_PORT = json_variables['_udpport']
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+
+        socket_dict = {}
+        socket_dict['_uuid'] = json_variables['_uuid']
+        first = True
+
+        while process.is_alive():
+            try:
+                if(first):
+                    socket_dict['progress_html'] = 0.01
+                    socket_dict['_progress'] = 0.01
+                    socket_dict['progress_html'] = '<center>starting job</center>'
+                    doc_string = json.dumps(socket_dict)
+                    sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+                    first = False
+                this_text = txtQueue.get(True, timeout=0.1)
+                text_split = string.split(this_text)
+                if(text_split[0] == 'STATUS'):
+                    value = locale.atof(text_split[1])
+                    svalue = str(round(100*value, 2))
+                    socket_dict['progress_output'] = value
+                    socket_dict['_progress'] = value
+                    socket_dict['progress_html'] = '<center>' + \
+                        svalue+'</center>'
+                    if "_textarea" in socket_dict:
+                        del socket_dict["_textarea"]
+#                    if "report" in socket_dict:
+#                        del socket_dict["report"]
+                    if socket_dict:
+                        doc_string = json.dumps(socket_dict)
+                        sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+                else:
+                    socket_dict["_textarea"] = this_text
+                    if socket_dict:
+                        doc_string = json.dumps(socket_dict)
+                        sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+            except:
+                if not process.is_alive():
+                    return total_string
+
+            time.sleep(0.01)
+        else:
+            return total_string
+
+        return total_string
+
+    def run_me(self, json_flag, json_variables, input_string):
+
+        output_dict = {}
+
+        if not json_flag:
+
+            # BEGIN USER EDIT
+            # BEGIN USER EDIT
+            # BEGIN USER EDIT
+
+            test_file_path = '/share/apps/local/svn_utk/svn/sassie_2.0/trunk/sassie/analyze/pcs/'
+
+            # test multi-frame
+            runname = 'run_0'
+            pcs_input_file = "./data/test_pcs_1D3Z_10frame.txt"
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+
+            runname = 'run_1'
+            pcs_input_file = "./data/RDC_Ub_WT_err.txt"  # different data format
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+            # test NH CH vectors with multi-frame
+
+            runname = 'run_2'
+            # using mock-up data, it should fail as mock-up pcs has RDC for Proline
+            pcs_input_file = "./data/test_pcs_nh_caha.txt"
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+            runname = 'run_3'
+            # delete pcs data for proline. it should run.
+            pcs_input_file = "./data/test_pcs_nh_caha_exclude_pro.txt"
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+            residue_exclusion_file_flag = False
+            residue_exclusion_file = "reslist_Ub.txt"
+            cond_num_cutoff = "33"
+            tolerance = "1e-2"
+            UDP_IP = '127.0.0.1'
+            UDP_PORT = 5005
+
+            # END USER EDIT
+            # END USER EDIT
+            # END USER EDIT
+        else:
+            runname = json_variables['runname']
+
+            base_directory = json_variables['_base_directory']
+
+            path = base_directory.replace('\/', '/') + "/"
+
+            os.chdir(path)
+            pdb_path = path
+
+            pdbfile = json_variables['pdbfile'][0]
+            head, pdbfilename = os.path.split(pdbfile)
+
+            dcdfile = json_variables['dcdfile'][0]
+            head, dcdfilename = os.path.split(dcdfile)
+            path = ''
+
+            UDP_IP = json_variables['_udphost']
+            UDP_PORT = json_variables['_udpport']
+
+            pcs_input_file = json_variables['pcs_input_file'][0]
+
+            residue_exclusion_file_flag = False
+            residue_exclusion_file = "dum.txt"
+
+            cond_num_cutoff = json_variables['cond_num_cutoff']
+            tolerance = json_variables['tolerance']
+
+            user_guess_flag = False
+
+            try:
+                residue_exclusion_file_flag_checkbox = json_variables['residue_exclusion_file_flag_checkbox']
+
+                if(residue_exclusion_file_flag_checkbox == 'on'):
+                    residue_exclusion_file_flag = True
+                    residue_exclusion_file = json_variables['residue_exclusion_file'][0]
+            except:
+                pass
+
+            try:
+                user_guess_flag_checkbox = json_variables['user_guess_flag_checkbox']
+
+                if(user_guess_flag_checkbox == 'on'):
+                    user_guess_flag = True
+                    user_guess_num = json_variables['user_guess_num']
+                    user_guess_x = json_variables['user_guess_x']
+                    user_guess_y = json_variables['user_guess_y']
+                    user_guess_z = json_variables['user_guess_z']
+
+                    user_guess_x = ','.join(user_guess_x)
+                    user_guess_y = ','.join(user_guess_y)
+                    user_guess_z = ','.join(user_guess_z)
+            except:
+                pass
+
+        svariables = {}
+
+        svariables['base_directory'] = (pdb_path, 'string' )
+        svariables['runname'] = (runname, 'string')
+        svariables['pcs_input_file'] = (pcs_input_file, 'string')
+        svariables['pdbfile'] = (pdbfile, 'string')
+        svariables['dcdfile'] = (dcdfile, 'string')
+        svariables['residue_exclusion_file_flag'] = (
+            residue_exclusion_file_flag, 'boolean')
+        svariables['residue_exclusion_file'] = (residue_exclusion_file, 'string')
+        svariables['cond_num_cutoff'] = (cond_num_cutoff, 'int')
+        svariables['tolerance'] = (tolerance, 'float')
+
+        svariables['user_guess_flag'] = (user_guess_flag,'boolean')
+        if user_guess_flag:
+            svariables['user_guess_num'] = (user_guess_num,'int')
+            svariables['user_guess_x'] = (user_guess_x,'float_array')
+            svariables['user_guess_y'] = (user_guess_y,'float_array')
+            svariables['user_guess_z'] = (user_guess_z,'float_array')
+        error, self.variables = input_filter.type_check_and_convert(svariables)
+
+        if(len(error) > 0):
+
+            self.message_box(error, 'skull.png')
+
+            output_dict['error'] = 'Error in input variables'
+            output_dict['sasoutput2'] = 'run failed'
+            print json.dumps(output_dict)
+            return
+
+        else:
+            error = pcs_filter.check_pcs(svariables)
+            if(len(error) > 0):
+                    self.message_box(error,'warning.png')
+                    output_dict['error'] = 'Error in pcs filter variables'
+                    output_dict['sasoutput2'] = 'run failed'
+                    output_dict['sasoutput2'] = error
+                    print json.dumps( output_dict )
+                    return
+
+            runname = self.variables['runname'][0]
+
+            if os.path.exists(runname+'/'+self.module):
+                shutil.rmtree(runname+'/'+self.module)
+
+            txtQueue = multiprocessing.JoinableQueue()
+
+            plotQueues = dict()
+
+            plotQueues['bokeh_plot_1'] = multiprocessing.JoinableQueue()
+#            plotQueues['bokeh_plot_2'] = multiprocessing.JoinableQueue()
+#            plotQueues['bokeh_plot_3'] = multiprocessing.JoinableQueue()
+#            plotQueues['bokeh_plot_4'] = multiprocessing.JoinableQueue()
+#            plotQueues['bokeh_plot_5'] = multiprocessing.JoinableQueue()
+
+            pcs_object = pcs.pcs()
+
+            process = multiprocessing.Process(
+                target=pcs_object.main, args=(self.variables, txtQueue, plotQueues))
+            process.start()
+
+            total_string = self.background_job(
+                process, txtQueue, json_variables)
+
+        #output_dict['bokeh_plot_1'] = plotQueues['bokeh_plot_1'].get()
+        try:
+            output_dict['bokeh_plot_1'] = plotQueues['bokeh_plot_1'].get(
+                timeout=0.2)
+        except:
+            pass
+
+        try:
+            output_dict['bokeh_plot_2'] = plotQueues['bokeh_plot_2'].get(
+                timeout=0.2)
+        except:
+            pass
+#
+#        try:
+#            output_dict['bokeh_plot_3'] = plotQueues['bokeh_plot_3'].get(
+#                timeout=0.2)
+#        except:
+#            pass
+#
+#        try:
+#            output_dict['bokeh_plot_4'] = plotQueues['bokeh_plot_4'].get(
+#                timeout=0.2)
+#        except:
+#            pass
+#
+#        try:
+#            output_dict['bokeh_plot_5'] = plotQueues['bokeh_plot_5'].get(
+#                timeout=0.2)
+#        except:
+#            pass
+
+        sys.stdout.flush()
+
+        if total_string:
+            output_dict['_empty_return'] = 1
+            print json.dumps(output_dict)
+        else:
+            output_dict['_empty_return'] = 1
+            # NEED STATUS RETURNED FROM ALTENS.PY TO AVOID THIS ERROR MESSAGE
+            error_string = 'Exception encountered executing '+self.module + \
+                ' program: please submit feedback and attach run log'
+            #output_dict['error'] = error_string
+            print json.dumps(output_dict)
+
+
+if __name__ == '__main__':
+
+    json_flag = True
+    #json_flag = False
+
+    if (len(sys.argv) < 1):
+        print "\{\"error\":\"pcs called with no arguments\"\}\n"
+# 		print 'exiting now'
+
+    elif len(sys.argv) > 1:
+        json_variables = " "
+        if(json_flag):
+            argv_io_string = StringIO(sys.argv[1])
+            json_variables = json.load(argv_io_string)
+        a = PCS_Drv()
+        a.run_me(json_flag, json_variables, sys.argv[1])
