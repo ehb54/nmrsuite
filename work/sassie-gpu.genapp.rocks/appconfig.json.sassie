@@ -1,0 +1,25 @@
+{
+   "lockdir" : "/src/genapp/etc",
+   "submitpolicy" : "login",
+   "resources" : {
+      "local" : ""
+       ,"compute-0" : "ssh sassie-gpu-head-test"
+       ,"compute-gpu" : "ssh gpu-node"
+   },
+   "resourcedefault" : "compute-gpu",
+   "hostname" : "sassie-gpu.genapp.rocks",
+   "messaging" : {
+      "udpport" : 30779,
+      "zmqhostip" : "127.0.0.1",
+      "zmqport" : 30778,
+      "tcptimeout" : 300,
+       "tcphostip" : "10.0.0.8",
+       "udphostip" : "10.0.0.8",
+       "udplisten" : "0.0.0.0",
+       "tcpport" : 30780,
+      "tcprport" : 30781,
+      "wssport" : 80,
+      "wsport" : 30777
+   },
+   "hostip" : "149.165.170.47"
+}

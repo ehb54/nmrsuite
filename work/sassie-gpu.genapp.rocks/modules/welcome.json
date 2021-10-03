@@ -1,0 +1,17 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid"       : "welcome",
+    "label"          : "Official Welcome",
+    "noreset"        : "true",
+    "nosubmit"       : "true",
+    "nooutputhr"     : "true",
+    "fields"   : [
+                  {
+                   "role"       : "input",
+                   "id"         : "text1",
+                   "type"       : "html",
+#                   "value"      : "Welcome to WillItFit, a framework for fitting of constrained models to small-angle scattering data!"
+                   "value"      : "__< welcome_my.html"
+                   }
+    ]
+}

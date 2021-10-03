@@ -1,0 +1,301 @@
+#!/opt/host/local/anaconda/bin/python
+import json
+import sys
+import os
+import shutil
+import ast
+import locale
+from StringIO import StringIO
+import multiprocessing
+import time
+import string
+import socket
+
+import sassie.analyze.altens.altens as altens
+import sassie.interface.input_filter as input_filter
+import sassie.interface.altens_filter as altens_filter
+
+class Altens_Drv():
+
+    module = 'altens'
+
+    def message_box(self, text, icon):
+
+        _message = {}
+        _message['icon'] = icon
+        _message['text'] = text
+
+        UDP_IP = json_variables['_udphost']
+        UDP_PORT = json_variables['_udpport']
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+
+        socket_dict = {}
+        socket_dict['_uuid'] = json_variables['_uuid']
+        socket_dict['_message'] = _message
+
+        doc_string = json.dumps(socket_dict)
+        sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+
+        return
+
+    def background_job(self, process, txtQueue, json_variables):
+
+        total_string = ''
+
+        UDP_IP = json_variables['_udphost']
+        UDP_PORT = json_variables['_udpport']
+        sock = socket.socket(socket.AF_INET,  # Internet
+                             socket.SOCK_DGRAM)  # UDP
+
+        socket_dict = {}
+        socket_dict['_uuid'] = json_variables['_uuid']
+        first = True
+
+        while process.is_alive():
+            try:
+                if(first):
+                    socket_dict['progress_html'] = 0.01
+                    socket_dict['_progress'] = 0.01
+                    socket_dict['progress_html'] = '<center>starting job</center>'
+                    doc_string = json.dumps(socket_dict)
+                    sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+                    first = False
+                this_text = txtQueue.get(True, timeout=0.1)
+                text_split = string.split(this_text)
+                if(text_split[0] == 'STATUS'):
+                    value = locale.atof(text_split[1])
+                    svalue = str(round(100*value, 2))
+                    socket_dict['progress_output'] = value
+                    socket_dict['_progress'] = value
+                    socket_dict['progress_html'] = '<center>' + \
+                        svalue+'</center>'
+                    if "_textarea" in socket_dict:
+                        del socket_dict["_textarea"]
+                    if "report" in socket_dict:
+                        del socket_dict["report"]
+                    if socket_dict:
+                        doc_string = json.dumps(socket_dict)
+                        sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+                else:
+                    socket_dict["_textarea"] = this_text
+                    if socket_dict:
+                        doc_string = json.dumps(socket_dict)
+                        sock.sendto(doc_string, (UDP_IP, UDP_PORT))
+                    total_string += this_text
+            except:
+                if not process.is_alive():
+                    return total_string
+
+            time.sleep(0.01)
+        else:
+            return total_string
+
+        return total_string
+
+    def run_me(self, json_flag, json_variables, input_string):
+
+        output_dict = {}
+
+        if not json_flag:
+
+            # BEGIN USER EDIT
+            # BEGIN USER EDIT
+            # BEGIN USER EDIT
+
+            test_file_path = '/share/apps/local/svn_utk/svn/sassie_2.0/trunk/sassie/analyze/altens/'
+
+            # test multi-frame
+            runname = 'run_0'
+            rdc_input_file = "./data/test_rdc_1D3Z_10frame.txt"
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+
+            runname = 'run_1'
+            rdc_input_file = "./data/RDC_Ub_WT_err.txt"  # different data format
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+            # test NH CH vectors with multi-frame
+
+            runname = 'run_2'
+            # using mock-up data, it should fail as mock-up rdc has RDC for Proline
+            rdc_input_file = "./data/test_rdc_nh_caha.txt"
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+            runname = 'run_3'
+            # delete rdc data for proline. it should run.
+            rdc_input_file = "./data/test_rdc_nh_caha_exclude_pro.txt"
+            pdbfile = './data/1D3Z_1frame.pdb'
+            dcdfile = './data/1D3Z_10frames.pdb'
+            residue_list_file_flag = False
+            residue_list_file = "reslist_Ub.txt"
+            use_monte_carlo_flag = True
+            number_of_monte_carlo_steps = '500'
+            seed = '1,123'
+
+            UDP_IP = '127.0.0.1'
+            UDP_PORT = 5005
+
+            # END USER EDIT
+            # END USER EDIT
+            # END USER EDIT
+        else:
+            runname = json_variables['runname']
+
+            base_directory = json_variables['_base_directory']
+
+            path = base_directory.replace('\/', '/') + "/"
+
+            os.chdir(path)
+            pdb_path = path
+
+            pdbfile = json_variables['pdbfile'][0]
+            head, pdbfilename = os.path.split(pdbfile)
+
+            dcdfile = json_variables['dcdfile'][0]
+            head, dcdfilename = os.path.split(dcdfile)
+            path = ''
+
+            UDP_IP = json_variables['_udphost']
+            UDP_PORT = json_variables['_udpport']
+
+            rdc_input_file = json_variables['rdc_input_file'][0]
+
+            residue_list_file_flag = False
+            residue_list_file = "dum.txt"
+
+            use_monte_carlo_flag = False
+            number_of_monte_carlo_steps = '0'
+            seed = '1,123'
+
+            try:
+                residue_list_file_flag_checkbox = json_variables['residue_list_file_flag_checkbox']
+
+                if(residue_list_file_flag_checkbox == 'on'):
+                    residue_list_file_flag = True
+                    residue_list_file = json_variables['residue_list_file'][0]
+            except:
+                pass
+
+            try:
+                use_monte_carlo_flag_checkbox = json_variables['use_monte_carlo_flag_checkbox']
+
+                if(use_monte_carlo_flag_checkbox == 'on'):
+                    use_monte_carlo_flag = True
+                    number_of_monte_carlo_steps = json_variables['number_of_monte_carlo_steps']
+            except:
+                pass
+
+        svariables = {}
+
+        svariables['base_directory'] = (pdb_path, 'string' )
+        svariables['runname'] = (runname, 'string')
+        svariables['rdc_input_file'] = (rdc_input_file, 'string')
+        svariables['pdbfile'] = (pdbfile, 'string')
+        svariables['dcdfile'] = (dcdfile, 'string')
+        svariables['residue_list_file_flag'] = (
+            residue_list_file_flag, 'boolean')
+        svariables['residue_list_file'] = (residue_list_file, 'string')
+        svariables['use_monte_carlo_flag'] = (use_monte_carlo_flag, 'boolean')
+        svariables['number_of_monte_carlo_steps'] = (
+            number_of_monte_carlo_steps, 'int')
+        svariables['seed'] = (seed, 'int_array')
+
+        error, self.variables = input_filter.type_check_and_convert(svariables)
+        error = altens_filter.check_altens(svariables)
+
+        if(len(error) > 0):
+
+            self.message_box(error, 'skull.png')
+
+            output_dict['error'] = 'Error in input variables'
+            output_dict['sasoutput2'] = 'run failed'
+            print json.dumps(output_dict)
+            return
+
+        else:
+            runname = self.variables['runname'][0]
+
+            if os.path.exists(runname+'/'+self.module):
+                shutil.rmtree(runname+'/'+self.module)
+
+            txtQueue = multiprocessing.JoinableQueue()
+
+            plotQueues = dict()
+
+            plotQueues['bokeh_plot_1'] = multiprocessing.JoinableQueue()
+            plotQueues['bokeh_plot_2'] = multiprocessing.JoinableQueue()
+            plotQueues['bokeh_plot_3'] = multiprocessing.JoinableQueue()
+            plotQueues['bokeh_plot_4'] = multiprocessing.JoinableQueue()
+            plotQueues['bokeh_plot_5'] = multiprocessing.JoinableQueue()
+
+            altens_object = altens.altens()
+
+            process = multiprocessing.Process(
+                target=altens_object.main, args=(self.variables, txtQueue, plotQueues))
+            process.start()
+
+            total_string = self.background_job(process, txtQueue, json_variables)
+
+        #output_dict['bokeh_plot_1'] = plotQueues['bokeh_plot_1'].get()
+        try:
+            output_dict['bokeh_plot_1'] = plotQueues['bokeh_plot_1'].get(
+                timeout=0.2)
+        except:
+            pass
+
+        try:
+            output_dict['bokeh_plot_2'] = plotQueues['bokeh_plot_2'].get(
+                timeout=0.2)
+        except:
+            pass
+
+        try:
+            output_dict['bokeh_plot_3'] = plotQueues['bokeh_plot_3'].get(
+                timeout=0.2)
+        except:
+            pass
+
+        try:
+            output_dict['bokeh_plot_4'] = plotQueues['bokeh_plot_4'].get(
+                timeout=0.2)
+        except:
+            pass
+
+        try:
+            output_dict['bokeh_plot_5'] = plotQueues['bokeh_plot_5'].get(
+                timeout=0.2)
+        except:
+            pass
+
+        print "WOW! CJEONG REMAINS A BEAST"
+        sys.stdout.flush()
+
+        if total_string:
+            output_dict['_empty_return'] = 1
+            print json.dumps(output_dict)
+        else:
+            output_dict['_empty_return'] = 1
+            # NEED STATUS RETURNED FROM ALTENS.PY TO AVOID THIS ERROR MESSAGE
+            error_string = 'Exception encountered executing '+self.module + \
+                ' program: please submit feedback and attach run log'
+            #output_dict['error'] = error_string
+            print json.dumps(output_dict)
+
+
+if __name__ == '__main__':
+
+    json_flag = True
+    #json_flag = False
+
+    if (len(sys.argv) < 1):
+        print "\{\"error\":\"altens called with no arguments\"\}\n"
+# 		print 'exiting now'
+
+    elif len(sys.argv) > 1:
+        json_variables = " "
+        if(json_flag):
+            argv_io_string = StringIO(sys.argv[1])
+            json_variables = json.load(argv_io_string)
+        a = Altens_Drv()
+        a.run_me(json_flag, json_variables, sys.argv[1])
