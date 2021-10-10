@@ -41,7 +41,7 @@ $dashes
 }
 
     
-for my $k ( @cns ) {
+for my $k ( sort { $a cmp $b } @cns ) {
     print qq[$eqs
 $k
 $eqs
