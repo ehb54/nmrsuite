@@ -5,3 +5,6 @@ output
 util
 ajax
 results
+*.pyc
+genapp.py
+genapp3.py
