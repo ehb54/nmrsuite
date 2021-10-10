@@ -1,4 +1,4 @@
-#!/opt/host/local/anaconda/bin/python
+#!/opt/miniconda2/bin/python
 import json
 import sys
 import os
