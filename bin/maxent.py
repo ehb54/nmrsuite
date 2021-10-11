@@ -54,12 +54,12 @@ if __name__=='__main__':
                 output_str += f"Uploaded cluster_by_rmsd result matrices 'weights' and 'structs' to {run_directory}/cluster.txt\n"
 
         ga.udpprogress(0);
-        ga.udpmessage( { "_textarea" : "udp message to _textarea\n" } );
+#        ga.udpmessage( { "_textarea" : "udp message to _textarea\n" } );
 
-        ga.udpprogress(0.5);
+#        ga.udpprogress(0.5);
 
-        ga.udpmessage( { "_textarea" : "tcp message to _textarea\n" } );
-        #output += str(ga) + "\n"
+#        ga.tcpmessage( { "_textarea" : "tcp message to _textarea\n" } );
+#        ga.tcpmessage( { "_textarea" : "JSON input to executable:\n" + json.dumps( json_variables, indent=4 ) + "\n" } );
 
         # output final object to the UI
         output['progress_html'] = 1.0

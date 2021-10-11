@@ -21,6 +21,10 @@
                     "id"    : "rotdif_all"
                     ,"label" : "ROTDIF & Dynamics Analysis"
                 }
+#		,{
+#                    "id"    : "test"
+#                    ,"label" : "test module"
+#                }
             ]
         },
         {
@@ -68,6 +72,18 @@
 #                }
             ]
         }
+        ,{
+            "id"    : "tutorial_menu",
+            "label" : "Tutorial",
+            "icon": "pngs/noicon.png",
+            "modules"   :[
+                {
+	            "id"       : "tutorial",
+	            "label"    : "ROTDIF tutorial"
+	        }
+	    ]
+        }
+
         ,{
             "id"      : "Acknowledgements_menu",
             "label"   : "Acknowledgements",
