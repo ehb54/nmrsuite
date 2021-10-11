@@ -164,7 +164,7 @@
   ,"mongojournal"               : "true"
 
 # optionally define a log directory for "html5" language
-#  ,"logdirectory"               : "_log"
+  ,"logdirectory"               : "_log"
   ,"bootstrap" : {
 #        "package" : "genapp"
 #        "package" : "material-design"
