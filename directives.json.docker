@@ -1,0 +1,196 @@
+# this is a project directives file
+# comments are ok but must start the line in this JSON
+{
+  "title"                     : "NMR Suite",
+
+# "nmrsuite" below could be replaced, but you should probably also then replace "nmrsuite" in the paths below
+# the application name should not contain any special characters
+  "application"               : "nmrsuite",
+
+  "footer"                    : "Test footer",
+  "footersize"                : "50px",
+
+  "version"                   : "0.1",
+# choose your target languages to generate currently from [ "html5", "qt3", "qt4", "qt5", "java" ]
+    "languages"                 : [ "html5" ],
+
+  "executable_path"           :
+                                {
+                                 "html5" : "/opt/genapp/nmrsuite/bin",
+                                 "qt3"   : "/opt/genapp/nmrsuite/bin",
+                                 "qt4"   : "/opt/genapp/nmrsuite/bin",
+                                 "qt5"   : "/opt/genapp/nmrsuite/bin",
+                                 "java"  : "/opt/genapp/nmrsuite/bin"
+                                },
+
+  "docroot"                   :
+                                {
+                                    "html5" : "/var/www/html",
+                                 "qt3"   : "/opt/genapp/tmp",
+                                 "qt4"   : "/opt/genapp/tmp",
+                                 "qt5"   : "/opt/genapp/tmp",
+                                 "java"  : "/opt/genapp/tmp"
+                                },
+# these are helper editor and pdb viewer applications and can be changed
+  "helper"                    : {
+                                 "txt" :"vi",
+                                 "pdb" :"rasmol"
+                                },
+# only uncomment this to have a "docs" tab in html5 which hyperlinks to your self created docs directory 
+#  "docsbaseurl"               : "docs",
+
+# global hover help texts
+  "help"                      : {
+                                 "user_config" : "this is user config help"
+                                 ,"register"    : "this is register help"
+                                 ,"jobs"        : "this is jobs help"
+                                 ,"files"       : "this is file help"
+                                 ,"feedback"    : "this is feedback help"
+                                 ,"docs"        : "this is docs help"
+                                 ,"login"       : "this is login help"
+                                 ,"logoff"      : "this is logoff help"
+                                 ,"help"        : "this is help help"
+                                 ,"project"     : "this is project help"
+                                 ,"menu"        : "this is menu help"
+                                 ,"submit"      : "this is help for the submit button"
+                                 ,"reset"       : "this is help for the reset to default values button"
+                                 ,"apptitle"    : "this is application help"
+                                },
+
+  "textarea"                 : {
+      "label"           : "Report:"
+      ,"default"        : "header3"
+      ,"verticalalign"  : "top"
+      ,"cols"           : "60"
+# define rows to stop autosize
+#      ,"rows"           : "10"
+      ,"help"           : "general textarea help"
+  },
+
+# "blue" colors
+  "text_color_rgb"            : "220,210,210",
+  "error_color_rgb"           : "255,0,0",
+  "background_color_rgb"      : "0,0,95",
+  "select_color_rgb"          : "200,128,0",
+  "button_color_rgb"          : "228,255,250",
+  "button_color_hex"          : "E4FFFA",
+  "button_g_color_rgb"        : "128,170,150",
+  "button_g_color_hex"        : "80AA06",
+  "button_hover_color_rgb"    : "255,255,255",
+  "button_hover_color_hex"    : "FFFFFF",
+  "button_hover_g_color_rgb"  : "228,255,250",
+  "button_hover_g_color_hex"  : "E4FFFA",
+  "header1_color"             : "228,255,250",
+  "header2_color"             : "228,255,250",
+  "header3_color"             : "228,255,250",
+  "header4_color"             : "228,255,250",
+  "help_background_color_rgb" : "0,0,75",
+  "help_text_color_rgb"       : "240,240,210"
+
+# paper colors (useful for screenshots for publications)
+#  "text_color_rgb"            : "0,0,0",
+#  "error_color_rgb"           : "255,0,0",
+#  "background_color_rgb"      : "255,255,255",
+#  "select_color_rgb"          : "200,128,0",
+#  "button_color_rgb"          : "192,192,255",
+#  "button_color_hex"          : "C0C0FF",
+#  "button_g_color_rgb"        : "255,255,255",
+#  "button_g_color_hex"        : "FFFFFF",
+#  "button_hover_color_rgb"    : "192,192,192",
+#  "button_hover_color_hex"    : "C0C0C0",
+#  "button_hover_g_color_rgb"  : "255,255,255",
+#  "button_hover_g_color_hex"  : "FFFFFF",
+#  "header1_color"             : "0,0,128",
+#  "header2_color"             : "0,0,128",
+#  "header3_color"             : "0,0,128",
+#  "header4_color"             : "0,0,128",
+#  "help_background_color_rgb" : "230,230,230",
+#  "help_text_color_rgb"       : "0,0,0"
+
+# debugging controls
+
+  ,"debug"                   : {
+#         ,"jobmonitor"        : "true"
+#         ,"pid"               : "true"
+#         ,"cancel"            : "true"
+#         ,"license"           : "true"
+#         ,"help"              : "true"
+#         ,"_tree"             : "true"
+#         ,"valuen"            : "true"
+#        ,"valuenx"            : "true"
+#        ,"sync"               : "true"
+#        ,"spec"               : "true"
+#        ,"fp"                 : "true"
+#        ,"plottics"           : "true"
+#        ,"plottwod"           : "true"
+#        ,"data"               : "true"
+#        ,"textarea"           : "true"
+#        ,"values"             : "true"
+#        ,"repeat"             : "true"
+#        ,"repeathtml"         : "true"
+#        ,"hide"               : "true"
+#        ,"repeatdeps"         : "true"
+#        ,"repeatdepsobj"      : "true"
+#        ,"repeatlb"           : "true"
+#        ,"repeatcb"           : "true"
+#        ,"repeatinit"         : "true"
+#        ,"pull"               : "true"
+#        ,"ws"                 : "true"
+#        ,"msg"                : "true"
+#        ,"job"                : "true"
+#        ,"fc"                 : "true"
+#        ,"jc"                 : "true"
+#        ,"project"            : "true"
+#        ,"basemylog"          : "true"
+#        ,"event"              : "true"
+#        ,"altfile"            : "true"
+#        ,"valid"              : "true"
+#        ,"jsmol"              : "true"
+        "jobrun"              : "true"
+      ,"basemylog"              : "true"
+   }
+
+#  uncomment to enable "captcha" human validation upon registration for html5/php target
+#  ,"enablecaptcha"                  : "true"
+
+#  uncomment to enable "login/register" splash entry for html5/php target
+#  ,"usesplash"                  : "true"
+
+# only uncomment if you have configured secure web sockets in your webserver
+#  ,"usewss"                  : "true"
+  ,"usews" : "true"
+
+# the following are currently only meaningful for "html5" language
+  ,"appconfig"                 : "/opt/genapp/nmrsuite/appconfig.json"
+# if you have a 32 bit mongo system "html5", comment this
+  ,"mongojournal"               : "true"
+
+# optionally define a log directory for "html5" language
+  ,"logdirectory"               : "_log"
+  ,"bootstrap" : {
+#        "package" : "genapp"
+#        "package" : "material-design"
+        "package" : "bootswatch",
+#        "theme" : "cerulean"
+#        "theme" : "cosmo"
+#        "theme" : "cyborg"
+#        "theme" : "darkly"
+#        "theme" : "flatly"
+#        "theme" : "journal"
+#        "theme" : "litera"
+#        "theme" : "lumen"
+#        "theme" : "lux"
+#        "theme" : "materia"
+#        "theme" : "minty"
+#        "theme" : "pulse"
+#         "theme" : "sandstone"
+#        "theme" : "simplex"
+#        "theme" : "sketchy"
+#        "theme" : "slate"
+        "theme" : "solar"
+#        "theme" : "spacelab"
+#        "theme" : "superhero"
+#        "theme" : "united"
+#        "theme" : "yeti"
+  }
+}
