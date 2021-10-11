@@ -8,3 +8,4 @@ results
 *.pyc
 genapp.py
 genapp3.py
+*.bak

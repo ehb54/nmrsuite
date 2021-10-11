@@ -230,9 +230,8 @@ if __name__ == '__main__':
     json_flag = True
     #json_flag = False
 
-    if (len(sys.argv) < 1):
-        print "\{\"error\":\"pre called with no arguments\"\}\n"
-# 		print 'exiting now'
+    if (len(sys.argv) < 2):
+        print "{\"error\":\"pre called with no arguments\"}\n"
 
     elif len(sys.argv) > 1:
         json_variables = " "

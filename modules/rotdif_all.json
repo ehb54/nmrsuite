@@ -10,6 +10,11 @@
     #"notify"    : "alexsav.science@gmail.com",
     "notify" : "email",
 
+    "dependencies" : [
+	{ "base" : "python2" }
+        ,{ "custom" : [ "sassie", "sasmol" ] }
+	,{ "conda" : [ "numpy", "scipy", "mocker", "pandas", "bokeh=1.4.0", "matplotlib", "statistics" ] }
+    ],
     
     "fields"   : [
                   {   
