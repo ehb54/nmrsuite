@@ -12,7 +12,7 @@
 
     "dependencies" : [
 	{ "base" : "python2" }
-        ,{ "custom" : [ "sassie", "sasmol" ] }
+        ,{ "custom" : [ "sassie", "sasmol", "java" ] }
 	,{ "conda" : [ "numpy", "scipy", "mocker", "pandas", "bokeh=1.4.0", "matplotlib", "statistics" ] }
     ],
     

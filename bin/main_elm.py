@@ -66,7 +66,7 @@ def rotdif(Pdbfilename,sub_dir):
     socket_dict['_uuid'] = json_variables['_uuid']
     base_dir = json_variables[ '_base_directory' ]
     #optimization_method_list = json_variables[ 'optimization_method' ]
-    ExecutableFileLocationRotdif = '/opt/genapp/rotdif/bin/rotdif-1.1.jar'
+    ExecutableFileLocationRotdif = os.path.dirname(os.path.realpath(__file__)) + '/rotdif-1.1.jar'
     ProcessToCallRotdif = []
     ProcessToCallRotdif.append('/usr/bin/java')
     ProcessToCallRotdif.append('-jar')
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     #elm_out = [join(str(base_dir),join(sub_dir,'ELM_prediction'))]       
     #save params
     #copy template
-    shutil.copy("/opt/genapp/rotdif/bin/ELM_ellipsoid.py",join(str(base_dir),join(sub_dir,"ELM_ellipsoid.py")))
+    shutil.copy(os.path.dirname(os.path.realpath(__file__)) + '/ELM_ellipsoid.py',join(str(base_dir),join(sub_dir,"ELM_ellipsoid.py")))
     with open(join(str(base_dir),join(sub_dir,"all_prediction"))) as in_f:
         tmp = in_f.readlines()
     tmp[0]="Parameters\n"
