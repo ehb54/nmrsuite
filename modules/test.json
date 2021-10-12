@@ -1,0 +1,37 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid": "test",
+    "label": "Test",
+    "executable": "test.py",
+    "dependencies" : [
+	{ "base" : "python3" }
+	,{ "conda" : [ "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" ] }
+	,{ "pip" : "csaps" }
+    ]
+    ,"fields": [
+        {
+            "role": "input",
+            "id": "module_header",
+            "label": "Test",
+            "type": "label",
+            "default": "header4",
+            "prehline": "true",
+            "posthline": "true"
+        },
+        {
+            "role": "input",
+            "id": "maxent_checkbox",
+            "label": "run maxent",
+            "type": "checkbox",
+            "checked": "false",
+            "repeater": "true"
+        },
+        {
+            "role": "input",
+            "id": "test_lrfile",
+            "label": "select a file",
+            "type": "lrfile",
+            "repeat" : "maxent_checkbox"
+        }
+    ]
+}
