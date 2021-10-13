@@ -45,7 +45,7 @@
         {
             "id"      : "ensemble",
             "label"   : "Ensemble",
-            "icon"    : "pngs/calculate.png",
+            "icon"    : "pngs/ensemble.png",
             "modules" : [
                 {
                     "id"    : "ses"
@@ -60,7 +60,7 @@
         {
             "id"      : "docking",
             "label"   : "Docking",
-            "icon"    : "pngs/calculate.png",
+            "icon"    : "pngs/docking.png",
             "modules" : [
                 {
                     "id"    : "elmdock"
@@ -75,7 +75,7 @@
         ,{
             "id"    : "tutorial_menu",
             "label" : "Tutorial",
-            "icon": "pngs/noicon.png",
+            "icon": "pngs/tutorial.png",
             "modules"   :[
                 {
 	            "id"       : "tutorial",
