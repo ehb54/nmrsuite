@@ -3,7 +3,7 @@
         {
             "id"      : "analyze",
             "label"   : "Analyze",
-            "icon"    : "pngs/analyze.png",
+            "icon"    : "pngs/gears.png",
             "modules" : [
                 {
                     "id"    : "pcs"
@@ -74,7 +74,7 @@
         }
         ,{
             "id"    : "tutorial_menu",
-            "label" : "Tutorial",
+            "label" : "Tutorials",
             "icon": "pngs/tutorial.png",
             "modules"   :[
                 {
@@ -99,13 +99,14 @@
         }
         ,{
             "id"      : "disclaimer_menu",
-            "label"   : "Official Disclaimer",
-            "icon"    : "pngs/gnu_disclaimer.png",
+            "label"   : "Disclaimer",
+#            "icon"    : "pngs/gnu_disclaimer.png",
+            "icon"    : "pngs/noicon.png",
             "autorun" : "disclaimer",
             "modules" : [
                 {
                     "id"    : "disclaimer",
-                   "label" : "Official Disclaimer",
+                   "label" : "Disclaimer",
                     "nobutton" : "true"
                 }
             ]
