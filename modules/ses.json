@@ -4,7 +4,7 @@
     "dependencies" : [
 	{ "base" : "python3" }
 	,{ "conda" : [ "numpy", "pandas", "plotly" ] }
-    ]
+    ],
     "fields": [
         {
             "role": "input",
