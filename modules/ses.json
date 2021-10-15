@@ -1,195 +1,246 @@
-# this is a module file, any module specific info belongs here
 {
-    "moduleid" : "ses",
-    "label"    : "SES",
+    "moduleid": "ses",
+    "label": "SES",
     "dependencies" : [
-	{ "base" : "python2" }
-        ,{ "custom" : [ "sassie", "sasmol" ] }
-	,{ "conda" : [ "numpy", "scipy", "mocker", "pandas", "bokeh=1.4.0", "matplotlib" ] }
+	{ "base" : "python3" }
+	,{ "conda" : [ "numpy", "pandas", "plotly" ] }
     ]
-    ,"fields"   : [
-                   {
-                   "role"       : "input",
-                   "id"       : "module_header",
-                   "label"    : "SES",
-                   "type"     : "label",
-                   "default"  : "header4",
-                   "prehline"  : "true",
-                   "posthline"  : "true"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "runname",
-                   "label"    : "run name",
-                   "type"     : "text",
-                   "default"  : "run_0",
-                   "required" : "true",
-                   "help"     : "results will be placed in a folder called pdbscan/ in the directory name you enter here"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "datafile",
-                   "label"   : "experimental data file",
-                   "type"     : "lrfile",
-                   "required" : "true",
-                   "help"     : "Lx2 text matrix file of the experimental data for L residues",
-                   "norow"    : "false"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "matrixfile",
-                   "label"   : "matrix file",
-                   "type"     : "lrfile",
-                   "required" : "true",
-                   "help"     : "LxN text matrix of predicted data for N conformers",
-                   "norow"    : "false"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "outputdir",
-                   "label"    : "output directory",
-                   "type"     : "text",
-                   "default"  : "solution",
-                   "required" : "true",
-                   "help"     : "Output directory file name"
-                   },
- 		   {
-                   "role"     : "input",
-                   "id"       : "number_topsolution",
-                   "label"    : "number of top solutions",
-                   "type"     : "integer",
-                   "default"  : 100000,
-                   "step"     : 1,
-                   "min"      : 1,
-                   "max"      : 1000000000,
-                   "help"     : "Number of top solutions to store per iteration of M-OMP"
-                  },
-                  {
-                   "role"     : "input",
-                   "id"       : "nnls",
-                   "label"    : "positive best solution",
-                   "type"     : "checkbox",
-                   "style"    : "switch",
-                   "checked" : "false",
-                   "help"     : "Output the best possible x>0 (NNLS) solution"
-                  },
-                   {
-                    "role"       : "input",
-                     "id"       : "storejava",
-                     "label"    : "store java",
-                     "type"     : "checkbox",
-                     "style"    : "switch",
-                     "checked"  : "false",
-                     "help"     : "Output the java object with all results that can be used for parsing using ARMOR API"
-                    },
-		    {
-                    "role"      : "input",
-                     "id"       : "advanced_input_label",
-                     "label"    : "Advanced Inputs",
-                     "type"     : "label",
-                     "default"  : "header4"
-		    },
-                  {
-                   "role"     : "input",
-                   "id"       : "pdb_flag",
-                   "label"    : "pdb",
-                   "type"     : "checkbox",
-		   "checked"  : "false",
-                   "norow"    : "false",
-		   "repeater" : "true",
-		   "help"     : "Output(?) pdb file directory. Ignore if not pdb files available"
-                   },
-		   {
-                   "role"     : "input",
-                   "id"       : "pdbdirectory",
-                   "label"    : "pdbdirectory",
-                   "type"     : "text",
-                   "default"  : "pdb",
-                   "norow"    : "false",
-                   "repeat"   : "pdb_flag",
-                   "help"     : "Output(?) pdb file directory name. Ignore if not pdb files available"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "align",
-                   "label"    : "align",
-                   "type"     : "text",
-                   "default"  : "CA",
-                   "help"     : "Name of the atom type (ex. H, CA, etc) to use for alignment and RMSD computation during postprocess clustering. Set to * for any",
-		   "repeat"   : "pdb_flag"
-                  },
-                  {
-                   "role"     : "input",
-                   "id"       : "outalign",
-                   "label"    : "outalign",
-                   "type"     : "listbox",
-                   "values"    : "no alignment~1~align based on whole structure~2~align by first chain~3",
-                   "help"     : "Type of alignment for models inside the output pdb file. Default is no alignment",
-                   "repeat"   : "pdb_flag"
-                  },
-                  {
-                   "role"     : "input",
-                   "id"       : "rmsd",
-                   "label"    : "rmsd",
-                   "type"     : "float",
-                   "default"  : 4.0,
-                   "step"     : 0.1,
-                   "min"      : 0.0,
-                   "max"      : 100.0,
-                   "help"     : "Cluster RMSD value for solution pdb files",
-		   "repeat"   : "pdb_flag"
-                  },		  
-                   {
-                   "role"     : "input",
-                   "id"       : "precond",
-                   "label"    : "preconditioning",
-                   "type"     : "listbox",
-                   "values"   : "None~1~Rotation and compression~2",
-                   "help"     : "Preconditioning of the linear system before M-OMP. Default is None"
-                  },
-                  {
-                   "role"     : "input",
-                   "id"       : "reltol",
-                   "label"    : "reltol",
-                   "type"     : "float",
-                   "default"  : 0.0005,
-                   "step"     : 0.0001,
-                   "min"      : 0.0,
-		   "max"      : 1.0,
-                   "help"     : "M-OMP solvers relative error tolerance for termination"
-                  },
-		  {
-                   "role"     : "input",
-                   "id"       : "toperror",
-                   "label"    : "top",
-                   "type"     : "float",
-                   "default"  : 0.005,
-                   "step"     : 0.001,
-                   "min"      : 0.0,
-                   "max"      : 1.0,
-                   "help"     : "Max relative error of top solutions relative to input"
-                  },
-                  {
-                   "role"    : "output",
-                   "id"      : "progress_output",
-                   "label"   : "progress: ",
-                   "type"    : "progress",
-                   "max"     : 1.0
-                   },
-                  {
-                    "role"    : "output",
-                    "id"      : "progress_html",
-                    "name"    : "progress_html",
-                    "label"   : "percent done: ",
-                    "type"    : "html"
-                   },
-        	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_1"
-            	   #,"label"     : "bokeh_plot 1"
-            	   ,"type"      : "bokeh"
-                   }
-                 ],
-# the executable will take inputs in order and produce output
-    "executable" : "pre"
+    "fields": [
+        {
+            "role": "input",
+            "id": "module_header",
+            "label": "SES",
+            "type": "label",
+            "default": "header4",
+            "prehline": "true",
+            "posthline": "true"
+        },
+        {
+            "role": "input",
+            "id": "runname",
+            "label": "run name",
+            "type": "text",
+            "default": "run_0",
+            "required": "true",
+            "help": "results will be placed in a folder called pdbscan/ in the directory name you enter here"
+        },
+        {
+            "role": "input",
+            "id": "datafile",
+            "label": "experimental data file",
+            "type": "lrfile",
+            "required": "true",
+            "help": "Lx2 text matrix file of the experimental data for L residues",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "matrixfile",
+            "label": "matrix file",
+            "type": "lrfile",
+            "required": "true",
+            "help": "LxN text matrix of predicted data for N conformers",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "outputdir",
+            "label": "output directory",
+            "type": "text",
+            "default": "solution",
+            "required": "true",
+            "help": "Output directory file name"
+        },
+        {
+            "role": "input",
+            "id": "number_topsolution",
+            "label": "number of top solutions (K)",
+            "type": "integer",
+            "default": 100000,
+            "step": 1,
+            "min": 1,
+            "max": 1000000000,
+            "help": "Number of top solutions (K) to store per iteration of M-OMP"
+        },
+        {
+            "role": "input",
+            "id": "nnls",
+            "label": "best possible solution",
+            "type": "checkbox",
+            "style": "switch",
+            "checked": "false",
+            "help": "Output the best possible x>0 (NNLS) solution",
+            "comment": ""
+        },
+        {
+            "role": "input",
+            "id": "advanced_input_label",
+            "label": "Advanced Inputs",
+            "type": "label",
+            "default": "header4"
+        },
+        {
+            "role": "input",
+            "id": "pdb_flag",
+            "label": "pdb",
+            "type": "checkbox",
+            "checked": "false",
+            "norow": "false",
+            "repeater": "true",
+            "help": "Output(?) pdb file directory. Ignore if not pdb files available"
+        },
+        {
+            "role": "input",
+            "id": "pdbinput",
+            "name": "pdbinput",
+            "label": "pdbinput",
+            "type": "listbox",
+            "values": "local pdb directory~c1~local pdb files~c2~server pdb path~c3",
+            "default": "c2",
+            "repeater": "true",
+            "repeat": "pdb_flag",
+            "help": "PDB input listbox"
+        },
+        {
+            "role": "input",
+            "id": "pdblocaldirectory",
+            "label": "pdbdirectory", 
+            "type": "file",
+            "directory": "true",
+            "default": "pdb",
+            "repeat": "pdbinput:c1",
+            "help": "Select PDB directory from local computer"
+        },
+        {
+            "role": "input",
+            "id": "pdblocalfiles",
+            "label": "pdbfiles",
+            "type": "file",
+            "multiple": "true",
+            "repeat": "pdbinput:c2",
+            "help": "Select PDB files from local computer"
+        },
+        {
+            "role": "input",
+            "id": "pdbserverpath",
+            "label": "pdbpath",
+            "type": "rpath",
+            "repeat": "pdbinput:c3",
+            "help": "Select PDB directory from server"
+        },
+        {
+            "role": "input",
+            "id": "align",
+            "label": "align atoms",
+            "type": "text",
+            "default": "CA",
+            "help": "Name of the atom type (ex. H, CA, etc) to use for alignment and RMSD computation during postprocess clustering. Set to * for any",
+            "repeat": "pdb_flag"
+        },
+        {
+            "role": "input",
+            "id": "outalign",
+            "label": "outalign",
+            "type": "listbox",
+            "values": "no alignment~1~align based on whole structure~2~align by first chain~3",
+            "help": "Type of alignment for models inside the output pdb file. Default is no alignment",
+            "repeat": "pdb_flag"
+        },
+        {
+            "role": "input",
+            "id": "rmsd",
+            "label": "rmsd (A)",
+            "type": "float",
+            "default": 4.0,
+            "step": 0.1,
+            "min": 0.0,
+            "max": 100.0,
+            "help": "Cluster RMSD value for solution pdb files",
+            "repeat": "pdb_flag"
+        },
+        {
+            "role": "input",
+            "id": "l0max",
+            "label": "l0max",
+            "type": "integer",
+            "default": 2147483647,
+            "step": 1,
+            "min": 1,
+            "help": "Maximum ensemble size to compute"
+        },
+        {
+            "role": "input",
+            "id": "maxsum",
+            "label": "maxsum",
+            "type": "float",
+            "default": 99999999999,
+            "help": "Maximum possible sum of the column weights"
+        },
+        {
+            "role": "input",
+            "id": "precond",
+            "label": "preconditioning",
+            "type": "listbox",
+            "values": "None~1~Rotation and compression~2",
+            "help": "Preconditioning of the linear system before M-OMP. Default is None"
+        },
+        {
+            "role": "input",
+            "id": "reltol",
+            "label": "reltol",
+            "type": "float",
+            "default": 0.0005,
+            "step": 0.0001,
+            "min": 0.0,
+            "max": 1.0,
+            "help": "M-OMP solvers relative error tolerance for termination"
+        },
+        {
+            "role": "input",
+            "id": "toperror",
+            "label": "top",
+            "type": "float",
+            "default": 0.005,
+            "step": 0.001,
+            "min": 0.0,
+            "max": 1.0,
+            "help": "Max relative error of top solutions relative to input"
+        },
+        {
+            "role": "input",
+            "id": "developer_debug_flag",
+            "label": "developer debug",
+            "type": "checkbox",
+            "checked": "false",
+            "norow": "false",
+            "help": "Flag to show more output"
+        },
+        {
+            "role": "output",
+            "id": "progress_output",
+            "label": "progress: ",
+            "type": "progress",
+            "max": 1.0
+        },
+        {
+            "role": "output",
+            "id": "progress_html",
+            "name": "progress_html",
+            "label": "percent done: ",
+            "type": "html"
+        },
+        {
+            "role": "output",
+            "id": "lineplot",
+            "label": "",
+            "type": "plotly"
+        },
+        {
+            "role": "output",
+            "id": "scatterplot",
+            "label": "",
+            "type": "plotly"
+        }
+    ],
+    "executable": "ses.py"
 }
