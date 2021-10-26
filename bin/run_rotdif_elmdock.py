@@ -71,7 +71,7 @@ def rotdif(in_dock,new_relax,new_pdb,sub_dir):
     socket_dict['_uuid'] = json_variables['_uuid']
     base_dir = json_variables[ '_base_directory' ]
     optimization_method_list = json_variables[ 'optimization_method' ]
-    ExecutableFileLocationRotdif = '/opt/genapp/rotdif/bin/rotdif-1.1.jar'
+    ExecutableFileLocationRotdif = os.path.dirname(os.path.realpath(__file__)) + '/rotdif-1.1.jar'
     ProcessToCallRotdif = []
     ProcessToCallRotdif.append('/usr/bin/java')
     ProcessToCallRotdif.append('-jar')
