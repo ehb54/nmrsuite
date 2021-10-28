@@ -1,0 +1,231 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid" : "pcs",
+    "label"    : "PCS",
+    "fields"   : [
+                   {
+                   "role"       : "input",
+                   "id"       : "module_header",
+                   "label"    : "PCS",
+                   "type"     : "label",
+                   "default"  : "header4",
+                   "prehline"  : "true",
+                   "posthline"  : "true"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "runname",
+                   "label"    : "run name",
+                   "type"     : "text",
+                   "default"  : "run_0",
+                   "required" : "true",
+                   "help"     : "results will be placed in a folder called pdbscan/ in the directory name you enter here"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "pdbfile",
+                   "label"   : "pdb file input",
+                   "type"     : "lrfile",
+                   "required" : "true",
+                   "help"     : "name of PDB file you wish to scan",
+                   "norow"    : "false"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "dcdfile",
+                   "label"   : "pdb/dcd file input",
+                   "type"     : "lrfile",
+                   "required" : "true",
+                   "help"     : "name of PDB/DCD file you wish to scan",
+                   "norow"    : "false"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "pcs_input_file",
+                   "label"   : "PCS data file",
+                   "type"     : "lrfile",
+                   "required" : "true",
+                   "help"     : "name of file with RDC data",
+                   "norow"    : "false"
+                   },
+		   {
+                   "role"     : "input",
+                   "id"       : "user_guess_flag_checkbox",
+                   "label"   : "manual SL positions",
+                   "type"     : "checkbox",
+                   "checked" : "false",
+                   "help"     : "Check to manually define the intial positions of spin lable, otherwise automatically guess",
+		   "repeater" : "true"
+		   },
+                   {
+                   "role"     : "input",
+                   "id"       : "user_guess_num",
+                   "label"   : "number of SL positions",
+                   "type"     : "integer",
+		   "default"  : 1,
+		   "min"      : 1,
+                   "help"     : "Check to manually define the intial positions of spin lable, otherwise automatically guess",
+                   "repeat"   : "user_guess_flag_checkbox",
+		   "repeater" : "yes",
+		   "required" : "true"
+                   },		   
+                   {
+                   "role"     : "input",
+                   "id"       : "user_guess_x",
+                   "label"   : "x",
+                   "type"     : "float",
+                   "default"  : 0.0,
+                   "step"     : 0.01,
+                   "help"     : "x",
+                   "repeat"   : "user_guess_num",
+                   "required" : "true",
+                   "norow"    : "true"
+                   },
+                   {
+                   "role"     : "input",
+                   "id"       : "user_guess_y",
+                   "label"   : "y",
+                   "type"     : "float",
+                   "default"  : 0.0,
+                   "step"     : 0.01,
+                   "help"     : "y",
+                   "repeat"   : "user_guess_num",
+                   "required" : "true",
+                   "norow"    : "true"
+                   },
+                   {
+                   "role"     : "input",
+                   "id"       : "user_guess_z",
+                   "label"   : "z",
+                   "type"     : "float",
+                   "default"  : 0.0,
+                   "step"     : 0.01,
+                   "help"     : "z",
+                   "repeat"   : "user_guess_num",
+                   "required" : "true",
+                   "norow"    : "true"
+                   },
+		   {
+                    "role"       : "input"
+                     ,"id"       : "advanced_input"
+                     ,"label"    : "Advanced Inputs"
+                     ,"type"     : "label"
+                     ,"prehline"  : "true"
+                     ,"posthline"  : "true"
+                    },
+                  {
+                   "role"     : "input",
+                   "id"       : "residue_exclusion_file_flag_checkbox",
+                   "label"   : "exclusion list file option",
+                   "type"     : "checkbox",
+                   "help"    : "click box to choose exclusion list file",
+                   "repeater": "true",
+                   "checked" : "false"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "residue_exclusion_file",
+                   "label"   : "exclusion list file",
+                   "type"     : "lrfile",
+                   "required" : "false",
+                   "help"     : "name of file with residue list to exclude",
+                   "repeat"   : "residue_exclusion_file_flag_checkbox"
+                   },
+                  {
+                   "role"    : "input",
+                   "id"      : "cond_num_cutoff",
+                   "label"   : "condition number cutoff",
+                   "type"    : "integer",
+                   "default" : 33,
+                   "min"     : 1,
+                   "max"     : 99,
+                   "step"     : 1,
+                   "help"    : "determine how strict the user wants the results to be"
+                   },
+                  {
+                   "role"    : "input",
+                   "id"      : "tolerance",
+                   "label"   : "tolerances",
+                   "type"    : "float",
+                   "default" : 1e-4,
+                   "min"     : 1e-9,
+                   "max"     : 1,
+                   "step"     : 1e-9,
+                   "help"    : "tolerance to control the convergence of simplex method"
+                   },
+                  {
+                   "role"    : "output",
+                   "id"      : "progress_output",
+                   "label"   : "progress: ",
+                   "type"    : "progress",
+                   "max"     : 1.0
+                   },
+                  {
+                    "role"    : "output",
+                    "id"      : "progress_html",
+                    "name"    : "progress_html",
+                    "label"   : "percent done: ",
+                    "type"    : "html"
+                   },
+        	   {
+            	   "role"       : "output"
+            	   ,"id"        : "bokeh_plot_1"
+            	   #,"label"     : "bokeh_plot 1"
+            	   ,"type"      : "bokeh"
+                   },
+        	   {
+            	   "role"       : "output"
+            	   ,"id"        : "bokeh_plot_2"
+            	   #,"label"     : "bokeh_plot 2"
+            	   ,"type"      : "bokeh"
+                   }
+#        	   {
+#            	   "role"       : "output"
+#            	   ,"id"        : "bokeh_plot_3"
+#            	   #,"label"     : "bokeh_plot 3"
+#            	   ,"type"      : "bokeh"
+#                   },
+#        	   {
+#            	   "role"       : "output"
+#            	   ,"id"        : "bokeh_plot_4"
+#            	   #,"label"     : "bokeh_plot 4"
+#            	   ,"type"      : "bokeh"
+#                   },
+#        	   {
+#            	   "role"       : "output"
+#            	   ,"id"        : "bokeh_plot_5"
+#            	   #,"label"     : "bokeh_plot 5"
+#            	   ,"type"      : "bokeh"
+#                   },
+                   #{
+                   #  "role"    : "output",
+                   #  "id"      : "report_html",
+                   #  "name"    : "report_html",
+                   #  "label"   : "report : ",
+                   #  "type"    : "html"
+                   # },
+#                   {
+#                    "role"       : "output",
+#                    "id"         : "pcs_data_output",
+#                    "label"      : "PCS data file",
+#                    "type"       : "file",
+#                    "help"       : "Right click to download"
+#                    },
+#                   {
+#                    "role"       : "output",
+#                    "id"         : "summary_pcs_analysis",
+#                    "label"      : "summary of analysis",
+#                    "type"       : "file",
+#                    "help"       : "Right click to download"
+#                    },
+#                   {
+#                    "role"       : "output",
+#                    "id"         : "pymol_script",
+#                    "label"      : "PyMOL script",
+#                    "type"       : "file",
+#                    "help"       : "Right click to download"
+#                    }
+                 ],
+# the executable will take inputs in order and produce output
+    "executable" : "pcs"
+}

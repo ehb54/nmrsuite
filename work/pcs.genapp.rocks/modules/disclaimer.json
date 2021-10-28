@@ -1,0 +1,21 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid"       : "disclaimer",
+    "label"          : "Official Disclaimer",
+    "noreset"        : "true",
+    "nosubmit"       : "true",
+    "nooutputhr"     : "true",
+   # "backgroundimage"    : "gnu_disclaimer.png",
+    "fields"   : [
+                  {
+                   "role"       : "input",
+                   "id"         : "text1",
+                   "type"       : "html"
+#                  ,"value"      : "__<Official Disclaimer.docx"
+                  ,"value"      : "__< disclaimer.html"
+                   }
+
+                 
+       
+    ]
+}

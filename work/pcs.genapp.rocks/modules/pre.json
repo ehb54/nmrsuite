@@ -1,0 +1,121 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid" : "pre",
+    "label"    : "PRE",
+    "fields"   : [
+                   {
+                   "role"       : "input",
+                   "id"       : "module_header",
+                   "label"    : "PRE",
+                   "type"     : "label",
+                   "default"  : "header4",
+                   "prehline"  : "true",
+                   "posthline"  : "true"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "runname",
+                   "label"    : "run name",
+                   "type"     : "text",
+                   "default"  : "run_0",
+                   "required" : "true",
+                   "help"     : "results will be placed in a folder called pdbscan/ in the directory name you enter here"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "pdbfile",
+                   "label"   : "pdb file input",
+                   "type"     : "lrfile",
+                   "required" : "true",
+                   "help"     : "name of PDB file you wish to scan"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "dcdfile",
+                   "label"   : "pdb/dcd file input",
+                   "type"     : "lrfile",
+                   "required" : "true",
+                   "help"     : "name of PDB/DCD file you wish to scan",
+		   "norow"    : "false"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "ratiofile",
+                   "label"   : "Experimental PRE data file",
+                   "type"     : "lrfile",
+                   "required" : "true",
+#                   "help"     : "Data file containing for each residue the ratio of signal intensities, Ipara/Idia,<\br> in the spectra recorded with the paramagnetic moiety in the paramagnetic (oxidized) and in the diamagnetic (reduced) states"
+                   "norow"    : "false"
+		  },
+                  {
+                   "role"     : "input",
+                   "id"       : "T2dia",
+                   "label"    : "1H T2_dia time",
+                   "type"     : "float",
+                   "default"  : 0.05,
+                   "step"     : 0.01,
+		   "min"      : 0.0,
+		   "max"      : 1000000000000.0,
+		   "norow"    : "false"
+#                   "help"     : "Average amide 1H T2 for the protein in seconds molecule when paramagnetic moiety is in diamagnetic state or absent"
+		  },
+                  {
+                   "role"     : "input",
+                   "id"       : "Htime",
+                   "label"    : "1H time during experiment",
+                   "type"     : "float",
+                   "default"  : 0.005,
+                   "step"     : 0.001,
+		   "min"      : 0.0,
+		   "max"      : 10000000000.0,
+		   "norow"    : "false"
+#                   "help"     : "Time during the pulse sequence (excluding acquisition time) when the magnetization is in 1H, in seconds"
+                  },
+		  {
+                   "role"     : "input",
+                   "id"       : "freq",
+                   "label"    : "Spectrometer 1H Frequency",
+                   "type"     : "float",
+                   "default"  : 600.0,
+                   "step"     : 1.0,
+                   "min"      : 0.0,
+		   "max"      : 100000000000.0,
+		   "norow"    : "false"
+#                   "help"     : "Spectrometer 1H frequency (Larmor frequency), in MHz units"
+                  },
+		  {
+                   "role"     : "input",
+                   "id"       : "TAUc",
+                   "label"    : "Rotational correlation time TAUc",
+                   "type"     : "float",
+                   "default"  : 4.5,
+                   "step"     : 0.1,
+		   "min"      : 0.0,
+		   "max"      : 100000000000.0,
+		   "norow"    : "false",
+                   "help"     : "The overall rotational correlation time of the protein molecule, in nanoseconds."
+                  },
+                  {
+                   "role"    : "output",
+                   "id"      : "progress_output",
+                   "label"   : "progress: ",
+                   "type"    : "progress",
+                   "max"     : 1.0
+                   },
+                  {
+                    "role"    : "output",
+                    "id"      : "progress_html",
+                    "name"    : "progress_html",
+                    "label"   : "percent done: ",
+                    "type"    : "html"
+                   },
+        	   {
+            	   "role"       : "output"
+            	   ,"id"        : "bokeh_plot_1"
+            	   #,"label"     : "bokeh_plot 1"
+            	   ,"type"      : "bokeh"
+                   }
+                 ],
+# the executable will take inputs in order and produce output
+    "executable" : "pre"
+}
