@@ -74,14 +74,14 @@
                    "type"    : "checkbox",
                    "help"    : "click box to use a residue list file",
                    "repeater": "true",
-                   "checked" : "true"
+                   "checked" : "false"
                    },
                   {
                    "role"     : "input",
                    "id"       : "residue_list_file",
                    "label"   : "exclusion list file",
                    "type"     : "lrfile",
-                   "required" : "false",
+                   "required" : "true",
                    "help"     : "name of file with residue list to exclude",
                    "repeat"   : "residue_list_file_flag_checkbox",
                    "norow"    : "false"
