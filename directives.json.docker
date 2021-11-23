@@ -61,9 +61,9 @@
       "label"           : "Report:"
       ,"default"        : "header3"
       ,"verticalalign"  : "top"
-      ,"cols"           : "60"
+      ,"cols"           : "110"
 # define rows to stop autosize
-#      ,"rows"           : "10"
+      ,"rows"           : "40"
       ,"help"           : "general textarea help"
   },
 
@@ -146,25 +146,25 @@
 #        ,"altfile"            : "true"
 #        ,"valid"              : "true"
 #        ,"jsmol"              : "true"
-        "jobrun"              : "true"
-      ,"basemylog"              : "true"
+#        "jobrun"              : "true"
+#      ,"basemylog"              : "true"
    }
 
 #  uncomment to enable "captcha" human validation upon registration for html5/php target
-#  ,"enablecaptcha"                  : "true"
+  ,"enablecaptcha"                  : "true"
 
 #  uncomment to enable "login/register" splash entry for html5/php target
-#  ,"usesplash"                  : "true"
+  ,"usesplash"                  : "true"
 
 # only uncomment if you have configured secure web sockets in your webserver
-#  ,"usewss"                  : "true"
-  ,"usews" : "true"
+  ,"usewss"                  : "true"
+#  ,"usews" : "true"
 
 # the following are currently only meaningful for "html5" language
   ,"appconfig"                 : "/opt/genapp/nmrsuite/appconfig.json"
 # if you have a 32 bit mongo system "html5", comment this
     ,"mongojournal"               : "true"
-    ,"css" : "custom.css"
+#    ,"css" : "custom.css"
 
 # optionally define a log directory for "html5" language
   ,"logdirectory"               : "_log"
