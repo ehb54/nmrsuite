@@ -163,8 +163,12 @@
 # the following are currently only meaningful for "html5" language
   ,"appconfig"                 : "/opt/genapp/nmrsuite/appconfig.json"
 # if you have a 32 bit mongo system "html5", comment this
-    ,"mongojournal"               : "true"
+  ,"mongojournal"               : "true"
 #    ,"css" : "custom.css"
+
+  ,"bokeh" : {
+     "version" : "1.4.0"
+  }
 
 # optionally define a log directory for "html5" language
   ,"logdirectory"               : "_log"
