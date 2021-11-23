@@ -1,4 +1,5 @@
 #!/opt/miniconda2/bin/python
+###!/share/apps/local/anaconda2/bin/python
 import json
 import sys
 import os
@@ -241,7 +242,7 @@ class PCS_Drv():
             plotQueues = dict()
 
             plotQueues['bokeh_plot_1'] = multiprocessing.JoinableQueue()
-            plotQueues['bokeh_plot_2'] = multiprocessing.JoinableQueue()
+#            plotQueues['bokeh_plot_2'] = multiprocessing.JoinableQueue()
 #            plotQueues['bokeh_plot_3'] = multiprocessing.JoinableQueue()
 #            plotQueues['bokeh_plot_4'] = multiprocessing.JoinableQueue()
 #            plotQueues['bokeh_plot_5'] = multiprocessing.JoinableQueue()

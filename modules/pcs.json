@@ -27,8 +27,8 @@
                    "label"   : "pdb file input",
                    "type"     : "lrfile",
                    "required" : "true",
-                   "help"     : "name of PDB file you wish to scan"
-#                   "norow"    : "false"
+                   "help"     : "name of PDB file you wish to scan",
+                   "norow"    : "false"
                    },
                   {
                    "role"     : "input",
@@ -36,8 +36,8 @@
                    "label"   : "pdb/dcd file input",
                    "type"     : "lrfile",
                    "required" : "true",
-                   "help"     : "name of PDB/DCD file you wish to scan"
-#                   "norow"    : "false"
+                   "help"     : "name of PDB/DCD file you wish to scan",
+                   "norow"    : "false"
                    },
                   {
                    "role"     : "input",
@@ -45,15 +45,14 @@
                    "label"   : "PCS data file",
                    "type"     : "lrfile",
                    "required" : "true",
-                   "help"     : "name of file with RDC data"
-#                   "norow"    : "false"
+                   "help"     : "name of file with RDC data",
+                   "norow"    : "false"
                    },
 		   {
                    "role"     : "input",
                    "id"       : "user_guess_flag_checkbox",
                    "label"   : "manual SL positions",
                    "type"     : "checkbox",
-                   "style"    : "switch",
                    "checked" : "false",
                    "help"     : "Check to manually define the intial positions of spin lable, otherwise automatically guess",
 		   "repeater" : "true"
@@ -64,49 +63,49 @@
                    "label"   : "number of SL positions",
                    "type"     : "integer",
 		   "default"  : 1,
-		   "step"     : 1,
 		   "min"      : 1,
                    "help"     : "Check to manually define the intial positions of spin lable, otherwise automatically guess",
                    "repeat"   : "user_guess_flag_checkbox",
-		   "repeater" : "true"
-#		   "required" : "true"
+		   "repeater" : "yes",
+		   "required" : "true"
                    },		   
                    {
                    "role"     : "input",
                    "id"       : "user_guess_x",
                    "label"   : "x",
                    "type"     : "float",
-                   "default"  : 0,
-		   "step"     : 0.01,
+                   "default"  : 0.0,
+                   "step"     : 0.01,
                    "help"     : "x",
-                   "repeat"   : "user_guess_num"
-#                   "required" : "true",
-#                   "norow"    : "true"
+                   "repeat"   : "user_guess_num",
+                   "required" : "true",
+                   "norow"    : "true"
                    },
-		   {
+                   {
                    "role"     : "input",
                    "id"       : "user_guess_y",
                    "label"   : "y",
                    "type"     : "float",
-                   "default"  : 0,
+                   "default"  : 0.0,
+                   "step"     : 0.01,
                    "help"     : "y",
-                   "repeat"   : "user_guess_num"
-#                   "required" : "true",
-#                   "norow"    : "true"
+                   "repeat"   : "user_guess_num",
+                   "required" : "true",
+                   "norow"    : "true"
                    },
-		   {
+                   {
                    "role"     : "input",
                    "id"       : "user_guess_z",
                    "label"   : "z",
                    "type"     : "float",
-                   "default"  : 0,
-		   "step"     : 0.01,
+                   "default"  : 0.0,
+                   "step"     : 0.01,
                    "help"     : "z",
-                   "repeat"   : "user_guess_num"
-#                   "required" : "true",
-#                   "norow"    : "true"
+                   "repeat"   : "user_guess_num",
+                   "required" : "true",
+                   "norow"    : "true"
                    },
-                   {
+		   {
                     "role"       : "input"
                      ,"id"       : "advanced_input"
                      ,"label"    : "Advanced Inputs"
@@ -119,7 +118,6 @@
                    "id"       : "residue_exclusion_file_flag_checkbox",
                    "label"   : "exclusion list file option",
                    "type"     : "checkbox",
-                   "style"    : "switch",
                    "help"    : "click box to choose exclusion list file",
                    "repeater": "true",
                    "checked" : "false"
@@ -149,10 +147,10 @@
                    "id"      : "tolerance",
                    "label"   : "tolerances",
                    "type"    : "float",
-                   "default" : 0.0001,
-                   "min"     : 0.0000001,
+                   "default" : 1e-4,
+                   "min"     : 1e-9,
                    "max"     : 1,
-                   "step"     : 0.0001,
+                   "step"     : 1e-9,
                    "help"    : "tolerance to control the convergence of simplex method"
                    },
                   {

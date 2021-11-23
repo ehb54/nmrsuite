@@ -1,279 +1,277 @@
 # this is a module file, any module specific info belongs here
 {
-    "moduleid" : "predict",
-    "label"    : "PREDICT",
-    "fields"   : [
-                   {
-                   "role"       : "input",
-                   "id"       : "module_header",
-                   "label"    : "PREDICT",
-                   "type"     : "label",
-                   "default"  : "header4",
-                   "prehline"  : "true",
-                   "posthline"  : "true"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "runname",
-                   "label"    : "run name",
-                   "type"     : "text",
-                   "default"  : "run_0",
-                   "required" : "true",
-                   "help"     : "results will be placed in a folder called pdbscan/ in the directory name you enter here"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "pdbfile",
-                   "label"   : "pdb file input",
-                   "type"     : "lrfile",
-                   "required" : "true",
-                   "help"     : "name of PDB file you wish to scan",
-                   "norow"    : "false"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "dcdfile",
-                   "label"   : "pdb/dcd file input",
-                   "type"     : "lrfile",
-                   "required" : "true",
-                   "help"     : "name of PDB/DCD file you wish to scan",
-                   "norow"    : "false"
-                   },
-		   {
-                   "role"    : "input",
-                   "id"      : "residue_list_file_flag_checkbox",
-                   "label"   : "residue list file option",
-                   "type"    : "checkbox",
-		   "checked" : "false",
-                   "style"    : "switch",
-                   "help"    : "click box to upload file containing atom types and residues",
-                   "repeater": "true"
-                   },
-                   {
-                   "role"     : "input",
-                   "id"       : "residue_list_file",
-                   "label"   : "residue list file",
-                   "type"     : "lrfile",
-                   "required" : "false",
-                   "help"     : "name of file with residue list to predict properties",
-                   "repeat"   : "residue_list_file_flag_checkbox",
-                   "norow"    : "false"
-                   },
-		   {
-                   "role"    : "input",
-                   "id"      : "exclusion_list_file_flag_checkbox",
-                   "label"   : "exclusion list file option",
-                   "type"    : "checkbox",
-                   "style"    : "switch",
-                   "help"    : "click box to upload file containing atom types and residues to be excluded from prediction",
-                   "repeater": "true",
-		   "repeat":   "residue_list_file_flag_checkbox",
-                   "checked" : "false"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "exclusion_list_file",
-                   "label"   : "exclusion list file",
-                   "type"     : "lrfile",
-                   "required" : "false",
-                   "help"     : "name of file with residue list to exclude",
-                   "repeat"   : "exclusion_list_file_flag_checkbox",
-                   "norow"    : "false"
-                   },
-                   {
-                   "role"     : "input",
-                   "id"       : "atomtypes",
-                   "label"    : "atom names",
-                   "type"     : "text",
-                   "default"  : "CA, HA",
-                   "help"     : "To predict RDCs, select two atom names. Otherwise, one atom type is required",
-                   "norow"    : "false"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "residue_list",
-                   "label"   : "select residues",
-                   "type"     : "text",
-		   "default"  : "segname A and (resid > 220 and resid < 226)",
-                   "required" : "true",
-                   "help"     : "",
-                   "norow"    : "false"
-                   },
-		   {
-                   "role"     : "input",
-                   "id"       : "exclusion_residue_list",
-                   "label"   : "select residues to exclude",
-                   "type"     : "text",
-                   "default"  : "None",
-                   "required" : "true",
-                   "help"     : "",
-                   "norow"    : "false"
-                   },
-                  {
-                   "role"     : "input",
-                   "id"       : "paramagnetic_coord",
-                   "label"    : "paramagnetic center coordinates (for PCS, PRE)",
-                   "type"     : "text",
-                   "default"  : "0,0,0",
-                   "help"     : "X,Y,Z coordinates of the paramagnetic center, in Angstroms"
-                  },
-		  {
-                   "role"     : "input",
-                   "id"       : "listboxsuscept",
-                   "name"     : "listboxsuscept",
-                   "label"    : "magnetic susceptibility anisotropy tensor (for RDC, PCS)",
-		   "type"     : "listbox",
-		   "values"   : "5-par susceptibility tensor~c1~2-par susceptibility tensor + 3 Euer angles~c2",
-                   "default"  : "c1",
-                   "repeater" : "true",
-                   "help"     : "required for predicting RDC or PCS"
-	          },
-                  {
-                   "role"     : "input",
-                   "id"       : "susceptibility_c1",
-                   "label"    : "5-par tensor (YY, ZZ, XY, XZ, YZ)",
-		   "type"     : "text",
-                   "default"  : "0,0,0,0,0",
-		   "repeat"   : "listboxsuscept:c1"
-                  },
-		  {
-                   "role"     : "input",
-                   "id"       : "susceptibility_c2",
-                   "label"    : "2-par tensor + 3 Euler angles",
-                   "type"     : "text",
-                   "default"  : "0,0,0,0,0",
-                   "repeat"   : "listboxsuscept:c2"
-                  },
-		  {
-                   "role"     : "input",
-                   "id"       : "frequency",
-                   "label"    : "spectrometer 1H frequency (for RDC, PRE)",
-                   "type"     : "text",
-                   "default"  : "10",
-                   "help"     : "Spectrometer 1H frequency (Larmor frequency), in MHz units"
-                  },
-                   {
-                   "role"       : "input",
-                   "id"       : "choose_pcs",
-                   "label"    : "predict PCSs",
-                   "type"     : "checkbox",
-		   "style"    : "switch",
-                   "checked"  : "true",
-		   "repeater" : "true"
-                   },
-		   {
-                   "role"       : "input",
-                   "id"       : "choose_rdc",
-                   "label"    : "predict RDCs",
-                   "type"     : "checkbox",
-                   "style"    : "switch",
-                   "checked"  : "false",
-                   "repeater" : "true"
-                   },
-                   {
-                   "role"       : "input",
-                   "id"       : "order_parameter",
-                   "label"    : "order parameter",
-                   "type"     : "text",
-		   "default"  : "0",
-                   "repeat"   : "choose_rdc"
-                   },
-		   {
-                   "role"       : "input",
-                   "id"       : "choose_pre",
-                   "label"    : "predict PREs",
-                   "type"     : "checkbox",
-                   "style"    : "switch",
-                   "checked"  : "false",
-                   "repeater" : "true"
-                   },
-		   {
-                   "role"       : "input",
-                   "id"       : "tauc",
-                   "label"    : "rotational correlation time TAUc",
-                   "type"     : "float",
-                   "default"  : "4.5",
-		   "step"     : "0.1",
-                   "repeat"   : "choose_pre"
-                   },
-		   {
-                   "role"       : "input",
-                   "id"       : "T2_dia",
-                   "label"    : "1H T2_dia time",
-                   "type"     : "float",
-                   "default"  : "0.05",
-                   "step"     : "0.1",
-                   "repeat"   : "choose_pre"
-                   },
-		   {
-                   "role"       : "input",
-                   "id"       : "exptime_checkbox",
-                   "label"    : "1H experiment time option",
-                   "type"     : "checkbox",
-                   "checked"  : "false",
-		   "repeater" : "true",
-                   "repeat"   : "choose_pre"
-                   },
-		   {
-                   "role"       : "input",
-                   "id"       : "exptime_1H",
-                   "label"    : "time",
-                   "type"     : "float",
-                   "default"  : "0.005",
-                   "repeat"   : "exptime_checkbox"
-                   },
-                  {
-                   "role"    : "output",
-                   "id"      : "progress_output",
-                   "label"   : "progress: ",
-                   "type"    : "progress",
-                   "max"     : 1.0
-                   },
-                  {
-                    "role"    : "output",
-                    "id"      : "progress_html",
-                    "name"    : "progress_html",
-                    "label"   : "percent done: ",
-                    "type"    : "html"
-                   },
-        	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_1"
-            	   #,"label"     : "bokeh_plot 1"
-            	   ,"type"      : "bokeh"
-                   },
-        	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_2"
-            	   #,"label"     : "bokeh_plot 2"
-            	   ,"type"      : "bokeh"
-                   },
-        	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_3"
-            	   #,"label"     : "bokeh_plot 3"
-            	   ,"type"      : "bokeh"
-                   },
-        	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_4"
-            	   #,"label"     : "bokeh_plot 4"
-            	   ,"type"      : "bokeh"
-                   },
-        	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_5"
-            	   #,"label"     : "bokeh_plot 5"
-            	   ,"type"      : "bokeh"
-                   },
-                   {
-                     "role"    : "output",
-                     "id"      : "report_html",
-                     "name"    : "report_html",
-                     "label"   : "report : ",
-                     "type"    : "html"
-                    }
-                 ],
+    "moduleid": "predict",
+    "label": "PREDICT",
+    "fields": [
+        {
+            "role": "input",
+            "id": "module_header",
+            "label": "PREDICT",
+            "type": "label",
+            "default": "header4",
+            "prehline": "true",
+            "posthline": "true"
+        },
+        {
+            "role": "input",
+            "id": "runname",
+            "label": "run name",
+            "type": "text",
+            "default": "run_0",
+            "required": "true",
+            "help": "results will be placed in a folder called pdbscan/ in the directory name you enter here"
+        },
+        {
+            "role": "input",
+            "id": "pdbfile",
+            "label": "pdb file input",
+            "type": "lrfile",
+            "required": "true",
+            "help": "name of PDB file you wish to scan",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "dcdfile",
+            "label": "pdb/dcd file input",
+            "type": "lrfile",
+            "required": "true",
+            "help": "name of PDB/DCD file you wish to scan",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            #CJ "id": "residueinput",
+            "id": "residue_flag",
+            "label": "residue input",
+            "type": "listbox",
+            "values": "none~c1~file input~c2~text input~c3",
+            "default": "c1",
+            "repeater": "true",
+            #CJ "repeat": "residue_flag",
+            "help": "options for inputting residue numbers (no input, file input, text input)"
+        },
+        {
+            "role": "input",
+            "id": "inclusionfile",
+            "label": "residue inclusion file", 
+            "type": "lrfile",
+            "repeat": "residue_flag:c2",
+            "help": "name of file with residue numbers/ranges to include"
+        },
+        {
+            "role": "input",
+            "id": "exclusionfile",
+            "label": "residue exclusion file", 
+            "type": "lrfile",
+            "repeat": "residue_flag:c2",
+            "help": "name of file with residue numbers/ranges to exclude"
+        },
+        {
+            "role": "input",
+            "id": "inclusiontext",
+            "label": "residue numbers/ranges to include", 
+            "type": "text",
+            "repeat": "residue_flag:c3",
+            "help": "comma-separated list with residue numbers/ranges to include"
+        },
+        {
+            "role": "input",
+            "id": "exclusiontext",
+            "label": "residue numbers/ranges to exclude", 
+            "type": "text",
+            "repeat": "residue_flag:c3",
+            "help": "comma-separated list with residue numbers/ranges to exclude"
+        },
+        {
+            "role": "input",
+            "id": "atomtypes",
+            "label": "atom names",
+            "type": "text",
+            "default": "CA, HA",
+            "help": "To predict RDCs, select two atom names. Otherwise, one atom type is required",
+            "norow": "false"
+        },
+        {
+            "role": "input",
+            "id": "paramagnetic_coord",
+            "label": "paramagnetic center position (for PCS, PRE)",
+            "type": "text",
+            "default": "0,0,0",
+            "help": "required for predicting PCSs or PREs"
+        },
+        {
+            "role": "input",
+            "id": "listboxsuscept",
+            "name": "listboxsuscept",
+            "label": "susceptibility (for RDC, PCS)",
+            "type": "listbox",
+            "values": "5-par susceptibility tensor~c1~2-par susceptibility tensor + 3 Euler angles~c2",
+            "default": "c1",
+            "repeater": "true",
+            "help": "required for predicting RDC or PCS"
+        },
+        {
+            "role": "input",
+            "id": "susceptibility_c1",
+            "label": "5-par susceptibility tensor",
+            "type": "text",
+            "default": "0,0,0,0,0",
+            "repeat": "listboxsuscept:c1"
+        },
+        {
+            "role": "input",
+            "id": "susceptibility_c2",
+            "label": "2-par susceptibility + 3 Euler",
+            "type": "text",
+            "default": "0,0,0,0,0",
+            "repeat": "listboxsuscept:c2"
+        },
+        {
+            "role": "input",
+            "id": "frequency",
+            "label": "frequency (for RDC, PRE)",
+            "type": "text",
+            "default": "10",
+            "help": "frequency in Hz"
+        },
+        {
+            "role": "input",
+            "id": "choose_pcs",
+            "label": "predict PCSs",
+            "type": "checkbox",
+            "style": "switch",
+            "checked": "true",
+            "repeater": "true"
+        },
+        {
+            "role": "input",
+            "id": "choose_rdc",
+            "label": "predict RDCs",
+            "type": "checkbox",
+            "style": "switch",
+            "checked": "false",
+            "repeater": "true"
+        },
+        {
+            "role": "input",
+            "id": "order_parameter",
+            "label": "order parameter",
+            "type": "text",
+            "default": "0",
+            "repeat": "choose_rdc"
+        },
+        {
+            "role": "input",
+            "id": "choose_pre",
+            "label": "predict PREs",
+            "type": "checkbox",
+            "style": "switch",
+            "checked": "false",
+            "repeater": "true"
+        },
+        {
+            "role": "input",
+            "id": "tauc",
+            "label": "rotational correlation time TAUc",
+            "type": "float",
+            "default": "4.5",
+            "step": "0.1",
+            "repeat": "choose_pre"
+        },
+        {
+            "role": "input",
+            "id": "T2_dia",
+            "label": "1H T2_dia time",
+            "type": "float",
+            "default": "0.05",
+            "step": "0.1",
+            "repeat": "choose_pre"
+        },
+        {
+            "role": "input",
+            "id": "more_options_checkbox",
+            "label": "additional input options",
+            "type": "checkbox",
+            "checked": "false",
+            "repeater": "true",
+            "repeat": "choose_pre"
+        },
+        {
+            "role": "input",
+            "id": "exptime_1H",
+            "label": "1H experimental time",
+            "type": "float",
+            "default": "0.005",
+            "repeat": "more_options_checkbox"
+        },
+        {
+            "role": "input",
+            "id": "spin",
+            "label": "paramagnetic spin",
+            "type": "float",
+            "default": "0.5",
+            "repeat": "more_options_checkbox"
+        },
+        {
+            "role": "output",
+            "id": "progress_output",
+            "label": "progress: ",
+            "type": "progress",
+            "max": 1.0
+        },
+        {
+            "role": "output",
+            "id": "progress_html",
+            "name": "progress_html",
+            "label": "percent done: ",
+            "type": "html"
+        },
+        {
+            "role": "output",
+            "id": "bokeh_plot_1",
+            #"label": "bokeh_plot 1",
+            #CJ This is a trick to make a placeholder at the webpage for bokeh plots 
+            "type": "bokeh"
+        },
+        {
+            "role": "output",
+            "id": "bokeh_plot_2",
+            	   #, 
+                   #CJ: If you put a comment here, you should end the above line with comma.
+                   #CJ: Web page will show the label bokeh_plot 2"
+            "label": "bokeh_plot 2",
+            "type": "bokeh"
+        },
+        {
+            "role": "output",
+            "id": "bokeh_plot_3",
+            	   #,
+            "label": "bokeh_plot 3",
+            "type": "bokeh"
+        },
+        {
+            "role": "output",
+            "id": "bokeh_plot_4",
+            	   #,
+            "label": "bokeh_plot 4",
+            "type": "bokeh"
+        },
+        {
+            "role": "output",
+            "id": "bokeh_plot_5",
+            	   #,
+            "label": "bokeh_plot 5",
+            "type": "bokeh"
+        },
+        {
+            "role": "output",
+            "id": "report_html",
+            "name": "report_html",
+            "label": "report : ",
+            "type": "html"
+        }
+    ],
 # the executable will take inputs in order and produce output
-    "executable" : "altens"
+    "executable": "altens"
 }

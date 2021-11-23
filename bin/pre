@@ -1,4 +1,5 @@
 #!/opt/miniconda2/bin/python
+###!/share/apps/local/anaconda2/bin/python
 import json
 import sys
 import os
@@ -127,6 +128,11 @@ class PRE_Drv():
             rdc_input_file = "./data/test_rdc_nh_caha_exclude_pro.txt"
             pdbfile = './data/1D3Z_1frame.pdb'
             dcdfile = './data/1D3Z_10frames.pdb'
+            residue_list_file_flag = False
+            residue_list_file = "reslist_Ub.txt"
+            use_monte_carlo_flag = True
+            number_of_monte_carlo_steps = '500'
+            seed = '1,123'
 
             UDP_IP = '127.0.0.1'
             UDP_PORT = 5005
@@ -203,11 +209,11 @@ class PRE_Drv():
 
             total_string = self.background_job(process, txtQueue, json_variables)
 
+        #output_dict['bokeh_plot_1'] = plotQueues['bokeh_plot_1'].get()
         try:
             output_dict['bokeh_plot_1'] = plotQueues['bokeh_plot_1'].get(
                 timeout=0.2)
         except:
-            
             pass
 
         sys.stdout.flush()

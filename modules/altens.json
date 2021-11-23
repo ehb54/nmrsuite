@@ -18,7 +18,7 @@
                    "label"    : "run name",
                    "type"     : "text",
                    "default"  : "run_0",
-#                   "required" : "true",
+                   "required" : "true",
                    "help"     : "results will be placed in a folder called pdbscan/ in the directory name you enter here"
                    },
                   {
@@ -26,45 +26,44 @@
                    "id"       : "pdbfile",
                    "label"   : "pdb file input",
                    "type"     : "lrfile",
-#                   "required" : "true",
-                   "help"     : "name of PDB file you wish to scan"
-#                   "norow"    : "false"
+                   "required" : "true",
+                   "help"     : "name of PDB file you wish to scan",
+                   "norow"    : "false"
                    },
                   {
                    "role"     : "input",
                    "id"       : "dcdfile",
                    "label"   : "pdb/dcd file input",
                    "type"     : "lrfile",
-#                   "required" : "true",
-                   "help"     : "name of PDB/DCD file you wish to scan"
-#                   "norow"    : "false"
+                   "required" : "true",
+                   "help"     : "name of PDB/DCD file you wish to scan",
+                   "norow"    : "false"
                    },
                   {
                    "role"     : "input",
                    "id"       : "rdc_input_file",
                    "label"   : "RDC data file",
                    "type"     : "lrfile",
-#                   "required" : "true",
-                   "help"     : "name of file with RDC data"
-#                   "norow"    : "false"
+                   "required" : "true",
+                   "help"     : "name of file with RDC data",
+                   "norow"    : "false"
                    },
                   {
                    "role"    : "input",
                    "id"      : "use_monte_carlo_flag_checkbox",
                    "label"   : "Monte Carlo sampling option",
                    "type"    : "checkbox",
-                   "style"    : "switch",
                    "help"    : "click box to enable Monte Carlo sampling",
                    "repeater": "true",
-                   "checked" : "false"
+                   "checked" : "true"
                    },
                   {
                    "role"     : "input",
                    "id"       : "number_of_monte_carlo_steps",
                    "label"    : "enter number of Monte Carlo steps",
-                   "type"     : "integer",
+                   "type"     : "text",
                    "default"  : "500",
-                   "step"     : 1,
+                   "size"     : 4,
                    "help"     : "supply appropriate value",
                    "repeat"   : "use_monte_carlo_flag_checkbox"
                   },
@@ -73,20 +72,19 @@
                    "id"      : "residue_list_file_flag_checkbox",
                    "label"   : "residue list file option",
                    "type"    : "checkbox",
-                   "style"    : "switch",
                    "help"    : "click box to use a residue list file",
                    "repeater": "true",
-                   "checked" : "false"
+                   "checked" : "true"
                    },
                   {
                    "role"     : "input",
                    "id"       : "residue_list_file",
                    "label"   : "exclusion list file",
                    "type"     : "lrfile",
-#                   "required" : "false",
+                   "required" : "false",
                    "help"     : "name of file with residue list to exclude",
-                   "repeat"   : "residue_list_file_flag_checkbox"
-#                   "norow"    : "false"
+                   "repeat"   : "residue_list_file_flag_checkbox",
+                   "norow"    : "false"
                    },
                   {
                    "role"    : "output",
