@@ -15,12 +15,12 @@ NMR Suite : SES Documentation
 awml:style="_Normal"><span style=
 "font-size:16pt;font-family:'Avenir'">
 <div style= "font-size:16pt;font-family:'Avenir'">
-<p>Sparse Ensemble Selection (SES) is an ensemble determination method based on the Maximum Parsimony (or Occam’s razor) principle. Given the initial input ensemble, SES method searches for the minimum size ensemble that ‘explains’ the experimental data. SES solves a minimization problem of the form:</span></p>
+<p>Sparse Ensemble Selection (SES) is an ensemble determination method based on the Maximum Parsimony (or Occam&rsquo;s razor) principle. Given the initial input ensemble, SES method searches for the minimum size ensemble that &lsquo;explains&rsquo; the experimental data. SES solves a minimization problem of the form:</span></p>
 <div class="">
   <img hspace="100px" src=pngs/equations.png></img>
 </div>
 
-<p>where <b>d</b> represents the experimental data, <b>A</b> is the matrix with predicted data, M is the solution ensemble size that will be chosen based on a L-curve, and <b>w</b> is the vector of weights assigned for each of the M conformers. The search starts with M=1 and increases M until the user-set upper M limit (termination condition l0max) is reached or there is no significant decrease in the &chi;<sup>2</sup> anymore – so the program will terminate automatically. See details in references [1,2]. This module is based on the program originally written in Java by Konstantin Berlin@UMD [1].
+<p>where <b>d</b> represents the experimental data, <b>A</b> is the matrix with predicted data, M is the solution ensemble size that will be chosen based on a L-curve, and <b>w</b> is the vector of weights assigned for each of the M conformers. The search starts with M=1 and increases M until the user-set upper M limit (termination condition l0max) is reached or there is no significant decrease in the &chi;<sup>2</sup> anymore &ndash; so the program will terminate automatically. See details in references [1,2]. This module is based on the program originally written in Java by Konstantin Berlin@UMD [1].
 </span></p>
 <br>
 <p><span style="font-weight:bold;font-size:18pt;font-family:'Avenir'">Running SES 
@@ -31,12 +31,12 @@ awml:style="_Normal"><span style=
 </div>
 
 <div style= "font-size:16pt;font-family:'Avenir'">
-  <p><b>run name:</b> name of the directory (under the current project) where the output of SES will be stored.  The output data can be accessed by clicking on the “file cabinet/drawer” image in the upper right corner of the web page: </p>
+  <p><b>run name:</b> name of the directory (under the current project) where the output of SES will be stored.  The output data can be accessed by clicking on the &ldquo;file cabinet/drawer&rdquo; image in the upper right corner of the web page: </p>
 <div class="">
   <img hspace="100px" src=pngs/filecabinet.png></img>
 </div>
 
-  <p><b>experimental data file:</b> upload your experimental data here. You can either browse your own computer using the “Browse local files” box or if you ran these data before on the server, you can find and load the data from the server using the “Browse server” option. The input data should be a text file (.txt, .dat etc) containing 2 columns and L rows; the first column contains the actual experimental data and the second column contains experimental errors. L is the number of data points (e.g. number of residues for NMR data or number of scattering vector lengths for SAS date, etc.). Here is an example for L = 10:
+  <p><b>experimental data file:</b> upload your experimental data here. You can either browse your own computer using the &ldquo;Browse local files&rdquo; box or if you ran these data before on the server, you can find and load the data from the server using the &ldquo;Browse server&rdquo; option. The input data should be a text file (.txt, .dat etc) containing 2 columns and L rows; the first column contains the actual experimental data and the second column contains experimental errors. L is the number of data points (e.g. number of residues for NMR data or number of scattering vector lengths for SAS date, etc.). Here is an example for L = 10:
 </p>
 <div class="">
   <img hspace="50px" src=pngs/data.png></img>
@@ -52,7 +52,7 @@ awml:style="_Normal"><span style=
 </p>
   <p><b>number of top solutions (K):</b>  it is the number of top solutions to store per iteration of the Multi-Orthogonal Matching Pursuit (OMP) algorithm (see [1]). The default value is K = 10000. 
 </p>
-  <p><b>best possible solution:</b>  if the flag is on, the program computes the best possible solution using all conformers in the input ensemble, with the purpose of determining the lowest possible values of the &chi;<sup>2</sup> and the relative error, in order to establish the “bottom line” for the L-curve. This calculation uses SVD and could take significant time – please be patient. 
+  <p><b>best possible solution:</b>  if the flag is on, the program computes the best possible solution using all conformers in the input ensemble, with the purpose of determining the lowest possible values of the &chi;<sup>2</sup> and the relative error, in order to establish the &ldquo;bottom line&rdquo; for the L-curve. This calculation uses SVD and could take significant time &ndash; please be patient. 
 </p>
   <p><b>Advanced Inputs:</b>  these input parameters allow you to define/control how you analyze the system. You can initially run SES with the default values for this entire part.
 </p>
@@ -70,24 +70,24 @@ awml:style="_Normal"><span style=
 <div class="">
   <img hspace="10px" src=pngs/pdbinputsinput.png></img>
 </div>
-<p><b>pdbfiles:</b>  for “local pdb directory” you only need to specify the folder on your computer where the pdb files are stored; for “local pdb files” you upload the pdb files by selecting all of them together; “server pdb path” is an option if your pdb files are already stored on the server.
+<p><b>pdbfiles:</b>  for &ldquo;local pdb directory&rdquo; you only need to specify the folder on your computer where the pdb files are stored; for &ldquo;local pdb files&rdquo; you upload the pdb files by selecting all of them together; &ldquo;server pdb path&rdquo; is an option if your pdb files are already stored on the server.
 </p>
 <p><b>align atoms:</b>  name of the atom type (e.g., CA) to use for alignment and RMSD computation during postprocess clustering. Set to * for any atom type. The default is alpha-carbons (CA). 
 </p>
-<p><b>outalign:</b>  this pull-down menu allows you to select the type of alignment for the structures in the output pdb file. For visualization purposes you can change how aligned the structures are. The options are “no alignment”, “align based on whole structure”, or “align by first chain” (for a multi-chain protein). 
+<p><b>outalign:</b>  this pull-down menu allows you to select the type of alignment for the structures in the output pdb file. For visualization purposes you can change how aligned the structures are. The options are &ldquo;no alignment&rdquo;, &ldquo;align based on whole structure&rdquo;, or &ldquo;align by first chain&rdquo; (for a multi-chain protein). 
 </p>
 <div class="">
   <img hspace="10px" src=pngs/outalign.png></img>
 </div>
 <p><b>rmsd (A):</b> specify the RMSD value (in Angstroms) to be used to cluster the solutions in the pdb output. The default rmsd value is 4 A. 
 </p>
-<p><b>l0max:</b> specify the maximum solution size to compute (the ensemble size search termination condition). A very large default l0max value means that SES will compute solutions of size: 1,2,3,4,… and so on until a point where computing for a larger size does not decrease the &chi;<sup>2</sup> anymore – and the program will terminate automatically. Choosing a smaller value (e.g., l0max = 6) based on what you expect for your system (l0max <span>&#8776;</span> M<sub>optimal</sub> +1 or M<sub>optimal</sub> +2) allows the calculation to finish faster. 
+<p><b>l0max:</b> specify the maximum solution size to compute (the ensemble size search termination condition). A very large default l0max value means that SES will compute solutions of size: 1,2,3,4,&hellip; and so on until a point where computing for a larger size does not decrease the &chi;<sup>2</sup> anymore &ndash; and the program will terminate automatically. Choosing a smaller value (e.g., l0max = 6) based on what you expect for your system (l0max <span>&#8776;</span> M<sub>optimal</sub> +1 or M<sub>optimal</sub> +2) allows the calculation to finish faster. 
 </p>
 <p><b>maxsum:</b> the maximum possible sum of the weights in a solution. Ideally, the sum of weights should equal 1, but it is not unusual that the sum exceeds this value, especially if there are some systematic errors in the prediction of the data. If you leave it free (the default <i>maxsum</i> is very large) the SES can choose solutions with the sum of weights above 1. 
 </p>
 <p><b>preconditioning: </b>preconditioning of the linear system before the run. The options are: 1) None or 2) Rotation and Compression. 
 </p>
-<p><b>reltol: </b>the M-OMP algorithm solver’s relative  error tolerance for termination.
+<p><b>reltol: </b>the M-OMP algorithm solver&rsquo;s relative  error tolerance for termination.
 </p>
 <p><b>top: </b> maximum relative error of top solutions relative to input. All output solutions have |error| &le; |error<sub>best solution</sub>|+top &times; ||d/&sigma;||<sub>2</sub>, where <b>d</b> and &sigma; are the experimental data and the errors, respectively. 
 </p>
@@ -95,12 +95,12 @@ awml:style="_Normal"><span style=
 <p><span style="font-weight:bold;font-size:18pt;font-family:'Avenir'">Output 
 </span></p>
 <br>
-<p>The output is stored in the “file cabinet”, which you can open by clicking on the “file cabinet/drawer” image in the upper right corner of the web page:
+<p>The output is stored in the &ldquo;file cabinet&rdquo;, which you can open by clicking on the &ldquo;file cabinet/drawer&rdquo; image in the upper right corner of the web page:
 </p>
 <div class="">
   <img hspace="100px" src=pngs/filecabinet.png></img>
 </div>
-<p>The default folder name in the files is “no_project_specified” but you can create new projects accordingly. Using “SES_test” as the name of the project, after running SES you find your input output data inside that folder. Below is an example for <i>run name</i> = test. 
+<p>The default folder name in the files is &ldquo;no_project_specified&rdquo; but you can create new projects accordingly. Using &ldquo;SES_test&rdquo; as the name of the project, after running SES you find your input output data inside that folder. Below is an example for <i>run name</i> = test. 
 </p>
 <div class="">
   <img hspace="100px" src=pngs/outputfiles.png></img>
@@ -116,12 +116,12 @@ awml:style="_Normal"><span style=
 </p>
 <p><b>output.txt</b> this text file contains a complete record of the SES calculation, including all input parameters/settings and the outputs for all the M (L0) values tested including the best solution for each M (L0). 
 </p>
-<p><b>solution</b> is the name of the <i>output directory</i> that was selected above as the input parameter. This directory contains your solution, stored as a text file named “general_solutions.txt” that contains all solution ensembles sorted by the ensemble size (M) and inside the ensemble size group by the &chi;<sup>2</sup>  value for the different solutions. Here is an example of such text file:
+<p><b>solution</b> is the name of the <i>output directory</i> that was selected above as the input parameter. This directory contains your solution, stored as a text file named &ldquo;general_solutions.txt&rdquo; that contains all solution ensembles sorted by the ensemble size (M) and inside the ensemble size group by the &chi;<sup>2</sup>  value for the different solutions. Here is an example of such text file:
 </p>
 <div class="">
   <img hspace="10px" src=pngs/solution.png></img>
 </div>
-<p>If the <b>pdb</b> flag is on, the <i>solution</i> folder will also contain additional files with names that read “general_ensemble_#1_#2.pdb”, where #1 is the solution size (M) and #2 is the order of the given solution among other solutions of the same size. These files contain atom coordinates (in the pdb format) of the structures/conformers comprising the corresponding ensemble solutions, and can be downloaded and visualized using various programs for protein structure visualization. 
+<p>If the <b>pdb</b> flag is on, the <i>solution</i> folder will also contain additional files with names that read &ldquo;general_ensemble_#1_#2.pdb&rdquo;, where #1 is the solution size (M) and #2 is the order of the given solution among other solutions of the same size. These files contain atom coordinates (in the pdb format) of the structures/conformers comprising the corresponding ensemble solutions, and can be downloaded and visualized using various programs for protein structure visualization. 
 </p>
 <br>
 <p><span style="font-weight:bold;font-size:18pt;font-family:'Avenir'">Screen Output 
@@ -146,9 +146,9 @@ awml:style="_Normal"><span style=
 <br>
 <p><span style="font-weight:bold;font-size:18pt;font-family:'Avenir'">References
 </span></p>
-<p>1.  K. Berlin, C. A. Castañeda, D. Schneidman-Duhovny, A. Sali, A. Nava-Tudela, and D. Fushman “Recovering a Representative Conformational Ensemble from Underdetermined Macromolecular Structural Data”,<b> J Am Chem Soc</b> (2013) 135, 16595–16609. http://dx.doi.org/10.1021/ja4083717 .
+<p>1.  K. Berlin, C. A. Casta&ntilde;eda, D. Schneidman-Duhovny, A. Sali, A. Nava-Tudela, and D. Fushman &ldquo;Recovering a Representative Conformational Ensemble from Underdetermined Macromolecular Structural Data&rdquo;,<b> J Am Chem Soc</b> (2013) 135, 16595&ndash;16609. http://dx.doi.org/10.1021/ja4083717 .
 </p>
-<p>2.  W. Andralojc, K. Berlin, D. Fushman, C. Luchinat, G. Parigi, E. Ravera, L. Sgheri, “Information content of long-range NMR data for the characterization of conformational heterogeneity”,<b> J Biomol NMR </b>(2015) 62, 353-371. http://dx.doi.org/10.1007/s10858-015-9951-6 .
+<p>2.  W. Andralojc, K. Berlin, D. Fushman, C. Luchinat, G. Parigi, E. Ravera, L. Sgheri, &ldquo;Information content of long-range NMR data for the characterization of conformational heterogeneity&rdquo;,<b> J Biomol NMR </b>(2015) 62, 353-371. http://dx.doi.org/10.1007/s10858-015-9951-6 .
 </p>
 </body>
 </html>
