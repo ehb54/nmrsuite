@@ -48,7 +48,7 @@ def absoluteFilePaths(directory):
     for dirpath, _, filenames in os.walk(directory):
         for f in filenames:
             path_list.append(os.path.abspath(os.path.join(dirpath, f)))
-    
+
     return path_list
 
 def joinFilePaths (f1, f2):
@@ -72,7 +72,7 @@ def stringToList (string): # This is used to convert the column and weights stri
 
 # DO NOT USE THIS FUNCTION FOR FILEPATHS
 # It often just leaves out huge sections of the filepath which caused a LOT of confusion in debugging
-def printQuit (string): # Prints a desired string 
+def printQuit (string): # Prints a desired string
     output = {}
     output["_textarea"] = str(string)
     print (json.dumps(output))
@@ -99,13 +99,13 @@ def getPlot (x, y, log = False): # This is for the top relative error plot
 
     # convert to dict
     #raise Exception ("Chart printed below \n\n {}. Chart variables are below \n\n".format(json.dumps(chart, indent=4)))
-    
+
 
 
 def main():
     argv_io_string = StringIO(sys.argv[1])                   # <--- Read in input JSON
     json_variables = json.load(argv_io_string)               # <--- Put input JSON into array
-    
+
     #java -jar sesgeneral-1.1.jar -out "output" -matrix "A_data.txt" -data "y_data.txt"
     #json_variables = {"outputdir": "output", "matrixfile": "A_data.txt", "datafile": "y_data.txt"}
 
@@ -134,7 +134,7 @@ def main():
     data = json.load(adjusted_json)
     adjusted_json.close() """
 
-    
+
     """
 
     json_file = module_prefix + "ses.json"
@@ -155,7 +155,7 @@ def main():
     with open("ses.json") as f:
         data = json.load(f) """
 
-    
+
     command = "java -jar {}sesgeneral-1.1.jar".format(bin_prefix)
 
     if ("module_header" in json_variables):
@@ -163,41 +163,41 @@ def main():
 
     if ("runname" in json_variables):
         runname = str(json_variables["runname"])
-            
+
     if ("datafile" in json_variables):
         datafile = str(json_variables["datafile"][0])
         #command += f' -data "{datafile}"'
         command += f' -data {datafile}'
-            
+
     if ("matrixfile" in json_variables):
         matrixfile = str(json_variables["matrixfile"][0])
         #command += f' -matrix "{matrixfile}"'
-        command += f' -matrix {matrixfile}'     
+        command += f' -matrix {matrixfile}'
 
     if ("outputdir" in json_variables):
         outputdir = str(json_variables["outputdir"])
         #command += f' -out "{outputdir}"'
         command += f' -out {outputdir}'
-            
+
     if ("number_topsolution" in json_variables):
         number_topsolution = str(json_variables["number_topsolution"])
         command += f" -K {number_topsolution}"
-            
+
     if ("nnls" in json_variables):
         nnls = str(json_variables["nnls"])
         command += " -best"
-            
+
     """ if ("advanced_input_label" in json_variables):
         advanced_input_label = str(json_variables["advanced_input_label"])
         command += f" -storejava {advanced_input_label}" """
-    
+
         # PDB stuff
     if ("pdb_flag" in json_variables):
         project_prefix = os.getcwd() + "/"
-            
+
         #pdb_flag = str(json_variables["pdb_flag"])
         choice = str(json_variables["pdbinput"]) # choice will be c1, c2, or c3
-        
+
         if (choice == "c1" or choice == "c2"):
             if (os.path.exists("PDB")):
                 shutil.rmtree("PDB")
@@ -224,7 +224,7 @@ def main():
             new_server_path = joinFilePaths(f1, f2)
 
             command += f" -pdb {new_server_path}"
-        
+
         else:
             raise Exception (f"There is no support for the choice '{choice}'")
 
@@ -232,11 +232,11 @@ def main():
         if ("align" in json_variables):
             align = str(json_variables["align"])
             command += f" -align {align}"
-            
+
         if ("outalign" in json_variables):
             outalign = str(json_variables["outalign"])
             command += f" -outalign {outalign}"
-            
+
         if ("rmsd" in json_variables):
             rmsd = str(json_variables["rmsd"])
             command += f" -rmsd {rmsd}"
@@ -244,19 +244,19 @@ def main():
     if ("l0max" in json_variables):
         l0max = str(json_variables["l0max"])
         command += f" -l0max {l0max}"
-        
+
     if ("maxsum" in json_variables):
         maxsum = str(json_variables["maxsum"])
         command += f" -maxsum {maxsum}"
-        
+
     if ("precond" in json_variables):
         precond = str(int(json_variables["precond"])-1)
         command += f" -precond {precond}"
-        
+
     if ("reltol" in json_variables):
         reltol = str(json_variables["reltol"])
         command += f" -reltol {reltol}"
-        
+
     if ("toperror" in json_variables):
         toperror = str(json_variables["toperror"])
         command += f" -top {toperror}"
@@ -269,7 +269,7 @@ def main():
 
     #printQuit(f"Value: {str(developer_debug_flag)} Type: {type(developer_debug_flag)}")
 
-    
+
 
     #command = f"""-K {number_topsolution} -align {align} -best {nnls} -data {datafile} -l0max {l0max}
     #-matrix {matrixfile} -maxsum {maxsum} -out {outputdir} -outalign {outalign} -pdb {pdbdirectory}
@@ -297,7 +297,7 @@ def main():
     output = f"Command: {command}      Output: {cmd_output}"
     lines = cmd_output.split("\n")
     #printQuit(cmd_output)
-    try: 
+    try:
         y = [x for x in lines if x.startswith("L-curve")][0]
     except Exception as e:
         outputStr = ""
@@ -306,7 +306,7 @@ def main():
         printQuit(outputStr)
 
     cmd_output.split("===Best L0")[0]
-    
+
 
     matrix = np.loadtxt(matrixfile)
 
@@ -314,11 +314,11 @@ def main():
     experimental_values = data[:, 0]
     experimental_errors = data[:, 1]
 
-    # AT THIS POINT IN THE CODE, WE HAVE THE COMMAND AND THE OUTPUT   
+    # AT THIS POINT IN THE CODE, WE HAVE THE COMMAND AND THE OUTPUT
     # Go to the end of this function for an explanation of why we are generating "newOutput"
 
     # WE ARE GOING TO CREATE THE LO FOLDER
-    L0_folder_name = "LO_Solutions_New"
+    L0_folder_name = "L0_Solutions"
     if os.path.exists(L0_folder_name):
         shutil.rmtree(L0_folder_name)
 
@@ -329,7 +329,7 @@ def main():
     L0_solution_lines_start = lines.index("Best solutions by l0-norm (column index starts at 1):")
     L0_solution_lines_end = [lines.index(l) for l in lines if l.startswith("L-curve: ")][0]
     L0_solution_lines = list(range(L0_solution_lines_start + 1, L0_solution_lines_end - 1))
-    
+
     newOutput = ""
 
     L0_numbers = []
@@ -346,7 +346,7 @@ def main():
             weights = np.array(stringToList(m.group(4))).astype(float)
         except:
             printQuit (f"""L0_solution_line: {L0_solution_line}\n\n""")
-        
+
 
         #output = f"{str(matrix)} \n {matrix.dtype} \n \n {str(columns)} \n {columns.dtype} \n \n {str(weights)} \n {weights.dtype} \n \n"
         #printQuit(output)
@@ -366,7 +366,7 @@ def main():
             \n\nMatrix[:, columns] shape: {matrix[:, columns].shape}
             \n\nWeights shape: {weights.shape}
             \n\nException: {e}""")
-        
+
         predicted_values = predicted_values.flatten()
         #printQuit(f"{experimental_errors.dtype}{np.square(np.subtract(experimental_values, predicted_values)).dtype}")
         #printQuit(np.square(np.subtract(experimental_values, predicted_values)))
@@ -390,7 +390,7 @@ def main():
         newOutput += f"===Best L0={l0_norm} Solution===\nRelative Error: {rel_error_value}\nChi2: {Chi2}\nL: {L}, Chi2/L: {Chi2/L}"
 
         #output = f"{tableString} \n\n Predicted Values: {str(predicted_values)} \n\n Experimental Values: {str(experimental_values)}"
-        
+
         columns = ["<index>", "<exp. value>", "<pred. value>", "<relative err.>"]
         data = data[:, 0]
 
@@ -398,15 +398,15 @@ def main():
         """
         printQuit(f"Data (shape: {data.shape}): {data}\n\nExperimental Values (shape: {experimental_values.shape}): {experimental_values}\n\nPredicted Values (shape: {predicted_values.shape}): {predicted_values}\n\nRelative Error Values (shape: {rel_error_values.shape}): {rel_error_values}\n\n")
         """
-        
+
         data = np.column_stack((indices, experimental_values, predicted_values, rel_error_values))
         data = np.round(data, 3)
- 
+
         template = "{0:10}|{1:15}|{2:15}|{3:15}"
         newOutput += "\n" + template.format(*columns) + "\n"
         for row in data:
             newOutput += template.format(*row) + "\n"
-        
+
         newOutput += "\n\n"
 
         # SAVE IN FILE
@@ -415,8 +415,8 @@ def main():
             df.to_csv("BestPossibleSolution.txt", sep='\t')
         else:
             df.to_csv("L0={}.txt".format(l0_norm), sep='\t')
-        
-        
+
+
         #for i in range (L):
             #newOutput += "\n" + "%.5f %.5f %.5f %.5f" % (indices[i], experimental_values[i], predicted_values[i], rel_error_value[i])
 
@@ -426,7 +426,7 @@ def main():
 
     # The below code adds the best possible solution as an L0-norm=0 line to the extracted L0_solution_lines
     # This is because it can be worked with in the same way
-    if ("nnls" in json_variables): 
+    if ("nnls" in json_variables):
         columns = ["Index", "Exp. Data Info", "Exp. Value" "Pred. Value", "Relative Err."]
 
         table = []
@@ -459,7 +459,7 @@ def main():
 
     #printQuit(newOutput)
     #printQuit(f"{newOutput} \n {outputStr}")
-    
+
     y = y[10:-1].split(", ")
     Lcurve_y = list(map(float, y))
     """ if (abs(float(Lcurve_y[0] - 1.0)) > 0.001):
@@ -511,7 +511,7 @@ if __name__ == '__main__':
     # Places standard output into runname folder
     if not os.path.exists("solution"):
         os.mkdir("solution")
-    
+
     os.chdir("solution")
     os.rename("general_solutions.dat", "general_solutions.txt")
     """ # Archives file if it already contains stuff (only archives one iteration)

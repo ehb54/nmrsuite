@@ -17,11 +17,11 @@
                     "id"    : "pre"
                     ,"label" : "PRE"
                 }
-		,{
+                ,{
                     "id"    : "rotdif_all"
                     ,"label" : "ROTDIF & Dynamics Analysis"
                 }
-#		,{
+#               ,{
 #                    "id"    : "test"
 #                    ,"label" : "test module"
 #                }
@@ -31,10 +31,10 @@
             "id"      : "predict_menu",
             "label"   : "Predict",
             "icon"    : "pngs/simulate.png",
-	    "modules" : [
+            "modules" : [
                 {
-                    "id"    : "predict"
-                    ,"label" : "PREDICT"
+                    "id"    : "parnmr"
+                    ,"label" : "PARNMR"
                 }
                 ,{
                     "id"    : "pati"
@@ -43,6 +43,10 @@
                 ,{
                     "id"    : "elm"
                     ,"label" : "Diffusion Tensor Prediction/ELM"
+                }
+                ,{
+                    "id"    : "rmsd_pairwise"
+                    ,"label" : "RMSD Pairwise"
                 }
             ]
         },
@@ -82,10 +86,10 @@
             "icon": "pngs/tutorial.png",
             "modules"   :[
                 {
-	            "id"       : "tutorial",
-	            "label"    : "ROTDIF tutorial"
-	        }
-	    ]
+                    "id"       : "tutorial",
+                    "label"    : "ROTDIF tutorial"
+                }
+            ]
         }
 
         ,{

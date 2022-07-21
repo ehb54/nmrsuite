@@ -8,18 +8,16 @@
 import numpy as np
 import os
 
-#from L_curveServerVersion import L_curve_for_best_lambda
-
 def filter_by_weight (run_directory):
     # Load all variables from their associated files in the 'result_of_maxent' folder
     A = np.loadtxt(os.path.join(run_directory, "A.txt"))
     lambda_ = np.loadtxt(os.path.join(run_directory, "lambda.txt")) #'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
-    x = np.loadtxt(os.path.join(run_directory, "weights.txt"))
-    y = np.loadtxt(os.path.join(run_directory, "data.txt"))
+    x = np.loadtxt(os.path.join(run_directory, "x.txt"))
+    y = np.loadtxt(os.path.join(run_directory, "y.txt"))
 
-    with open(os.path.join(run_directory, "index.txt"), "r") as f: index68 = int(f.read()) # Load index value from its file
+    with open(os.path.join(run_directory, "index.txt"), "r") as f: index68 = int(f.read()[0]) # Load index value from its file
 
-    std68 = np.std(x[:,index68]) 
+    std68 = np.std(x[:,index68])
     mean68 = np.mean(x[:,index68])
 
     def clustering(avg, sdevi, maxent):
@@ -32,12 +30,7 @@ def filter_by_weight (run_directory):
 
         return keep
 
-    keep68 = clustering(mean68, std68, x[:,index68])
-    keep68_weights = np.transpose(x[np.asarray(keep68, int)])[index68]
-    keep68_weights = np.divide(keep68_weights, np.sum(keep68_weights)) # Normalize
-    
-    # Corresponding weights
-    np.savetxt(os.path.join(run_directory, "cluster.txt"), np.transpose(np.vstack((keep68 + 1, keep68_weights)))) # Adds 1 to match 1-indexing (structures start with 1)
+    keep68 = clustering(mean68, std68, x[:,index68]) + 1
+    np.savetxt(os.path.join(run_directory, "cluster.txt"), keep68)
 
-#filter_by_weight("result_of_maxent43")
-
+#filter_by_weight("result_of_maxent")

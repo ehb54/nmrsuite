@@ -24,7 +24,7 @@ def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_u
 
   lambda_ = np.power(2, matlab_range(lambda_lower, lambda_step, lambda_upper)) # 'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
   best = scipy.optimize.nnls(A, y)[0] # PRODUCES X VECTOR; Python function: Nonnegative least squares
-  
+
   x0 = np.ones(np.shape(A)[1]) / np.shape(A)[1]
 
   w = np.ones(np.shape(A)[1]) * np.shape(A)[1] # Prior distribution vector
@@ -32,7 +32,7 @@ def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_u
   xsol = mymaxent(A, y, lambda_, w, x0+1.0e-6)
 
   #print (xsol)
-  
+
   xsol[:, 0] = best
   lambda_ = np.insert(lambda_, 0, 0)
   res = np.array([])
@@ -42,18 +42,18 @@ def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_u
     res = np.append(res, np.linalg.norm(y - np.matmul(A, xsol[:, i]))/np.linalg.norm(y))
     with np.errstate(divide='ignore', invalid='ignore'): # Ignores division by zero or invalid value errors
       lambdares = np.append(lambdares, np.sum(np.multiply(xsol[:, i], np.log(np.multiply(w, xsol[:, i]))))+np.sum(np.size(xsol[:,i])))
-  
+
   xnorm = np.array([])
   for i in range (np.shape(xsol)[1]):
     xnorm = np.append(xnorm, xsol[:,i]/np.sum(xsol[:,i]))
 
   if (os.path.exists(run_directory) == False):
     os.mkdir(run_directory)
-  
+
   np.savetxt(os.path.join(run_directory, "A.txt"), A)#, np.round(A, 5),  fmt='%f')
   np.savetxt(os.path.join(run_directory, "lambda.txt"), lambda_)#, np.round(lambda_, 5),  fmt='%f')
-  np.savetxt(os.path.join(run_directory, "x.txt"), xsol)#, np.round(xsol, 5),  fmt='%f')
-  np.savetxt(os.path.join(run_directory, "y.txt"), y)#, np.round(y, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "weights.txt"), xsol)#, np.round(xsol, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "data.txt"), y)#, np.round(y, 5),  fmt='%f')
 
   print ("Done.")
 
@@ -85,19 +85,19 @@ def mymaxent(A, y, lambda_, w, x0):
     # ub = ones(length(x0),1)
     # nonlcon = []
     # options = options
-    
+
     # Aeq and Beq means Aeq*x = beq and A*x ≤ b
     # lb and ub means solution x always between A and B (inclusive), so it can be anywhere from 0 all the way to 1
 
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
-    # For lb and ub use bounds 
+    # For lb and ub use bounds
     # For Aeq and Beq use constraints
-    # Aeq and Beq mean 
+    # Aeq and Beq mean
 
     # options = optimset('Display','off','Algorithm','interior-point','TolCon',1.0e-6,'TolFun',0,'TolX',1.0e-8,'GradObj','on','MaxIter',50000,...
     #  'DerivativeCheck','off','MaxFunEvals',50000,...
     #  'Diagnostics','off','FinDiffType','central','ScaleProblem','obj-and-constr','PlotFcns',[]);
-    
+
     args = (A, At, y, w, lambda_[i])
     lambda_value = lambda_[i]
     #bounds = Bounds(0, 1)
@@ -110,7 +110,7 @@ def mymaxent(A, y, lambda_, w, x0):
         maxcor=3,  # Number of previous gradients used to approximate the Hessian
         ftol=1e-6,
         gtol=1e-6,
-        maxfun=500,  
+        maxfun=500,
         maxiter=500,
         iprint=99
     )
@@ -228,10 +228,10 @@ def mymaxent(A, y, lambda_, w, x0):
         maxcor=3,  # Number of previous gradients used to approximate the Hessian
         ftol=1e-6,
         gtol=1e-6,
-        maxfun=50000,  
+        maxfun=50000,
         maxiter=50000,
     )
-    
+
     res = scipy.optimize.fmin_l_bfgs_b(func=myfun, x0=x0, args=args, approx_grad=True, bounds=bounds,
     m=3, factr=1e7, pgtol=1e-5, maxfun=50000, maxiter=50000) """
 
@@ -241,9 +241,8 @@ def mymaxent(A, y, lambda_, w, x0):
     '''
     scipy.optimize.minimize
     x0 = x0
-    
+
     '''
   return (xout)
 
 #run_max_entropy("MatrixA_test.txt", "y_test.txt", -0.6, 0.2, 7, "result_of_maxent")
-

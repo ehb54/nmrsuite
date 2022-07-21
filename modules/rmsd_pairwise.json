@@ -1,0 +1,144 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid": "rmsd_pairwise",
+    "label": "RMSD Pairwise",
+    "fields": [
+        {
+            "role": "input",
+            "id": "module_header",
+            "label": "RMSD Pairwise",
+            "type": "label",
+            "default": "header4",
+            "prehline": "true",
+            "posthline": "true"
+        },
+        {
+            "role": "input",
+            "id": "runname",
+            "label": "run name",
+            "type": "text",
+            "default": "run_0",
+            "required": "true",
+            "help": "results will be placed in a folder called pdbscan/ in the directory name you enter here"
+        },
+        {
+            "role": "input",
+            "id": "pdbinput",
+            "name": "pdbinput",
+            "label": "pdbinput",
+            "type": "listbox",
+            "values": "local pdb directory~c1~local pdb files~c2~server pdb path~c3",
+            "default": "c2",
+            "repeater": "true",
+            "help": "PDB input listbox"
+        },
+        {
+            "role": "input",
+            "id": "pdblocaldirectory",
+            "label": "pdbdirectory",
+            "type": "file",
+            "directory": "true",
+            "default": "pdb",
+            "repeat": "pdbinput:c1",
+            "help": "Select PDB directory from local computer"
+        },
+        {
+            "role": "input",
+            "id": "pdblocalfiles",
+            "label": "pdbfiles",
+            "type": "file",
+            "multiple": "true",
+            "repeat": "pdbinput:c2",
+            "help": "Select PDB files from local computer"
+        },
+        {
+            "role": "input",
+            "id": "pdbserverpath",
+            "label": "pdbpath",
+            "type": "rpath",
+            "repeat": "pdbinput:c3",
+            "help": "Select PDB directory from server"
+        },
+        {
+            "role": "input",
+            "id": "residue_flag",
+            "label": "residue input",
+            "type": "listbox",
+            "values": "none~c1~file input~c2~text input~c3",
+            "default": "c1",
+            "repeater": "true",
+            "help": "options for inputting residue numbers (no input, file input, text input)"
+        },
+        {
+            "role": "input",
+            "id": "inclusionfile",
+            "label": "residue inclusion file", 
+            "type": "lrfile",
+            "repeat": "residue_flag:c2",
+            "help": "name of file with residue numbers and inclusive ranges to include"
+        },
+        {
+            "role": "input",
+            "id": "exclusionfile",
+            "label": "residue exclusion file", 
+            "type": "lrfile",
+            "repeat": "residue_flag:c2",
+            "help": "name of file with residue numbers and inclusive ranges to exc alude"
+        },
+        {
+            "role": "input",
+            "id": "inclusiontext",
+            "label": "residue numbers/ranges to include", 
+            "type": "text",
+            "repeat": "residue_flag:c3",
+            "help": "comma-separated list with residue numbers and inclusive ranges to include"
+        },
+        {
+            "role": "input",
+            "id": "exclusiontext",
+            "label": "residue numbers/ranges to exclude", 
+            "type": "text",
+            "repeat": "residue_flag:c3",
+            "help": "comma-separated list with residue numbers and inclusive ranges to exclude"
+        },
+        {
+            "role": "input",
+            "id": "atomtypes",
+            "label": "atom names",
+            "type": "text",
+            "default": "CA, HA",
+            "help": "For multiple atom names, use a comma or space to separate them. For no atom names, leave this field blank.",
+            "norow": "false"
+        },
+        {
+            "role": "output",
+            "id": "progress_output",
+            "label": "progress: ",
+            "type": "progress",
+            "max": 1.0
+        },
+        {
+            "role": "output",
+            "id": "progress_html",
+            "name": "progress_html",
+            "label": "percent done: ",
+            "type": "html"
+        },
+        {
+            "role": "output",
+            "id": "bokeh_plot_1",
+            #"label": "bokeh_plot 1",
+            #CJ This is a trick to make a placeholder at the webpage for bokeh plots 
+            "type": "bokeh"
+        },
+        {
+            "role": "output",
+            "id": "report_html",
+            "name": "report_html",
+            "label": "report : ",
+            "type": "html"
+        }
+    ],
+# the executable will take inputs in order and produce output
+    "executable": "CalculateRMSD.py"
+}

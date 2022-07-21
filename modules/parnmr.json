@@ -1,12 +1,12 @@
 # this is a module file, any module specific info belongs here
 {
-    "moduleid": "predict",
-    "label": "PREDICT",
+    "moduleid": "parnmr",
+    "label": "PARNMR",
     "fields": [
         {
             "role": "input",
             "id": "module_header",
-            "label": "PREDICT",
+            "label": "PARNMR",
             "type": "label",
             "default": "header4",
             "prehline": "true",
@@ -23,32 +23,67 @@
         },
         {
             "role": "input",
-            "id": "pdbfile",
-            "label": "pdb file input",
-            "type": "lrfile",
-            "required": "true",
-            "help": "name of PDB file you wish to scan",
-            "norow": "false"
+            "id": "pdbinput",
+            "name": "pdbinput",
+            "label": "pdbinput",
+            "type": "listbox",
+            "values": "local pdb directory~c1~local pdb files~c2~server pdb path~c3",
+            "default": "c2",
+            "repeater": "true",
+            "help": "PDB input listbox"
         },
         {
             "role": "input",
-            "id": "dcdfile",
-            "label": "pdb/dcd file input",
-            "type": "lrfile",
-            "required": "true",
-            "help": "name of PDB/DCD file you wish to scan",
-            "norow": "false"
+            "id": "pdblocaldirectory",
+            "label": "pdbdirectory",
+            "type": "file",
+            "directory": "true",
+            "default": "pdb",
+            "repeat": "pdbinput:c1",
+            "help": "Select PDB directory from local computer"
         },
         {
             "role": "input",
-            #CJ "id": "residueinput",
+            "id": "pdblocalfiles",
+            "label": "pdbfiles",
+            "type": "file",
+            "multiple": "true",
+            "repeat": "pdbinput:c2",
+            "help": "Select PDB files from local computer"
+        },
+        {
+            "role": "input",
+            "id": "pdbserverpath",
+            "label": "pdbpath",
+            "type": "rpath",
+            "repeat": "pdbinput:c3",
+            "help": "Select PDB directory from server"
+        },
+        {
+            "role": "input",
+            "id": "pdb_model",
+            "label": "pdb model",
+            "type": "text",
+            "default": "0",
+            "help": "Select PDB model number"
+        },
+        #{
+        #    "role": "input",
+        #    "id": "dcdfile",
+        #    "label": "pdb/dcd file input",
+        #    "type": "lrfile",
+        #    "required": "true",
+        #    "help": "name of PDB/DCD file you wish to scan",
+        #    "norow": "false"
+        #},
+        {
+            "role": "input",
             "id": "residue_flag",
             "label": "residue input",
             "type": "listbox",
             "values": "none~c1~file input~c2~text input~c3",
             "default": "c1",
             "repeater": "true",
-            #CJ "repeat": "residue_flag",
             "help": "options for inputting residue numbers (no input, file input, text input)"
         },
         {
@@ -57,7 +92,7 @@
             "label": "residue inclusion file", 
             "type": "lrfile",
             "repeat": "residue_flag:c2",
-            "help": "name of file with residue numbers/ranges to include"
+            "help": "name of file with residue numbers and inclusive ranges to include"
         },
         {
             "role": "input",
@@ -65,7 +100,7 @@
             "label": "residue exclusion file", 
             "type": "lrfile",
             "repeat": "residue_flag:c2",
-            "help": "name of file with residue numbers/ranges to exclude"
+            "help": "name of file with residue numbers and inclusive ranges to exc alude"
         },
         {
             "role": "input",
@@ -73,7 +108,7 @@
             "label": "residue numbers/ranges to include", 
             "type": "text",
             "repeat": "residue_flag:c3",
-            "help": "comma-separated list with residue numbers/ranges to include"
+            "help": "comma-separated list with residue numbers and inclusive ranges to include"
         },
         {
             "role": "input",
@@ -81,7 +116,7 @@
             "label": "residue numbers/ranges to exclude", 
             "type": "text",
             "repeat": "residue_flag:c3",
-            "help": "comma-separated list with residue numbers/ranges to exclude"
+            "help": "comma-separated list with residue numbers and inclusive ranges to exclude"
         },
         {
             "role": "input",
@@ -89,7 +124,7 @@
             "label": "atom names",
             "type": "text",
             "default": "CA, HA",
-            "help": "To predict RDCs, select two atom names. Otherwise, one atom type is required",
+            "help": "Two comma-separated or space-separated atom names are required for predict RDCs. Other predict programs will accept more than one atom name but only use the first.",
             "norow": "false"
         },
         {
@@ -137,6 +172,14 @@
         },
         {
             "role": "input",
+            "id": "chainID",
+            "label": "chain ID",
+            "type": "text",
+            "default": "A",
+            "help": "The chain on the PDB file that will be selected"
+        },
+        {
+            "role": "input",
             "id": "choose_pcs",
             "label": "predict PCSs",
             "type": "checkbox",
@@ -159,6 +202,14 @@
             "label": "order parameter",
             "type": "text",
             "default": "0",
+            "repeat": "choose_rdc"
+        },
+        {
+            "role": "input",
+            "id": "temp",
+            "label": "temperature",
+            "type": "text",
+            "default": "298",
             "repeat": "choose_rdc"
         },
         {
@@ -190,20 +241,11 @@
         },
         {
             "role": "input",
-            "id": "more_options_checkbox",
-            "label": "additional input options",
-            "type": "checkbox",
-            "checked": "false",
-            "repeater": "true",
-            "repeat": "choose_pre"
-        },
-        {
-            "role": "input",
             "id": "exptime_1H",
             "label": "1H experimental time",
             "type": "float",
             "default": "0.005",
-            "repeat": "more_options_checkbox"
+            "repeat": "choose_pre"
         },
         {
             "role": "input",
@@ -211,7 +253,7 @@
             "label": "paramagnetic spin",
             "type": "float",
             "default": "0.5",
-            "repeat": "more_options_checkbox"
+            "repeat": "choose_pre"
         },
         {
             "role": "output",
@@ -273,5 +315,5 @@
         }
     ],
 # the executable will take inputs in order and produce output
-    "executable": "altens"
+    "executable": "predict.py"
 }

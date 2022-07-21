@@ -1,7 +1,6 @@
 #!/opt/miniconda3/bin/python
 
 import json, sys, time, os
-import numpy as np
 from io import StringIO ## for Python3
 from genapp3 import genapp ## python3
 from maxent_scripts.RunMaxEntropy import run_max_entropy
@@ -39,11 +38,10 @@ if __name__=='__main__':
                 lambda_upper = float(json_variables["lambda_upper_bound"])
                 sigma = float(json_variables["sigma"]) # For outliers
                 run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_upper, run_directory)
-                line_plot, histogram, scatter_plot = L_curve_for_best_lambda(run_directory, sigma)
-                output_str += f"Uploaded maximum entropy result files (A.txt, index.txt, lambda.txt, weights.txt, data.txt) to {run_directory}\n"
+                line_plot, histogram = L_curve_for_best_lambda(run_directory, sigma)
+                output_str += f"Uploaded maximum entropy result files (A.txt, index.txt, lambda.txt, x.txt, y.txt) to {run_directory}\n"
                 output['lineplot'] = line_plot
                 output['histogram'] = histogram
-                output['scatterplot'] = scatter_plot
                 output_str += f"Created L_curve plots\n"
 
 

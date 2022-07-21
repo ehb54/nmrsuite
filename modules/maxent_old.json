@@ -4,9 +4,9 @@
     "label": "MaxEnt",
     "executable": "maxent.py",
     "dependencies" : [
-        { "base" : "python3" }
-        ,{ "conda" : [ "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" ] }
-        ,{ "pip" : "csaps" }
+	{ "base" : "python3" }
+	,{ "conda" : [ "numpy", "scipy", "matplotlib", "-c conda-forge cyipopt" ] }
+	,{ "pip" : "csaps" }
     ]
     ,"fields": [
         {
@@ -109,7 +109,7 @@
             "help": "upper bound to generate lambda values",
             "repeat": "maxent_checkbox"
         },
-        {
+	{
             "role": "input",
             "id": "sigma",
             "label": "tolerance for removing outliers",
@@ -121,7 +121,7 @@
             "help": "percent of the range of the function which values can deviate from the curve before being considered outliers",
             "repeat": "maxent_checkbox"
         },
-        {
+	{
             "role": "input",
             "id": "filter_by_weight_checkbox",
             "label": "run filter by weight",
@@ -139,51 +139,13 @@
             "style": "switch",
             "repeater": "true",
             "help": "click box to run cluster by rmsd"
-        },
-        {
+        },{
             "role": "input",
             "id": "structure_directory",
             "label": "structure files directory",
             "type": "lrfile",
             "repeat": "cluster_by_rmsd_checkbox",
             "help": "input directory where the structure files are located"
-        },
-        {
-            "role": "input",
-            "id": "structure_input",
-            "label": "structure input",
-            "type": "listbox",
-            "values": "local structure directory~c1~local structure files~c2~server structure path~c3",
-            "default": "c2",
-            "repeater": "true",
-            "repeat": "cluster_by_rmsd_checkbox",
-            "help": "structure files input listbox"
-        },
-        {
-            "role": "input",
-            "id": "local_structure_directory",
-            "label": "local structure directory",
-            "type": "file",
-            "directory": "true",
-            "repeat": "structure_input:c1",
-            "help": "Select structure directory from local computer"
-        },
-        {
-            "role": "input",
-            "id": "local_structure_files",
-            "label": "local structure files",
-            "type": "file",
-            "multiple": "true",
-            "repeat": "structure_input:c2",
-            "help": "Select structure files from local computer"
-        },
-        {
-            "role": "input",
-            "id": "server_structure_path",
-            "label": "server structure path",
-            "type": "rpath",
-            "repeat": "structure_input:c3",
-            "help": "Select structure directory from server"
         },
         {
             "role": "output",
@@ -201,12 +163,6 @@
         {
             "role": "output",
             "id": "histogram",
-            "label": "",
-            "type": "plotly"
-        },
-        {
-            "role": "output",
-            "id": "scatterplot",
             "label": "",
             "type": "plotly"
         },

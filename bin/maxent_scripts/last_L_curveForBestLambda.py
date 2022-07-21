@@ -85,7 +85,7 @@ def L_curve_for_best_lambda (run_directory, sigma):
     A = np.loadtxt(os.path.join(run_directory, "A.txt"))
     lambda_ = np.loadtxt(os.path.join(run_directory, "lambda.txt")) #'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
     x = np.loadtxt(os.path.join(run_directory, "weights.txt"))
-    y = np.loadtxt(os.path.join(run_directory, "data.txt"))
+    y = np.loadtxt(os.path.join(run_directory, "y.txt"))
 
     y_prime = np.array([])
 
@@ -124,10 +124,7 @@ def L_curve_for_best_lambda (run_directory, sigma):
 
     chosen_lambda = lambda_[index]
 
-    with open(os.path.join(run_directory, "index.txt"), "w") as f: f.write(str(index68[0]))
-
-    # X: y
-    # Y: A*x[:,index68]
+    with open(os.path.join(run_directory, "index.txt"), "w") as f: f.write(str(index68))
 
     line_plot = {
         "data": [
@@ -192,58 +189,9 @@ def L_curve_for_best_lambda (run_directory, sigma):
             }
         }
 
-    scatter_x = y.tolist()
-    scatter_y = np.reshape(np.matmul(A, x[:,index68]), -1).tolist()
-
-    # The below code finds the lowest value between x and y
-
-    minimum_x = min(scatter_x)
-    minimum_y = min(scatter_y)
-    first_point = min(minimum_x, minimum_y)
-
-    # Same thing as above but for maximum
-
-    maximum_x = max(scatter_x)
-    maximum_y = max(scatter_y)
-    second_point = max(maximum_x, maximum_y)
-
-
-    scatter_plot = {
-        "data": [
-            {
-                "x": [first_point, second_point],
-                "y": [first_point, second_point],
-                "mode": "lines",
-                "marker": {
-                    "color": "Black"
-                },
-                "name": "Agreement"
-            },
-            {
-                "x": scatter_x,
-                "y": scatter_y,
-                "mode": "markers",
-                "marker": {
-                    "color": "Green"
-                },
-                "name": "Data"          
-            }
-        ],
-        "layout": {
-            "title": "Agreement between Experimental and Predicted Data",
-            "xaxis": {
-                "title": "Experimental Data"
-            },
-            "yaxis": {
-                "title": "Predicted Data",
-            }
-        }
-    }
-
-
 
     line_plot_figure = go.Figure(line_plot)
-    line_plot_figure.write_image(os.path.join(run_directory, "l_curve.png"))
+    line_plot_figure.write_image(os.path.join(run_directory, "line_plot.png"))
 
 
     """ fig = make_subplots(rows=1, cols=2, subplot_titles=("Plot 1", "Plot 2"))
@@ -272,7 +220,7 @@ def L_curve_for_best_lambda (run_directory, sigma):
 
     fig.show() """
 
-    return line_plot, histogram, scatter_plot
+    return line_plot, histogram
 
 #L_curve_for_best_lambda("result_of_maxent")
 
