@@ -33,6 +33,7 @@
 	            ,"id"         : "run_name"
 	            ,"label"      : "Run Name"
 	            ,"type"       : "text"
+		    ,"default"    : "run_0"
 	            ,"required"   : "true"
 	            ,"help"       : "Enter a name to run this task"
 	        },

@@ -27,6 +27,7 @@
 	            ,"label"      : "Run Name"
 	            ,"type"       : "text"
 	            ,"required"   : "true"
+		    ,"default"    : "run_0"
 	            ,"help"       : "Enter a name to run this task"
 	        },
 ################################################################

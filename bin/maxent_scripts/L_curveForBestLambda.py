@@ -26,12 +26,14 @@ def lcurve_points(y, A, x, lambda_):
 
     w = np.ones((np.shape(A)[1], 1)) * np.shape(A)[1] #vector filled with the number of maximum size(A,1) of A
 
-    r = np.empty((np.shape(Ax)[1], np.shape(Ax)[0]))
-    rn = np.empty(np.shape(Ax)[1])
-    xval = np.empty(np.shape(Ax)[1])
-    f = np.empty(np.shape(Ax)[1])
+    length = np.shape(Ax)[1]
 
-    for i in range (np.shape(Ax)[1]): #Returns Chi^2 for each lambda.
+    r = np.empty((length, np.shape(Ax)[0]))
+    rn = np.empty(length)
+    xval = np.empty(length)
+    f = np.empty(length)
+
+    for i in range (length): #Returns Chi^2 for each lambda.
         r[i, :] = Ax[:,i] - y
         rn[i] = np.linalg.norm(r[i,:])/np.linalg.norm(y)
 
@@ -47,7 +49,6 @@ def lcurve_points(y, A, x, lambda_):
     """ x = np.log(xval[1:])
     y = np.log(f[1:])
     smoothing_factor = .995 """
-
     
     x_par = np.log(xval) #x has to be strictly increasing
     #y_par = np.flip(np.log(f))
@@ -64,13 +65,13 @@ def lcurve_points(y, A, x, lambda_):
     f = f[indices]
 
     pp = CubicSmoothingSpline(x_par, y_par, smooth=0.995).spline
-    p_first = pp.derivative(nu=1)
     p_second = pp.derivative(nu=2)
     y_prime = p_second(np.log(xval))
 
     y_prime = np.flip(y_prime)
 
     [index,v] = index_max(y_prime)
+    index += 1
 
     full_x = np.linspace(np.min(np.log(xval)),np.max(np.log(xval)), 200)
     ydf2_full = p_second(full_x)
@@ -84,14 +85,15 @@ def lcurve_points(y, A, x, lambda_):
 def L_curve_for_best_lambda (run_directory, sigma):
     A = np.loadtxt(os.path.join(run_directory, "A.txt"))
     lambda_ = np.loadtxt(os.path.join(run_directory, "lambda.txt")) #'lambda' is a reserved keyword in Python, so a trailing underscore was added to the variable name per the style guide
-    x = np.loadtxt(os.path.join(run_directory, "weights.txt"))
+    x = np.loadtxt(os.path.join(run_directory, "weights_for_all_lambdas.txt"))
     y = np.loadtxt(os.path.join(run_directory, "data.txt"))
 
     y_prime = np.array([])
 
     x = x[:, 1:] #excluding the results with lambda = 0
-    lambda68 = lambda_[1:] #from results_of_maxent
+    lambda68 = lambda_#[1:] #from results_of_maxent
     
+    #return lcurve_points(y, A, x, lambda68)
     [index,x68,y68, pp] = lcurve_points(y, A, x, lambda68)
 
     lambda_ = lambda68 #The lambda will have the size shortened, but we want to still have the full lambda68
@@ -121,6 +123,7 @@ def L_curve_for_best_lambda (run_directory, sigma):
             break
 
     index68 = np.where(lambda68 == lambda_[index])[0]
+    index68 += 1
 
     chosen_lambda = lambda_[index]
 
@@ -150,8 +153,8 @@ def L_curve_for_best_lambda (run_directory, sigma):
                 "name": "Spline fit"
             },
                         {
-                "x": [np.log(x68[index])],
-                "y": [np.log(y68[index])],
+                "x": [np.log(x68[index-1])],
+                "y": [np.log(y68[index-1])],
                 "mode": "markers",
                 "line": {
                     "color": "Red"

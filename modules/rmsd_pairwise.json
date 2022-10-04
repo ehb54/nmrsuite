@@ -140,5 +140,5 @@
         }
     ],
 # the executable will take inputs in order and produce output
-    "executable": "CalculateRMSD.py"
+    "executable": "calculate_rmsd.py"
 }

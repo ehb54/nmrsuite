@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
-L0_folder_name = "L0_Solutions"
+L0_folder_name = "LO_Solutions_New"
 
 def printQuit (string):
     output = {}
@@ -34,7 +34,7 @@ def L0Plot (L0_number):
 
     #output = f"Index: {index}; Type: {type(index)}.        Exp Value Type :{type(exp_value)}"
     #printQuit(output)
-
+    
     # Finds the min values and max values for the graph
     min_x = np.min(exp_value)
     min_y = np.min(pred_value)
@@ -61,7 +61,7 @@ def L0Plot (L0_number):
 
     os.chdir("..")
 
-    # Prints coor coeff and rel error, the two things we need
+    # Prints coor coeff and rel error, the two things we need    
     return exp_value.tolist(), pred_value.tolist(), index.tolist(), min_abs, max_abs, corr_coeff, rel_error#, corr_coeff
 
 #saveL0Solutions(open("output.txt", "r").readlines())
@@ -75,7 +75,7 @@ def saveAndPlot(L0_numbers, Chi2L_numbers, rel_error_numbers):
     L0_to_rel_error =  dict(zip(L0_numbers, rel_error_numbers))
 
     height = num_L0s * 500
-
+    
     subplot_titles = []
     for L0_number in L0_numbers:
         if (L0_number == 0):
@@ -118,7 +118,7 @@ def saveAndPlot(L0_numbers, Chi2L_numbers, rel_error_numbers):
             L0_number = 0
         else:
             L0_number = int(re.sub("[^0-9]", "", text))
-
+        
         [R, Q] = additions_to_titles[L0_number]
         Chi2L = L0_to_Chi2L[L0_number]
         rel_error = L0_to_rel_error[L0_number]
@@ -136,3 +136,5 @@ def saveAndPlot(L0_numbers, Chi2L_numbers, rel_error_numbers):
     #fig["data"] = fig["data"].append(fig["data"].pop(0))
 
     return fig.to_dict()
+
+    # Look up "alias" |-><-| check running a .sh file (e.g. mygit.sh) .bat instead of .sh  also command lit

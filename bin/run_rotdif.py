@@ -115,8 +115,8 @@ def rotdif(in_dock,Pdbfilename,Relaxfilename,sub_dir):
     master_rotdif, slave_rotdif = pty.openpty()
     ProcessRotdif = subprocess.Popen( ProcessToCallRotdif,stdout=slave_rotdif,stdin=PIPE,bufsize=0,close_fds=True)    
     stdout_rotdif = os.fdopen(master_rotdif, 'r', 0)
-    rotdif_log = open('rotdif_log.out','w')
-    path_to_live_log = join(str(base_dir),'rotdif_log.out')
+    rotdif_log = open('rotdif_results.out','w')
+    path_to_live_log = join(str(base_dir),'rotdif_results.out')
     error_string_md = ''
     timeout = 4 # seconds
 

@@ -46,14 +46,42 @@ def printQuit (string): # Prints a desired string
 
 def joinFilePaths (f1, f2):
     return f1 + '/' + '/'.join([i for i in f2.split('/') if i not in f1.split('/')])
-            
+
 
 def getResidueNumbers (inclusion_text, exclusion_text):
     inclusion_set = set(inputToList(inclusion_text))
     exclusion_set = set(inputToList(exclusion_text))
     residue_numbers = np.array(list(inclusion_set - exclusion_set))
-    
+
     return residue_numbers
+
+def makeBarChart (predicted_data, data_type):
+    residue_numbers = predicted_data[:,0].tolist()
+    chart = {
+            "data": [
+                {
+                    "x": residue_numbers, # Convert to string
+                    "y": predicted_data[:,1].tolist(),
+                    "text": residue_numbers,
+                    "type": "bar",
+                    "marker": {
+                        "color": "Red"
+                    }
+                }
+            ],
+            "layout": {
+                    "title": f"Predicted {data_type} Data for the First Structure",
+                    "xaxis": {
+                        "title": "Residue Number"
+                    },
+                    "yaxis": {
+                        "title": f"Predicted {data_type} Value",
+                        #"range": [np.min(leg[:,0])-0.05*np.min(leg[:,0]), np.max(leg[:,0])+0.1*np.max(leg[:,0])]
+                    },
+            }
+        }
+    
+    return chart
 
 if __name__=='__main__':
 
@@ -74,34 +102,28 @@ if __name__=='__main__':
         if not os.path.exists(runname):
             os.mkdir(runname)
         os.chdir(runname)
-        
+
         if not os.path.exists("Predict"):
             os.mkdir("Predict")
         os.chdir("Predict")
-        
+
         if os.path.exists("PDB"):
             shutil.rmtree("PDB")
         os.mkdir("PDB")
 
         os.chdir("../")
 
-        #pdb_flag = str(json_variables["pdb_flag"])
         choice = str(json_variables["pdbinput"]) # choice will be c1, c2, or c3
 
         if (choice == "c1" or choice == "c2"):
             if (choice == "c1"):
                 files = json_variables["pdblocaldirectory"] # C1 returns a list of files
-    
+
             if (choice == "c2"):
                 files = json_variables["pdblocalfiles"] # C2 returns a list of files
 
-            #printQuit(str(files) + str(os.getcwd()) + str(os.listdir()))
-
             for filename in files:
                 shutil.move(filename, os.path.join("Predict", "PDB"))#shutil.move(os.path.join(project_prefix, filename), "PDB")
-            
-            #printQuit(files)
-            #command += f" -pdb {project_prefix + 'PDB'}"
 
         elif (choice == "c3"):
             server_path = json_variables["pdbserverpath"][0]
@@ -113,14 +135,10 @@ if __name__=='__main__':
             f2 = server_path.split("users/")[1] # Takes all after users
             new_server_path = joinFilePaths(f1, f2)
 
-            #command += f" -pdb {new_server_path}"
-
         else:
             raise Exception (f"There is no support for the choice '{choice}'")
 
-            #command += f" -pdb {project_prefix + 'PDB'}"
 
-        
         os.chdir("Predict")
 
         pdb_filenames = []
@@ -129,7 +147,8 @@ if __name__=='__main__':
             new_filename = "PDB/" + filename
             pdb_filenames.append(new_filename)
 
-        pdb_model = int(json_variables["pdb_model"])
+        pdb_model = int(json_variables["pdb_model"]) - 1
+        chainID = str(json_variables["chainID"]).strip()
 
         reslist = np.array([])
 
@@ -145,7 +164,7 @@ if __name__=='__main__':
             exclusion_text = json_variables["exclusiontext"]
             reslist = getResidueNumbers(inclusion_text, exclusion_text) # Originally named residue_numbers
 
-            
+
         #printQuit(pdb_filenames)
 
         '''
@@ -162,9 +181,13 @@ if __name__=='__main__':
             pdb_filename_current = pdb_filename.replace(pdb_number, str(num).zfill(pdb_number_count))
             pdb_filenames.append(pdb_filename_current)
         '''
-        
+
         if (pre_chosen or pcs_chosen):
             SL_position = line_csv_to_arr(json_variables["paramagnetic_coord"])
+            atom_type = json_variables["atomtypes"]
+
+            if ("," in atom_type or " " in atom_type): #If more than one atom type was given, will only pick the first
+                atom_type = atom_type.split(",")[0].strip()
 
         if (pre_chosen or rdc_chosen):
             freq = float(json_variables["frequency"])
@@ -176,11 +199,11 @@ if __name__=='__main__':
             spin = float(json_variables["spin"])
             gammaRatio = 1 # Not sure what to do with this
 
-            predictedPREIsEmpty = True 
+            predictedPREIsEmpty = True
 
             predictedPRE = ""
             for pdb_filename in pdb_filenames:
-                current_predictedPRE = predictPRE(reslist, T2dia, TAUc, Htime, SL_position, freq, pdb_filename, spin, gammaRatio, pdb_model)
+                current_predictedPRE = predictPRE(reslist, T2dia, TAUc, Htime, SL_position, freq, pdb_filename, spin, gammaRatio, pdb_model, chainID, atom_type)
                 if (predictedPREIsEmpty):
                     predictedPRE = current_predictedPRE
                     #printQuit(predictedPRE)
@@ -189,23 +212,17 @@ if __name__=='__main__':
                     predictedPRE = np.concatenate((predictedPRE, np.reshape(current_predictedPRE[:, -1], (-1, 1))), axis=1)
 
             np.savetxt("predictedPRE.txt", predictedPRE)
-            output_str += str(predictedPRE) + "\n"
-            
-        if (pcs_chosen or rdc_chosen): 
-            chainID = str(json_variables["chainID"]).strip()
-            #printQuit(chainID)
+            output_str += "PRE:\n" + str(predictedPRE) + "\n"
 
+        if (pcs_chosen or rdc_chosen):
             #reslist = np.array([-0.2073, 0.2761, 0.1499, -0.1655, 0.3134]) #FIX
             if (json_variables["listboxsuscept"] == "c1"):
                 susceptibility_tensor = line_csv_to_arr(json_variables["susceptibility_c1"])
             else:
                 susceptibility_tensor = getTensorFromEuler(json_variables["susceptibility_c2"])
-        
+
 
         if (pcs_chosen):
-            atom_type = json_variables["atomtypes"]
-            if ("," in atom_type or " " in atom_type): # If more than one atom type was given, will only pick the first
-                atom_type = atom_type.split(",")[0].strip()
 
             predictedPCS = ""
             predictedPCSIsEmpty = True
@@ -221,7 +238,7 @@ if __name__=='__main__':
                     predictedPCS = np.concatenate((predictedPCS, np.reshape(current_predictedPCS[:, -1], (-1, 1))), axis=1)
             #printQuit(predictedPCS)
             np.savetxt("predictedPCS.txt", predictedPCS)
-            output_str += str(predictedPCS) + "\n"
+            output_str += "PCS:\n" + str(predictedPCS) + "\n"
 
         if (rdc_chosen):
             [atom1, atom2] = json_variables["atomtypes"].split(",")
@@ -229,7 +246,7 @@ if __name__=='__main__':
             atom2 = atom2.strip()
             Sorder = float(json_variables["order_parameter"])
             T = float(json_variables["temp"])
-            
+
             predictedRDC = ""
             predictedRDCIsEmpty = True
 
@@ -246,8 +263,12 @@ if __name__=='__main__':
                     predictedRDC = np.concatenate((predictedRDC, np.reshape(current_predictedRDC[:, 1], (-1, 1))), axis=1)
 
             np.savetxt("predictedRDC.txt", predictedRDC)
-            output_str += str(predictedRDC) + "\n"
+            output_str += "RDC:\n" + str(predictedRDC) + "\n"
 
         output['_textarea'] = output_str
+
+        if (pre_chosen): output['pre_graph'] = makeBarChart(predictedPRE, "PRE")
+        if (pcs_chosen): output['pcs_graph'] = makeBarChart(predictedPCS, "PCS")
+        if (rdc_chosen): output['rdc_graph'] = makeBarChart(predictedRDC, "RDC")
 
         print(json.dumps(output))

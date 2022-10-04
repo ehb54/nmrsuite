@@ -9,10 +9,18 @@ from maxent_scripts.L_curveForBestLambda import L_curve_for_best_lambda
 from maxent_scripts.FilterByWeight import filter_by_weight
 from maxent_scripts.ClusterByRMSD import cluster_by_rmsd
 
+from scipy.cluster.hierarchy import dendrogram, fcluster, linkage
+
 
 # function to check if a checkbox was checked by seeing if its id exists in the JSON
 is_checked = lambda json_variables, checkbox_id : checkbox_id in json_variables.keys()
+sortrows = lambda matrix: matrix[np.lexsort(matrix.T[::-1])] # Equivalent of Matlab's sortrows
 
+def printQuit (string): # Prints a desired string
+    output = {}
+    output["_textarea"] = str(string)
+    print (json.dumps(output))
+    quit()
 
 if __name__=='__main__':
 
@@ -39,8 +47,9 @@ if __name__=='__main__':
                 lambda_upper = float(json_variables["lambda_upper_bound"])
                 sigma = float(json_variables["sigma"]) # For outliers
                 run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_upper, run_directory)
+                #printQuit(L_curve_for_best_lambda(run_directory, sigma))
                 line_plot, histogram, scatter_plot = L_curve_for_best_lambda(run_directory, sigma)
-                output_str += f"Uploaded maximum entropy result files (A.txt, index.txt, lambda.txt, weights.txt, data.txt) to {run_directory}\n"
+                output_str += f"Uploaded maximum entropy result files (A.txt, index.txt, lambda.txt, weights_for_all_lambdas.txt, data.txt) to {run_directory}\n"
                 output['lineplot'] = line_plot
                 output['histogram'] = histogram
                 output['scatterplot'] = scatter_plot
@@ -49,15 +58,17 @@ if __name__=='__main__':
 
         if is_checked(json_variables, "filter_by_weight_checkbox"):
                 filter_by_weight(run_directory)
+                #printQuit(filter_by_weight(run_directory))
                 output_str += f"Uploaded filter_by_weight result vector 'keep68' to {run_directory}/cluster.txt\n"
-
+        
+        '''
         if is_checked(json_variables, "cluster_by_rmsd_checkbox"):
                 structure_directory = json_variables["structure_directory"][0]
                 cluster_by_rmsd(run_directory, structure_directory)
                 output_str += f"Uploaded cluster_by_rmsd result matrices 'weights' and 'structs' to {run_directory}/cluster.txt\n"
+        '''
 
-        ga.udpprogress(0);
-#        ga.udpmessage( { "_textarea" : "udp message to _textarea\n" } );
+        #        ga.udpmessage( { "_textarea" : "udp message to _textarea\n" } );
 
 #        ga.udpprogress(0.5);
 
@@ -67,11 +78,55 @@ if __name__=='__main__':
         # output final object to the UI
         output['progress_html'] = 1.0
         output['_textarea'] = output_str
-        string = ""
-        for key in output.keys():
-                string += str(key)# + str(type(value))
-        #output = {}
-        #output['_textarea'] = output_str
+
+        if is_checked(json_variables, "cluster_by_rmsd_checkbox"):
+                tree_filename = json_variables["tree_input"][0]
+                rmsd_cut = json_variables["rmsd_cut"]
+
+                tree = np.loadtxt(tree_filename)
+
+                keep68 = np.loadtxt(os.path.join(run_directory, "cluster.txt"))[:,0].astype(int)
+                #printQuit(keep68)
+                index68 = np.loadtxt(os.path.join(run_directory, "index.txt")).astype(int)
+
+                xsol = np.loadtxt(os.path.join(run_directory, "weights_for_all_lambdas.txt"))[:, index68]
+
+                T = fcluster(Z=tree, t=rmsd_cut, criterion="distance") # the RMSD clustering is chose to be 4A in here
+
+                size = np.size(keep68)
+                new_T = np.zeros((size, 2))
+
+                new_T[:,0] = keep68        
+                new_T[:,1] = T[keep68-1]
+
+                #T = T_matrix[T_matrix[:,0].argsort()]
+                new_T = sortrows(new_T) # using lambda function
+
+
+                # Here, the representative of the cluster is chosen
+                # The representative is the structure with the highest initial weight (assigned by max entropy)
+                # The final weight of the representative is the summation of weights for every point in the cluster
+
+                aux1 = np.unique(new_T[:,1])
+                num_clusters = np.size(aux1)
+
+                weights = np.empty(num_clusters)
+                structs = np.empty(num_clusters)
+                
+                for i in range (num_clusters):
+                        aux = np.where(new_T[:,1] == aux1[i])[0]
+                        x = xsol[new_T[aux,0].astype(int)-1]
+                        weights[i] = np.sum(x)
+                        structs[i] = np.where(xsol == np.max(x))[0]+1
+
+                struct_sort = np.argsort(structs)
+                structs = structs[struct_sort]
+                weights = weights[struct_sort]
+                weights = np.divide(weights, np.sum(weights)) # Normalize weights
+                
+                np.savetxt(os.path.join(run_directory, "result_after_cluster.txt"), np.column_stack((structs, weights)))
+                output_str += f"Uploaded structure vectors 'structs' and 'weights' to {run_directory}/result_after_cluster.txt\n"
+
         print(json.dumps(output))
 
 '''

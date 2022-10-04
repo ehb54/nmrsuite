@@ -45,7 +45,7 @@
                    "label"   : "PCS data file",
                    "type"     : "lrfile",
                    "required" : "true",
-                   "help"     : "name of file with RDC data",
+                   "help"     : "name of file with PCS data - first line should be something like &#35; A N where A is the chain ID and N is the atom type",
                    "norow"    : "false"
                    },
 		   {

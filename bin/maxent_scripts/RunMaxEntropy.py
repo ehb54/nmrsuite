@@ -52,7 +52,7 @@ def run_max_entropy (A_filename, y_filename, lambda_lower, lambda_step, lambda_u
 
   np.savetxt(os.path.join(run_directory, "A.txt"), A)#, np.round(A, 5),  fmt='%f')
   np.savetxt(os.path.join(run_directory, "lambda.txt"), lambda_)#, np.round(lambda_, 5),  fmt='%f')
-  np.savetxt(os.path.join(run_directory, "weights.txt"), xsol)#, np.round(xsol, 5),  fmt='%f')
+  np.savetxt(os.path.join(run_directory, "weights_for_all_lambdas.txt"), xsol)#, np.round(xsol, 5),  fmt='%f')
   np.savetxt(os.path.join(run_directory, "data.txt"), y)#, np.round(y, 5),  fmt='%f')
 
   print ("Done.")

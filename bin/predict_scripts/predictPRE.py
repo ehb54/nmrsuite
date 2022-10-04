@@ -17,7 +17,7 @@ import math as m
 #def predictPREHelper (atom_coordinates, residue_nums, atom_type, XYZ_coordinates, freq, T2dia, OneHT2, TauC):
 
 
-def predictPRE (reslist, T2dia, TAUc, Htime, SL_position, freq, pdb_filename, spin = 1/2, gammaRatio = 1, pdb_model = 0, chainID = "A"):
+def predictPRE (reslist, T2dia, TAUc, Htime, SL_position, freq, pdb_filename, spin = 1/2, gammaRatio = 1, pdb_model = 0, chainID = "A", atom_type = "H"):
     # DO PCS stuff
     omega = freq * gammaRatio * 2 * m.pi * 1e6   
     S = spin
@@ -27,7 +27,7 @@ def predictPRE (reslist, T2dia, TAUc, Htime, SL_position, freq, pdb_filename, sp
     R2dia = 1/float(T2dia)
     factor = d2 * (4 * tauC + 3 * tauC / float(1 + (omega * tauC) ** 2))
 
-    readpdb_output = readpdb(fname = pdb_filename, reslst = reslist, atlst = np.array(["N"]), model_num = 0, chainID = "A")
+    readpdb_output = readpdb(fname = pdb_filename, reslst = reslist, atlst = np.array([atom_type]), model_num = 0, chainID = chainID)
     NH_coord = readpdb_output[0]
     reslst = readpdb_output[2]
     #pdb2nhcoor(fname = pdb_filename, model = pdb_model, chainID = chainID)

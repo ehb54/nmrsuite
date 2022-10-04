@@ -2,8 +2,8 @@
     "moduleid": "ses",
     "label": "SES",
     "dependencies" : [
-	{ "base" : "python3" }
-	,{ "conda" : [ "numpy", "pandas", "plotly" ] }
+        { "base" : "python3" }
+        ,{ "conda" : [ "numpy", "pandas", "plotly" ] }
     ],
     "fields": [
         {
@@ -74,6 +74,71 @@
         },
         {
             "role": "input",
+            "id": "display_results",
+            "label": "display results",
+            "type": "checkbox",
+            "checked": "false",
+            "style": "switch",
+            "repeater": "true",
+            "help": "click box to display results"
+        },
+        {
+            "role": "input",
+            "id": "number",
+            "label": "number of solutions to display",
+            "type": "integer",
+            "default": 4,
+            "step": 1,
+            "min": 1,
+            "max": 1000000000,
+            "repeat": "display_results",
+            "help": "Number of different solutions ranked by Chi2 that you wants to see displayed"
+        },
+        {
+            "role": "input",
+            "id": "size",
+            "label": "size of solutions",
+            "type": "integer",
+            "default": 4,
+            "step": 1,
+            "min": 1,
+            "max": 1000000000,
+            "repeat": "display_results",
+            "help": "Size of the solutions you want to focus on, choose based on the L curve. Run SES first without the display_results flag and choose the size accordingly."
+        },
+        {
+            "role": "input",
+            "id": "cluster_by_rmsd_checkbox",
+            "label": "run cluster by rmsd",
+            "type": "checkbox",
+            "checked": "false",
+            "style": "switch",
+            "repeater": "true",
+            "repeat": "display_results",
+            "help": "click box to run cluster by rmsd"
+        },
+        {
+            "role": "input",
+            "id": "tree_input",
+            "label": "tree input file",
+            "type": "lrfile",
+            "help": "rmsd tree input from rmsd pairwise in predict module",
+            "repeat": "cluster_by_rmsd_checkbox"
+        },
+        {
+            "role": "input",
+            "id": "rmsd_cut",
+            "label": "rmsd cut",
+            "type": "float",
+            "default": 4.0,
+            "min": 0,
+            "max": 2147483647,
+            "step": 0.1,
+            "help": "by how many Angstroms you want to cluster structures by RMSD",
+            "repeat": "cluster_by_rmsd_checkbox"
+        },
+        {
+            "role": "input",
             "id": "advanced_input_label",
             "label": "Advanced Inputs",
             "type": "label",
@@ -104,7 +169,7 @@
         {
             "role": "input",
             "id": "pdblocaldirectory",
-            "label": "pdbdirectory", 
+            "label": "pdbdirectory",
             "type": "file",
             "directory": "true",
             "default": "pdb",
@@ -238,6 +303,24 @@
         {
             "role": "output",
             "id": "scatterplot",
+            "label": "",
+            "type": "plotly"
+        },
+        {
+            "role": "output",
+            "id": "figure_1",
+            "label": "",
+            "type": "plotly"
+        },
+        {
+            "role": "output",
+            "id": "figure_2",
+            "label": "",
+            "type": "plotly"
+        },
+        {
+            "role": "output",
+            "id": "figure_3",
             "label": "",
             "type": "plotly"
         }

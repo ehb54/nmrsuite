@@ -37,20 +37,70 @@
                    "required" : "true",
                    "help"     : "name of PDB/DCD file you wish to scan",
 		   "norow"    : "false"
-                   },
+                  },
                   {
                    "role"     : "input",
                    "id"       : "ratiofile",
-                   "label"   : "Experimental PRE data file",
+                   "label"   : "experimental PRE data file",
                    "type"     : "lrfile",
                    "required" : "true",
-#                   "help"     : "Data file containing for each residue the ratio of signal intensities, Ipara/Idia,<\br> in the spectra recorded with the paramagnetic moiety in the paramagnetic (oxidized) and in the diamagnetic (reduced) states"
+                   "help"     : "Data file containing for each residue the ratio of signal intensities, Ipara/Idia, in the spectra recorded with the paramagnetic moiety in the paramagnetic (oxidized) and in the diamagnetic (reduced) states - first line should be something like &#35; A N where A is the chain ID and N is the atom type",
                    "norow"    : "false"
 		  },
                   {
                    "role"     : "input",
+                   "id"       : "model",
+                   "label"    : "pdb model",
+                   "type"     : "text",
+                   "default"  : "1",
+                   "help"     : "Select PDB model number"
+                  },
+	          {
+	           "role"     : "input",
+	           "id"       : "residue_flag",
+	           "label"    : "residue input",
+	           "type"     : "listbox",
+	           "values"   : "all~c1~file input~c2~text input~c3",
+	           "default"  : "c1",
+	           "repeater" : "true",
+	           "help"     : "options for inputting residue numbers (no input, file input, text input)"
+	          },
+	          {
+	           "role"     : "input",
+	           "id"       : "inclusionfile",
+	           "label"    : "residue inclusion file",
+	           "type"     : "lrfile",
+	           "repeat"   : "residue_flag:c2",
+	           "help"     : "name of file with residue numbers and inclusive ranges to include"
+	          },
+	          {
+	           "role"     : "input",
+	           "id"       : "exclusionfile",
+	           "label"    : "residue exclusion file",
+	           "type"     : "lrfile",
+	           "repeat"   : "residue_flag:c2",
+	           "help"     : "name of file with residue numbers and inclusive ranges to exc alude"
+	          },
+	          {
+	           "role"     : "input",
+	           "id"       : "inclusiontext",
+	           "label"    : "residue numbers/ranges to include",
+	           "type"     : "text",
+	           "repeat"   : "residue_flag:c3",
+	           "help"     : "comma-separated list with residue numbers, colon for ranges and inclusive ranges to include"
+	          },
+	          {
+	           "role"     : "input",
+	           "id"       : "exclusiontext",
+	           "label"    : "residue numbers/ranges to exclude",
+	           "type"     : "text",
+	           "repeat"   : "residue_flag:c3",
+	           "help"     : "comma-separated list with residue numbers, colon for ranges and inclusive ranges to exclude"
+  	          },
+                  {
+                   "role"     : "input",
                    "id"       : "T2dia",
-                   "label"    : "1H T2_dia time",
+                   "label"    : "1H T2_dia time [ms]",
                    "type"     : "float",
                    "default"  : 0.05,
                    "step"     : 0.01,
@@ -62,7 +112,7 @@
                   {
                    "role"     : "input",
                    "id"       : "Htime",
-                   "label"    : "1H time during experiment",
+                   "label"    : "1H time during experiment [ms]",
                    "type"     : "float",
                    "default"  : 0.005,
                    "step"     : 0.001,
@@ -74,7 +124,7 @@
 		  {
                    "role"     : "input",
                    "id"       : "freq",
-                   "label"    : "Spectrometer 1H Frequency",
+                   "label"    : "spectrometer 1H Frequency [MHz]",
                    "type"     : "float",
                    "default"  : 600.0,
                    "step"     : 1.0,
@@ -86,7 +136,7 @@
 		  {
                    "role"     : "input",
                    "id"       : "TAUc",
-                   "label"    : "Rotational correlation time TAUc",
+                   "label"    : "rotational correlation time TAUc [ns]",
                    "type"     : "float",
                    "default"  : 4.5,
                    "step"     : 0.1,
@@ -95,12 +145,19 @@
 		   "norow"    : "false",
                    "help"     : "The overall rotational correlation time of the protein molecule, in nanoseconds."
                   },
+		  {
+		   "role"     : "input",
+		   "id"	      : "scaling",
+		   "label"    : "scaling",
+		   "type"     : "float",
+		   "default"  : "1.0"
+		  },
                   {
-                   "role"    : "output",
-                   "id"      : "progress_output",
-                   "label"   : "progress: ",
-                   "type"    : "progress",
-                   "max"     : 1.0
+                   "role"     : "output",
+                   "id"       : "progress_output",
+                   "label"    : "progress: ",
+                   "type"     : "progress",
+                   "max"      : 1.0
                    },
                   {
                     "role"    : "output",
@@ -110,10 +167,10 @@
                     "type"    : "html"
                    },
         	   {
-            	   "role"       : "output"
-            	   ,"id"        : "bokeh_plot_1"
-            	   #,"label"     : "bokeh_plot 1"
-            	   ,"type"      : "bokeh"
+            	   "role"     : "output"
+            	   ,"id"      : "bokeh_plot_1"
+            	   #,"label"  : "bokeh_plot 1"
+            	   ,"type"    : "bokeh"
                    }
                  ],
 # the executable will take inputs in order and produce output

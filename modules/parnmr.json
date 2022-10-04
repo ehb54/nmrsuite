@@ -1,3 +1,4 @@
+
 # this is a module file, any module specific info belongs here
 {
     "moduleid": "parnmr",
@@ -64,7 +65,7 @@
             "id": "pdb_model",
             "label": "pdb model",
             "type": "text",
-            "default": "0",
+            "default": "1",
             "help": "Select PDB model number"
         },
         #{
@@ -81,7 +82,7 @@
             "id": "residue_flag",
             "label": "residue input",
             "type": "listbox",
-            "values": "none~c1~file input~c2~text input~c3",
+            "values": "all~c1~file input~c2~text input~c3",
             "default": "c1",
             "repeater": "true",
             "help": "options for inputting residue numbers (no input, file input, text input)"
@@ -89,7 +90,7 @@
         {
             "role": "input",
             "id": "inclusionfile",
-            "label": "residue inclusion file", 
+            "label": "residue inclusion file",
             "type": "lrfile",
             "repeat": "residue_flag:c2",
             "help": "name of file with residue numbers and inclusive ranges to include"
@@ -97,7 +98,7 @@
         {
             "role": "input",
             "id": "exclusionfile",
-            "label": "residue exclusion file", 
+            "label": "residue exclusion file",
             "type": "lrfile",
             "repeat": "residue_flag:c2",
             "help": "name of file with residue numbers and inclusive ranges to exc alude"
@@ -105,7 +106,7 @@
         {
             "role": "input",
             "id": "inclusiontext",
-            "label": "residue numbers/ranges to include", 
+            "label": "residue numbers/ranges to include",
             "type": "text",
             "repeat": "residue_flag:c3",
             "help": "comma-separated list with residue numbers and inclusive ranges to include"
@@ -113,7 +114,7 @@
         {
             "role": "input",
             "id": "exclusiontext",
-            "label": "residue numbers/ranges to exclude", 
+            "label": "residue numbers/ranges to exclude",
             "type": "text",
             "repeat": "residue_flag:c3",
             "help": "comma-separated list with residue numbers and inclusive ranges to exclude"
@@ -123,14 +124,14 @@
             "id": "atomtypes",
             "label": "atom names",
             "type": "text",
-            "default": "CA, HA",
-            "help": "Two comma-separated or space-separated atom names are required for predict RDCs. Other predict programs will accept more than one atom name but only use the first.",
+            "default": "N, H",
+            "help": "Two comma-separated or space-separated atom names are required for predict RDCs. PCS and PRE will accept more than one atom name but only use the first.",
             "norow": "false"
         },
         {
             "role": "input",
             "id": "paramagnetic_coord",
-            "label": "paramagnetic center position (for PCS, PRE)",
+            "label": "paramagnetic center position (for PCS, PRE) [Angstroms]",
             "type": "text",
             "default": "0,0,0",
             "help": "required for predicting PCSs or PREs"
@@ -165,10 +166,10 @@
         {
             "role": "input",
             "id": "frequency",
-            "label": "frequency (for RDC, PRE)",
+            "label": "frequency (for RDC, PRE) [MHz]",
             "type": "text",
-            "default": "10",
-            "help": "frequency in Hz"
+            "default": "600",
+            "help": "frequency in MHz"
         },
         {
             "role": "input",
@@ -201,13 +202,13 @@
             "id": "order_parameter",
             "label": "order parameter",
             "type": "text",
-            "default": "0",
+            "default": "1",
             "repeat": "choose_rdc"
         },
         {
             "role": "input",
             "id": "temp",
-            "label": "temperature",
+            "label": "temperature [K]",
             "type": "text",
             "default": "298",
             "repeat": "choose_rdc"
@@ -224,7 +225,7 @@
         {
             "role": "input",
             "id": "tauc",
-            "label": "rotational correlation time TAUc",
+            "label": "rotational correlation time TAUc [ns]",
             "type": "float",
             "default": "4.5",
             "step": "0.1",
@@ -233,7 +234,7 @@
         {
             "role": "input",
             "id": "T2_dia",
-            "label": "1H T2_dia time",
+            "label": "1H T2_dia time [ms]",
             "type": "float",
             "default": "0.05",
             "step": "0.1",
@@ -242,7 +243,7 @@
         {
             "role": "input",
             "id": "exptime_1H",
-            "label": "1H experimental time",
+            "label": "1H experimental time [ms]",
             "type": "float",
             "default": "0.005",
             "repeat": "choose_pre"
@@ -271,47 +272,21 @@
         },
         {
             "role": "output",
-            "id": "bokeh_plot_1",
-            #"label": "bokeh_plot 1",
-            #CJ This is a trick to make a placeholder at the webpage for bokeh plots 
-            "type": "bokeh"
+            "id": "pre_graph",
+            "label": "",
+            "type": "plotly"
         },
         {
             "role": "output",
-            "id": "bokeh_plot_2",
-            	   #, 
-                   #CJ: If you put a comment here, you should end the above line with comma.
-                   #CJ: Web page will show the label bokeh_plot 2"
-            "label": "bokeh_plot 2",
-            "type": "bokeh"
+            "id": "pcs_graph",
+            "label": "",
+            "type": "plotly"
         },
         {
             "role": "output",
-            "id": "bokeh_plot_3",
-            	   #,
-            "label": "bokeh_plot 3",
-            "type": "bokeh"
-        },
-        {
-            "role": "output",
-            "id": "bokeh_plot_4",
-            	   #,
-            "label": "bokeh_plot 4",
-            "type": "bokeh"
-        },
-        {
-            "role": "output",
-            "id": "bokeh_plot_5",
-            	   #,
-            "label": "bokeh_plot 5",
-            "type": "bokeh"
-        },
-        {
-            "role": "output",
-            "id": "report_html",
-            "name": "report_html",
-            "label": "report : ",
-            "type": "html"
+            "id": "rdc_graph",
+            "label": "",
+            "type": "plotly"
         }
     ],
 # the executable will take inputs in order and produce output

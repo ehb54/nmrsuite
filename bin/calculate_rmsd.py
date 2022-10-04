@@ -162,14 +162,16 @@ if __name__=='__main__':
             for chain in model_a:
                 for residue in chain:
                     if (reslistIsEmpty or np.isin(int(residue.id[1]), reslist)):
-                        atoms_a = np.append(atoms_a, residue)#['CA'])
-            
+                        atoms_a = np.append(atoms_a, residue['CA'])#['CA'])
+        
             for chain in model_b:
                 for residue in chain:
                     if (reslistIsEmpty or np.isin(int(residue.id[1]), reslist)):
-                        atoms_b = np.append(atoms_b, residue)#['CA'])
+                        atoms_b = np.append(atoms_b, residue['CA'])#['CA'])
+
 
             super_imposer = PDB.Superimposer()
+            #printQuit(str(np.size(atoms_a)) + "\n" + str(np.size(atoms_b)))
             super_imposer.set_atoms(atoms_a, atoms_b)
             super_imposer.apply(model_b.get_atoms())
 
@@ -182,7 +184,9 @@ if __name__=='__main__':
         tree = linkage(v,'average')
 
         output = {}
-        output_str = str(rmsd_array) + "\n" + str(tree)
+        output_str = ""#str(rmsd_array) + "\n" + str(tree)
+        np.savetxt("rmsd.txt", rmsd_array)
+        np.savetxt("tree.txt", tree)
         output['_textarea'] = output_str
 
         print(json.dumps(output))

@@ -8,7 +8,7 @@ import sys
 import subprocess
 import json
 import cStringIO
-import shlex 
+import shlex
 import socket
 import time
 import pty
@@ -28,7 +28,7 @@ from subprocess import Popen, PIPE, STDOUT
 #import our functions
 from run_rotdif import rotdif
 from plot_2d_3d import plot_2d_3d
-from plot_exp import exp_plot 
+from plot_exp import exp_plot
 from plot_vec import vec_plot
 from plot_iso import iso_plot
 from plot_axi import axi_plot
@@ -46,7 +46,7 @@ import shutil
 if __name__ == "__main__":
     color_list=[ '#1f77b4','#ff7f0e','#2ca02c','#d62728', '#9467bd',\
 '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22','#17becf']
-    json_variables = " " 
+    json_variables = " "
     InitialDirectoryStr = os.path.abspath(os.path.dirname(sys.argv[0]))
     argv_io_string = StringIO(sys.argv[1])
     json_variables = json.load(argv_io_string)
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     output_res, base_dir, dyna_flag, elm_flag, elmdock_flag = rotdif(to_dock,old_pdb,old_relax,sub_dir)
     exp_graph,exp_keys,exp_resi,dyna_resi = exp_plot(color_list, dyna_flag, elm_flag, elmdock_flag,old_relax)
     outputmd_arr_files = []
-    log_out = [join(str(base_dir),join(sub_dir,'rotdif_log.out'))]
+    log_out = [join(str(base_dir),join(sub_dir,'rotdif_results.out'))]
     ani_out = [join(str(base_dir),join(sub_dir, 'out_ani.py'))]
     axi_out = [join(str(base_dir),join(sub_dir, 'out_axial.py'))]
 
@@ -79,15 +79,15 @@ if __name__ == "__main__":
         output_res[ 'diso_plot' ] = diso_plot(color_list, exp_keys, to_dock, dyna_flag, elm_flag, elmdock_flag)
         output_res[ 'daxi_plot' ] = daxi_plot(color_list, exp_keys, to_dock, dyna_flag, elm_flag, elmdock_flag)
         output_res[ 'dani_plot' ] = dani_plot(color_list,exp_keys, to_dock, dyna_flag, elm_flag, elmdock_flag)
- 
+
     if elm_flag == True:
         save_elm(dyna_flag, elm_flag, elmdock_flag)
         elm_out = [join(str(base_dir),join(sub_dir,'ELM_prediction'))]
-        output_res[ 'elm_out' ] = elm_out    
+        output_res[ 'elm_out' ] = elm_out
 
     if elmdock_flag == True:
         save_dock(dyna_flag, elm_flag, elmdock_flag)
-        dock_out = [join(str(base_dir),join(sub_dir, 'ELMDOCK'))]     
+        dock_out = [join(str(base_dir),join(sub_dir, 'ELMDOCK'))]
         output_res[ 'elmdock' ] = dock_out
         dock_pdb = [join(str(base_dir),join(sub_dir, 'out_dock.pdb'))]
         output_res[ 'pdb'] = dock_pdb
@@ -105,4 +105,33 @@ if __name__ == "__main__":
     output_res[ 'iso_plot' ] = iso_plot(exp_resi, color_list,exp_keys, dyna_flag, elm_flag, elmdock_flag)
     output_res[ 'axi_plot' ] = axi_plot(exp_resi, color_list,exp_keys, dyna_flag, elm_flag, elmdock_flag)
     output_res[ 'ani_plot' ] = ani_plot(exp_resi, color_list,exp_keys, dyna_flag, elm_flag, elmdock_flag)
+
+    runname = json_variables["run_name"]
+
+    os.chdir("..")
+
+    # The Java script saves the code in a folder called "[run_name]_ROTDIF", but we want to save it in "[run_name]/ROTDIF"
+    if not os.path.exists(runname):
+            os.mkdir(runname)
+    os.chdir(runname)
+
+    if os.path.exists("ROTDIF"):
+        shutil.rmtree("ROTDIF")
+    os.mkdir("ROTDIF")
+
+    os.chdir("..")
+
+    source_directory = str(runname) + "_ROTDIF"
+    destination_directory = str(runname) + "/ROTDIF"
+
+    rotdif_files = os.listdir(source_directory)
+
+    for file in rotdif_files:
+        source_path = os.path.join(source_directory, file)
+        destination_path = os.path.join(destination_directory, file)
+        shutil.move(source_path, destination_path)
+
+    shutil.rmtree(source_directory)
+
+
     print (json.dumps(output_res))

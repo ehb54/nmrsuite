@@ -1,3 +1,4 @@
+
 # this is a module file, any module specific info belongs here
 {
     "moduleid": "maxent",
@@ -43,15 +44,6 @@
             "label": "experimental data file",
             "type": "lrfile",
             "help": "Lx2 text matrix file of the experimental data for L residues",
-            "repeat": "maxent_checkbox",
-            "norow": "false"
-        },
-        {
-            "role": "input",
-            "id": "matrixfile",
-            "label": "matrix file",
-            "type": "lrfile",
-            "help": "LxN text matrix of predicted data for N conformers",
             "repeat": "maxent_checkbox",
             "norow": "false"
         },
@@ -142,48 +134,23 @@
         },
         {
             "role": "input",
-            "id": "structure_directory",
-            "label": "structure files directory",
+            "id": "tree_input",
+            "label": "tree input file",
             "type": "lrfile",
-            "repeat": "cluster_by_rmsd_checkbox",
-            "help": "input directory where the structure files are located"
+            "help": "rmsd tree input from rmsd pairwise in predict module",
+            "repeat": "cluster_by_rmsd_checkbox"
         },
         {
             "role": "input",
-            "id": "structure_input",
-            "label": "structure input",
-            "type": "listbox",
-            "values": "local structure directory~c1~local structure files~c2~server structure path~c3",
-            "default": "c2",
-            "repeater": "true",
-            "repeat": "cluster_by_rmsd_checkbox",
-            "help": "structure files input listbox"
-        },
-        {
-            "role": "input",
-            "id": "local_structure_directory",
-            "label": "local structure directory",
-            "type": "file",
-            "directory": "true",
-            "repeat": "structure_input:c1",
-            "help": "Select structure directory from local computer"
-        },
-        {
-            "role": "input",
-            "id": "local_structure_files",
-            "label": "local structure files",
-            "type": "file",
-            "multiple": "true",
-            "repeat": "structure_input:c2",
-            "help": "Select structure files from local computer"
-        },
-        {
-            "role": "input",
-            "id": "server_structure_path",
-            "label": "server structure path",
-            "type": "rpath",
-            "repeat": "structure_input:c3",
-            "help": "Select structure directory from server"
+            "id": "rmsd_cut",
+            "label": "rmsd cut",
+            "type": "float",
+            "default": 4.0,
+            "min": 0,
+            "max": 2147483647,
+            "step": 0.1,
+            "help": "by how many Angstroms you want to cluster structures by RMSD",
+            "repeat": "cluster_by_rmsd_checkbox"
         },
         {
             "role": "output",

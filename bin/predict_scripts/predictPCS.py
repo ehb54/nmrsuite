@@ -25,9 +25,6 @@ from predict_scripts.tensor2pcs import tensor2pcs
 
 def predictPCS (susceptibility_tensor, reslist, pdb_filename, SLposition, atom_type = "H", pdb_model = 0, chainID = "A"):
 
-    pdb_model = 0
-    # DO PCS stuff
-
     #reslist = np.array(range(1, 76))
 
     #convert output of PCS analysis into SL coordinates and the tensor

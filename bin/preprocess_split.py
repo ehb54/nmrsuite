@@ -5,7 +5,7 @@ from preprocess_dyna_rho import preprocess_out
 
 
 def split_data(dyna_flag, elm_flag, elmdock_flag):
-    with open('rotdif_log.out') as in_f:
+    with open('rotdif_results.out') as in_f:
         all_txt = in_f.read().splitlines()
         #get the lines
     dock_start = 0
