@@ -1,6 +1,6 @@
 #fic info belongs here
 {
-    "moduleid"       : "Acknowledgements",
+    "moduleid"       : "acknowledgements",
     "label"          : "Acknowledgements",
     "noreset"        : "true",
     "nosubmit"       : "true",
