@@ -19,7 +19,7 @@ def iso_plot(exp_resi,color_list, exp_keys, dyna_flag, elm_flag, elmdock_flag):
         iso_output[2][i] = [iso_output[2][i][jj] for jj in ind_a]
         iso_output[3][i] = [iso_output[3][i][jj] for jj in ind_a]        
 
-        err_dev = stat.stdev(iso_output[3][i])
+        err_dev = iso_output[3][i]
         dif = list(map(operator.sub,iso_output[2][i],iso_output[1][i]))
         tmp_data = [
         {
@@ -53,7 +53,7 @@ def iso_plot(exp_resi,color_list, exp_keys, dyna_flag, elm_flag, elmdock_flag):
         },
         {
           "x": iso_output[0][i],
-          "y": [x / err_dev for x in dif],
+          "y": [x / d for x, d in zip(dif, err_dev)],
           "type": "bar",
           "xaxis": "x2",
           "yaxis": "y2",

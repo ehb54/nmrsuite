@@ -75,8 +75,8 @@ def rotdif(in_dock,Pdbfilename,Relaxfilename,sub_dir):
     ProcessToCallRotdif.append('-nogui')
     dyna_flag = True
     if 'run_dyna' not in json_variables:
-        ProcessToCallRotdif.append('-nodynamics')
-        dyna_flag = False
+        #ProcessToCallRotdif.append('-nodynamics')
+        dyna_flag = True
     elm_flag = False
     if 'run_elm' in json_variables:
         ProcessToCallRotdif.append('-elm')

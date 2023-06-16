@@ -18,7 +18,7 @@ def ani_plot(exp_resi, color_list, exp_keys, dyna_flag, elm_flag, elmdock_flag):
         ani_output[2][i] = [ani_output[2][i][jj] for jj in ind_a]
         ani_output[3][i] = [ani_output[3][i][jj] for jj in ind_a]    
 
-        err_dev = stat.stdev(ani_output[3][i])
+        err_dev = ani_output[3][i]
         dif = list(map(operator.sub,ani_output[2][i],ani_output[1][i]))
         tmp_data = [
         {
@@ -52,7 +52,7 @@ def ani_plot(exp_resi, color_list, exp_keys, dyna_flag, elm_flag, elmdock_flag):
         },
         {
           "x": ani_output[0][i],
-          "y": [x/err_dev for x in dif],
+          "y": [x / d  for x, d in zip(dif, err_dev)],
           "type": "bar",
           "marker": {"color": color_list[i]},
           "xaxis": "x2",
