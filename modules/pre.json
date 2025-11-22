@@ -100,7 +100,7 @@
                   {
                    "role"     : "input",
                    "id"       : "T2dia",
-                   "label"    : "1H T2_dia time [ms]",
+                   "label"    : "1H T2_dia time [s]",
                    "type"     : "float",
                    "default"  : 0.05,
                    "step"     : 0.01,
@@ -112,7 +112,7 @@
                   {
                    "role"     : "input",
                    "id"       : "Htime",
-                   "label"    : "1H time during experiment [ms]",
+                   "label"    : "1H time during experiment [s]",
                    "type"     : "float",
                    "default"  : 0.005,
                    "step"     : 0.001,

@@ -99,12 +99,12 @@
             "id": "size",
             "label": "size of solutions",
             "type": "integer",
-            "default": 4,
+            "default": 3,
             "step": 1,
             "min": 1,
             "max": 1000000000,
             "repeat": "display_results",
-            "help": "Size of the solutions you want to focus on, choose based on the L curve. Run SES first without the display_results flag and choose the size accordingly."
+            "help": "Size of the solutions you want to focus on, choose based on the L curve. Run SES first without the display_results flag and choose the size accordingly. This number can not be bigger than l0max flag input."
         },
         {
             "role": "input",
@@ -241,13 +241,23 @@
             "default": 99999999999,
             "help": "Maximum possible sum of the column weights"
         },
+	{
+	    "role": "input",
+	    "id": "weigh1",
+	    "label": "weigh1",
+	    "type": "listbox",
+	    "values": "1~1~random~2~optimized~3",
+	    "default": "1",
+	    "help": "1 = weight 1 for solution of size 1; random = weight random for solution of size 1; optimized = weight optimize"
+	},
         {
             "role": "input",
             "id": "precond",
             "label": "preconditioning",
             "type": "listbox",
-            "values": "None~1~Rotation and compression~2",
-            "help": "Preconditioning of the linear system before M-OMP. Default is None"
+            "values": "None~0~Rotation and compression~1",
+            "default": "1",
+	    "help": "Preconditioning of the linear system before M-OMP."
         },
         {
             "role": "input",
@@ -265,7 +275,7 @@
             "id": "toperror",
             "label": "top",
             "type": "float",
-            "default": 0.005,
+            "default": 0.5,
             "step": 0.001,
             "min": 0.0,
             "max": 1.0,

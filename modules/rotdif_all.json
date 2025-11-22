@@ -98,7 +98,7 @@
             {   
                 "role"    : "input",
                 "id"      : "axeslength",
-                "label"   : "Axes Length(Angstrom)",
+                "label"   : "Axes Length [Angstrom]",
                 "type"    : "text",
                 "required" : "True",
                 "default" : "5"

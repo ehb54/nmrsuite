@@ -86,10 +86,13 @@ def getPlot (x, y, log = False): # This is for the top relative error plot
     fig = make_subplots(rows=1, cols=2)
 
     fig.append_trace(go.Scatter(x=x, y=y, marker={"color": 'Blue'}, name="Linear"), row=1, col=1)
-    fig.append_trace(go.Scatter(x=x, y=y, marker={"color": 'Red'}, name="Log"), row=1, col=2)
-
-    fig.update_yaxes(title_text="Relative Error", row=1, col=1)
-    fig.update_yaxes(title_text="Log Relative Error", type="log", row=1, col=2)
+    y_log = np.log(y)
+    y_log = y_log.tolist()
+    fig.append_trace(go.Scatter(x=x, y=y_log, marker={"color": 'Red'}, name="Log"), row=1, col=2)
+    chi = '\u03C7'
+    squared = '\u00B2'
+    fig.update_yaxes(title_text=f"{chi}{squared}", row=1, col=1)
+    fig.update_yaxes(title_text=f"Log {chi}{squared}", row=1, col=2)
 
     fig.update_xaxes(title_text="Ensemble Size")
 
@@ -250,9 +253,13 @@ def main():
     if ("maxsum" in json_variables):
         maxsum = str(json_variables["maxsum"])
         command += f" -maxsum {maxsum}"
+
+    if ("weigh1" in json_variables):
+        weigh1 = str(int(json_variables["weigh1"]))
+        command += f" -weigh1 {weigh1}"
         
     if ("precond" in json_variables):
-        precond = str(int(json_variables["precond"])-1)
+        precond = str(int(json_variables["precond"]))
         command += f" -precond {precond}"
         
     if ("reltol" in json_variables):
@@ -336,6 +343,7 @@ def main():
 
     L0_numbers = []
     Chi2L_numbers = []
+    Chi2_numbers = []
     rel_error_numbers = []
 
     for i, L0_solution_line in enumerate(L0_solution_lines):
@@ -423,6 +431,7 @@ def main():
             #newOutput += "\n" + "%.5f %.5f %.5f %.5f" % (indices[i], experimental_values[i], predicted_values[i], rel_error_value[i])
 
         L0_numbers.append(int(l0_norm))
+        Chi2_numbers.append(float(Chi2))
         Chi2L_numbers.append(float(Chi2/L))
         rel_error_numbers.append(float(rel_error_value))
 
@@ -463,7 +472,7 @@ def main():
     #printQuit(f"{newOutput} \n {outputStr}")
     
     y = y[10:-1].split(", ")
-    Lcurve_y = list(map(float, y))
+    Lcurve_y = Chi2_numbers #list(map(float, y))
     """ if (abs(float(Lcurve_y[0] - 1.0)) > 0.001):
         Lcurve_y.insert(0, 1.0) """
     Lcurve_x = list(range(1, len(Lcurve_y) + 2))

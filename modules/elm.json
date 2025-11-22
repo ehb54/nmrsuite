@@ -68,7 +68,7 @@
             {
                 "role"    : "input",
                 "id"      : "temperature",
-                "label"   : "Temperature(K)",
+                "label"   : "Temperature [K]",
                 "type"    : "text",
                 "required" : "True",
                 "default" : "298"
@@ -84,7 +84,7 @@
             {   
                 "role"    : "input",
                 "id"      : "hydro",
-                "label"   : "Hydration Layer Thickness(Angstrom)",
+                "label"   : "Hydration Layer Thickness [Angstrom]",
                 "type"    : "text",
                 "required" : "True",
                 "default" : "2.2",
@@ -93,7 +93,7 @@
             {   
                 "role"    : "input",
                 "id"      : "water",
-                "label"   : "Water Radius(Angstrom)",
+                "label"   : "Water Radius [Angstrom]",
                 "type"    : "text",
                 "required" : "True",
                 "default" : "1.4",
